@@ -1,0 +1,101 @@
+import Combine
+import shared
+import KMPNativeCoroutinesAsync
+
+@MainActor
+class FamilyListViewModel: ObservableObject {
+    
+    @Published var familyListModels = [FamilyListModel]()
+    @Published var loading = false
+    @Published var newItemName = ""
+    
+    //Todo: implement DI
+    private lazy var getAllFamilyListUseCase = ServiceLocator.init().getAllFamilyListUseCase
+    private lazy var createFamilyListUseCase = ServiceLocator.init().createFamilyListUseCase
+    private lazy var updateFamilyListUseCase = ServiceLocator.init().updateFamilyListUseCase
+    private lazy var deleteFamilyListUseCase = ServiceLocator.init().deleteFamilyListUseCase
+    
+    init(
+        familyListModels: [FamilyListModel] = [FamilyListModel]()
+    ) {
+        self.familyListModels = familyListModels
+    }
+    
+    func loadData() async {
+        
+        loading = true
+        let result = await asyncResult(for: getAllFamilyListUseCase.executeNative())
+        switch result {
+        case .success(let data):
+            familyListModels = data
+            loading = false
+        case .failure(let error):
+            showError(error)
+            loading = false
+        }
+    }
+    
+    func add() async {
+        
+        guard !newItemName.isEmpty else {
+            return
+        }
+        
+        let item = FamilyListModel(
+            name: newItemName
+        )
+        newItemName = ""
+        loading = true
+        let result = await asyncResult(for: createFamilyListUseCase.executeNative(item: item))
+        switch result {
+        case .success:
+            await loadData()
+        case .failure(let error):
+            showError(error)
+            loading = false
+        }
+    }
+    
+    func showError(_ error: Error) {
+        
+        print(error)
+    }
+    
+    func update(item: FamilyListModel) async {
+        
+        //Todo: implement debounce
+        loading = true
+        let result = await asyncResult(for: updateFamilyListUseCase.executeNative(item: item))
+        switch result {
+        case .success:
+            loading = false
+        case .failure(let error):
+            showError(error)
+            loading = false
+        }
+    }
+    
+    func remove(item: FamilyListModel) async {
+     
+        loading = true
+        let result = await asyncResult(for: deleteFamilyListUseCase.executeNative(uuid: item.uuid))
+        switch result {
+        case .success:
+            await loadData()
+        case .failure(let error):
+            showError(error)
+            loading = false
+        }
+    }
+    
+    func onDelete(at offsets: IndexSet) {
+        
+        if let index = offsets.first {
+            let item = self.familyListModels.remove(at: index)
+            Task {
+                await remove(item: item)
+            }
+            
+        }
+    }
+}
