@@ -8,7 +8,7 @@ android {
     compileSdk = 33
     defaultConfig {
         applicationId = "dev.haroldjose.sharedfamilylist.android"
-        minSdk = 29
+        minSdk = 26
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"

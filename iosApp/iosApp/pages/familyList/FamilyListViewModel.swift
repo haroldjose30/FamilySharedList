@@ -10,10 +10,14 @@ class FamilyListViewModel: ObservableObject {
     @Published var newItemName = ""
     
     //Todo: implement DI
-    private lazy var getAllFamilyListUseCase = ServiceLocator.init().getAllFamilyListUseCase
-    private lazy var createFamilyListUseCase = ServiceLocator.init().createFamilyListUseCase
-    private lazy var updateFamilyListUseCase = ServiceLocator.init().updateFamilyListUseCase
-    private lazy var deleteFamilyListUseCase = ServiceLocator.init().deleteFamilyListUseCase
+    private var serviceLocator = ServiceLocator()
+    private lazy var getAllFamilyListUseCase = serviceLocator.getAllFamilyListUseCase
+    private lazy var updateFamilyListUseCase = serviceLocator.updateFamilyListUseCase
+    private lazy var deleteFamilyListUseCase = serviceLocator.deleteFamilyListUseCase
+    
+    
+    private lazy var createFamilyListUseCase = CreateFamilyListUseCaseHelper()
+    
     
     init(
         familyListModels: [FamilyListModel] = [FamilyListModel]()

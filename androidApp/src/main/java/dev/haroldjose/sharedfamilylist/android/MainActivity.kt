@@ -12,6 +12,7 @@ import dev.haroldjose.sharedfamilylist.android.pages.familyList.FamilyListViewMo
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             MyApplicationTheme {
                 Surface(

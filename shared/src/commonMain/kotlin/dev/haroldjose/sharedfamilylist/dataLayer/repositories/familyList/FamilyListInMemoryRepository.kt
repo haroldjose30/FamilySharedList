@@ -9,42 +9,12 @@ internal class FamilyListInMemoryRepository: IFamilyListRepository {
     }
 
     override suspend fun insert(item: FamilyListDto) {
+
         familyListDataSource.add(item)
     }
 
     override suspend fun findAll(): List<FamilyListDto> {
 
-        if (familyListDataSource.isEmpty()) {
-
-            familyListDataSource.add(
-                FamilyListDto(
-                    uuid = "uuid1",
-                    name = "Item A",
-                    isCompleted = false
-                )
-            )
-            familyListDataSource.add(
-                FamilyListDto(
-                    uuid = "uuid2",
-                    name = "Item B",
-                    isCompleted = false
-                )
-            )
-            familyListDataSource.add(
-                FamilyListDto(
-                    uuid = "uuid3",
-                    name = "Item C",
-                    isCompleted = false
-                )
-            )
-            familyListDataSource.add(
-                FamilyListDto(
-                    uuid = "uuid4",
-                    name = "Item D",
-                    isCompleted = false
-                )
-            )
-        }
         return familyListDataSource.toList()
     }
 

@@ -1,5 +1,9 @@
 package dev.haroldjose.sharedfamilylist.dependencyInjection
 
+import dev.haroldjose.sharedfamilylist.GlobalState
+import dev.haroldjose.sharedfamilylist.dataLayer.repositories.familyList.FamilyListInMemoryRepository
+import dev.haroldjose.sharedfamilylist.dataLayer.repositories.familyList.IFamilyListRepository
+import dev.haroldjose.sharedfamilylist.dataLayer.repositories.familyList.mongoDb.FamilyListMongoDbRepository
 import dev.haroldjose.sharedfamilylist.domainLayer.usecases.familyList.CreateFamilyListUseCase
 import dev.haroldjose.sharedfamilylist.domainLayer.usecases.familyList.DeleteFamilyListUseCase
 import dev.haroldjose.sharedfamilylist.domainLayer.usecases.familyList.GetAllFamilyListUseCase
@@ -14,19 +18,31 @@ interface IServiceLocator
 object ServiceLocator: IServiceLocator {
 
     val getAllFamilyListUseCase: GetAllFamilyListUseCase by lazy {
-        GetAllFamilyListUseCase()
+        GetAllFamilyListUseCase(familyListRepository)
     }
 
     val createFamilyListUseCase: CreateFamilyListUseCase by lazy {
-        CreateFamilyListUseCase()
+        CreateFamilyListUseCase(familyListRepository)
     }
 
     val updateFamilyListUseCase: UpdateFamilyListUseCase by lazy {
-        UpdateFamilyListUseCase()
+        UpdateFamilyListUseCase(familyListRepository)
     }
 
     val deleteFamilyListUseCase: DeleteFamilyListUseCase by lazy {
-        DeleteFamilyListUseCase()
+        DeleteFamilyListUseCase(familyListRepository)
+    }
+
+    val globalState: GlobalState by lazy {
+        GlobalState()
+    }
+
+    internal val familyListRepository: IFamilyListRepository by lazy {
+
+        if (GlobalState.isRunningUITests)
+            FamilyListInMemoryRepository()
+        else
+            FamilyListMongoDbRepository()
     }
 }
 

@@ -23,6 +23,7 @@ kotlin {
         val ktorVersion: String by project
         val coroutinesVersion: String by project
         val serializationVersion: String by project
+        val koinVersion: String by project
 
 
         val commonMain by getting {
@@ -34,6 +35,7 @@ kotlin {
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
                 implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+                implementation("io.insert-koin:koin-core:$koinVersion")
             }
         }
         val commonTest by getting {
@@ -73,9 +75,9 @@ kotlin {
 
 android {
     namespace = "dev.haroldjose.sharedfamilylist"
-    compileSdk = 32
+    compileSdk = 33
     defaultConfig {
-        minSdk = 29
-        targetSdk = 32
+        minSdk = 26
+        targetSdk = 33
     }
 }

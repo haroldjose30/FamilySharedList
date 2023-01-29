@@ -3,7 +3,7 @@ package dev.haroldjose.sharedfamilylist.dataLayer.dto
 import kotlinx.serialization.Serializable
 
 @Serializable
-internal data class FamilyListDto(
+data class FamilyListDto(
     val uuid: String = "",
     val name: String = "",
     val isCompleted: Boolean = false,

@@ -9,6 +9,7 @@ struct FamilyListPage: View {
             HStack {
                 Spacer()
                 Text("Lista de Compras")
+                    .accessibilityIdentifier(Identifier.textTitle)
                     .font(.title)
                 Spacer()
             }
@@ -56,7 +57,12 @@ struct FamilyListPage: View {
 
             
             HStack {
-                TextField("Informe o novo item", text: $viewModel.newItemName)
+                
+                TextField(
+                    "Informe o novo item",
+                    text: $viewModel.newItemName
+                ).accessibilityIdentifier(Identifier.textFieldAdd)
+                
                 Button(action: {
                     Task {
                         await viewModel.add()
@@ -64,7 +70,10 @@ struct FamilyListPage: View {
                 }) {
                     Image(systemName: "plus.circle.fill")
                         .imageScale(.large)
-                }.frame(width: 50)
+                }
+                .accessibilityIdentifier(Identifier.buttonAdd)
+                .frame(width: 50)
+                
             }.padding(
                 EdgeInsets(
                     top: 8,
@@ -132,8 +141,21 @@ private struct FamilyListRow: View {
             
         }
     }
-    
 }
+
+
+private extension FamilyListPage {
+    
+    private enum Identifier {
+        static let textTitle = AccessibilityId.FamilyListPage.textTitle.rawValue
+        static let buttonAdd = AccessibilityId.FamilyListPage.buttonAdd.rawValue
+        static let textFieldAdd = AccessibilityId.FamilyListPage.textFieldAdd.rawValue
+    }
+}
+
+
+
+
 
 struct FamilyListPage_Previews: PreviewProvider {
     static var previews: some View {
