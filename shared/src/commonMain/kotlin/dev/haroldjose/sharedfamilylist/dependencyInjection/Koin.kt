@@ -1,6 +1,7 @@
 package dev.haroldjose.sharedfamilylist.dependencyInjection
 
 import dev.haroldjose.sharedfamilylist.dependencyInjection.modules.appModule
+import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
 
@@ -15,10 +16,7 @@ fun initKoin(
     )
 }
 
-// called by iOS
-fun initKoin() {
-
-    startKoin {
-        modules(appModule())
-    }
+// Koin utilities for iOS injection
+fun KoinApplication.Companion.start(): KoinApplication = initKoin {
+    modules(appModule())
 }

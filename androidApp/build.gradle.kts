@@ -33,6 +33,9 @@ android {
 
 dependencies {
     val coroutinesVersion: String by project
+    val koinVersion: String by project
+    val koinAndroidVersion: String by project
+    val koinAndroidComposeVersion: String by project
 
     implementation(project(":shared"))
     implementation("androidx.compose.ui:ui:1.3.3")
@@ -42,4 +45,7 @@ dependencies {
     implementation("androidx.compose.material:material:1.3.1")
     implementation("androidx.activity:activity-compose:1.6.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
+    implementation("io.insert-koin:koin-core:$koinVersion")
+    implementation("io.insert-koin:koin-android:$koinAndroidVersion")
+    implementation("io.insert-koin:koin-androidx-compose:$koinAndroidComposeVersion")
 }

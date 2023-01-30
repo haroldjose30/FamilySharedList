@@ -7,16 +7,14 @@ struct iOSApp: App {
     @Environment(\.scenePhase) private var scenePhase
     
     init() {
+        KoinApplication.start()
         configureIsRunningUITests()
-        KoinKt.doInitKoin()
     }
 	
     var body: some Scene {
         
        WindowGroup {
-            FamilyListPage(
-                viewModel: FamilyListViewModel()
-            )
+            FamilyListPage()
         }.onChange(of: scenePhase) { phase in
             
             switch phase {

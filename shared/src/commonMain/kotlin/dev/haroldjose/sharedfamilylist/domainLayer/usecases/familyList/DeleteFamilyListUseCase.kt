@@ -1,7 +1,6 @@
 package dev.haroldjose.sharedfamilylist.domainLayer.usecases.familyList
 
 import dev.haroldjose.sharedfamilylist.dataLayer.repositories.familyList.IFamilyListRepository
-import dev.haroldjose.sharedfamilylist.dependencyInjection.ServiceLocator
 
 class DeleteFamilyListUseCase(
     private val familyListRepository: IFamilyListRepository

@@ -2,7 +2,6 @@ package dev.haroldjose.sharedfamilylist.android.pages.familyList
 
 import QuantitySelectionView
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -13,7 +12,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
@@ -28,20 +26,18 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.haroldjose.sharedfamilylist.android.MyApplicationTheme
 import dev.haroldjose.sharedfamilylist.domainLayer.models.FamilyListModel
 import kotlinx.coroutines.launch
-
-
+import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FamilyListPage(
-    viewModel: FamilyListViewModel,
+    viewModel: FamilyListViewModel = getViewModel()
 ) {
 
     //region STATE
@@ -231,22 +227,10 @@ fun FamilyListRow(
     }
 }
 
-
 @Preview(showBackground = false)
 @Composable
 fun DefaultPreviewTaskListPage() {
-
-
     MyApplicationTheme {
-
-        val familyListModels = arrayListOf(
-            FamilyListModel(name = "Pao"),
-            FamilyListModel(name = "Leite"),
-            FamilyListModel(name = "Manteiga"),
-            FamilyListModel(name = "Coca Cola"),
-        )
-        var viewModel = FamilyListViewModel()
-        viewModel.familyListModels = familyListModels
-        FamilyListPage(viewModel = viewModel)
+        //FamilyListPage(FamilyListViewModelPreview())
     }
 }

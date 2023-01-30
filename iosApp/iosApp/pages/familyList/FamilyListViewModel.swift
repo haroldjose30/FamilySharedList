@@ -9,20 +9,23 @@ class FamilyListViewModel: ObservableObject {
     @Published var loading = false
     @Published var newItemName = ""
     
-    //Todo: implement DI
-    private var serviceLocator = ServiceLocator()
-    private lazy var getAllFamilyListUseCase = serviceLocator.getAllFamilyListUseCase
-    private lazy var updateFamilyListUseCase = serviceLocator.updateFamilyListUseCase
-    private lazy var deleteFamilyListUseCase = serviceLocator.deleteFamilyListUseCase
     
     
-    private lazy var createFamilyListUseCase = CreateFamilyListUseCaseHelper()
-    
+   private let createFamilyListUseCase: CreateFamilyListUseCase
+   private let getAllFamilyListUseCase: GetAllFamilyListUseCase
+   private let updateFamilyListUseCase: UpdateFamilyListUseCase
+   private let deleteFamilyListUseCase: DeleteFamilyListUseCase
     
     init(
-        familyListModels: [FamilyListModel] = [FamilyListModel]()
+        createFamilyListUseCase: CreateFamilyListUseCase = KoinApplication.shared.inject(),
+        getAllFamilyListUseCase: GetAllFamilyListUseCase = KoinApplication.shared.inject(),
+        updateFamilyListUseCase: UpdateFamilyListUseCase = KoinApplication.shared.inject(),
+        deleteFamilyListUseCase: DeleteFamilyListUseCase = KoinApplication.shared.inject()
     ) {
-        self.familyListModels = familyListModels
+        self.createFamilyListUseCase = createFamilyListUseCase
+        self.getAllFamilyListUseCase = getAllFamilyListUseCase
+        self.updateFamilyListUseCase = updateFamilyListUseCase
+        self.deleteFamilyListUseCase = deleteFamilyListUseCase
     }
     
     func loadData() async {

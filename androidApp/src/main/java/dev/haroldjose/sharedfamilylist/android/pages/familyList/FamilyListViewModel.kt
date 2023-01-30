@@ -6,24 +6,26 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.haroldjose.sharedfamilylist.dependencyInjection.ServiceLocator
 import dev.haroldjose.sharedfamilylist.domainLayer.models.FamilyListModel
+import dev.haroldjose.sharedfamilylist.domainLayer.usecases.familyList.CreateFamilyListUseCase
+import dev.haroldjose.sharedfamilylist.domainLayer.usecases.familyList.DeleteFamilyListUseCase
+import dev.haroldjose.sharedfamilylist.domainLayer.usecases.familyList.GetAllFamilyListUseCase
+import dev.haroldjose.sharedfamilylist.domainLayer.usecases.familyList.UpdateFamilyListUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class FamilyListViewModel(): ViewModel() {
+class FamilyListViewModel(
+    private val getAllFamilyListUseCase: GetAllFamilyListUseCase,
+    private val createFamilyListUseCase: CreateFamilyListUseCase,
+    private val updateFamilyListUseCase: UpdateFamilyListUseCase,
+    private val deleteFamilyListUseCase: DeleteFamilyListUseCase
+): ViewModel() {
 
     var familyListModels: List<FamilyListModel> by mutableStateOf(arrayListOf())
     var loading:Boolean by mutableStateOf(false)
     var newItemName: String by mutableStateOf("")
     var quantity: Int by mutableStateOf(1)
-
-    //Todo: implement DI
-    private val getAllFamilyListUseCase = ServiceLocator.getAllFamilyListUseCase
-    private val createFamilyListUseCase = ServiceLocator.createFamilyListUseCase
-    private val updateFamilyListUseCase = ServiceLocator.updateFamilyListUseCase
-    private val deleteFamilyListUseCase = ServiceLocator.deleteFamilyListUseCase
 
     suspend fun loadData() {
 
