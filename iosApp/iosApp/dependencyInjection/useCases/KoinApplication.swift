@@ -13,18 +13,21 @@ extension KoinApplication {
 }
 
 extension KoinApplication {
+    
     private static let keyPaths: [PartialKeyPath<Koin>] = [
         \.createFamilyListUseCase,
-         \.updateFamilyListUseCase,
-         \.getAllFamilyListUseCase,
-         \.deleteFamilyListUseCase
+        \.updateFamilyListUseCase,
+        \.getAllFamilyListUseCase,
+        \.deleteFamilyListUseCase,
     ]
     
     static func inject<T>() -> T {
+        
         shared.inject()
     }
     
     func inject<T>() -> T {
+        
         for partialKeyPath in Self.keyPaths {
             guard let keyPath = partialKeyPath as? KeyPath<Koin, T> else { continue }
             return koin[keyPath: keyPath]

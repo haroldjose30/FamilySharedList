@@ -9,19 +9,18 @@ class FamilyListViewModel: ObservableObject {
     @Published var loading = false
     @Published var newItemName = ""
     
-    
-    
    private let createFamilyListUseCase: CreateFamilyListUseCase
    private let getAllFamilyListUseCase: GetAllFamilyListUseCase
    private let updateFamilyListUseCase: UpdateFamilyListUseCase
    private let deleteFamilyListUseCase: DeleteFamilyListUseCase
     
     init(
-        createFamilyListUseCase: CreateFamilyListUseCase = KoinApplication.shared.inject(),
-        getAllFamilyListUseCase: GetAllFamilyListUseCase = KoinApplication.shared.inject(),
-        updateFamilyListUseCase: UpdateFamilyListUseCase = KoinApplication.shared.inject(),
-        deleteFamilyListUseCase: DeleteFamilyListUseCase = KoinApplication.shared.inject()
+        createFamilyListUseCase: CreateFamilyListUseCase,
+        getAllFamilyListUseCase: GetAllFamilyListUseCase,
+        updateFamilyListUseCase: UpdateFamilyListUseCase,
+        deleteFamilyListUseCase: DeleteFamilyListUseCase
     ) {
+        
         self.createFamilyListUseCase = createFamilyListUseCase
         self.getAllFamilyListUseCase = getAllFamilyListUseCase
         self.updateFamilyListUseCase = updateFamilyListUseCase

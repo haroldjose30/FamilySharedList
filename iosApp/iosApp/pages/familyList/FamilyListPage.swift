@@ -3,7 +3,7 @@ import shared
 
 struct FamilyListPage: View {
     
-    @StateObject var viewModel: FamilyListViewModel = FamilyListViewModel()
+    @StateObject var viewModel: FamilyListViewModel
     
     var body: some View {
         VStack {
@@ -154,22 +154,13 @@ private extension FamilyListPage {
     }
 }
 
-
-
-
-
-//struct FamilyListPage_Previews: PreviewProvider {
-//    static var previews: some View {
-//        FamilyListPage(
-//            viewModel:
-//                FamilyListViewModel(
-//                    familyListModels: [
-//                        FamilyListModel(name: "Pao"),
-//                        FamilyListModel(name: "Leite"),
-//                        FamilyListModel(name: "Manteiga"),
-//                        FamilyListModel(name: "Coca Cola"),
-//                    ]
-//                )
-//        )
-//    }
-//}
+struct FamilyListPage_Previews: PreviewProvider {
+    static var previews: some View {
+        //TODO: inject mocked service
+        GlobalState.companion.isRunningUITests = true
+        
+        return FamilyListPage(
+            viewModel: ResolverPreview().resolve()
+        )
+    }
+}

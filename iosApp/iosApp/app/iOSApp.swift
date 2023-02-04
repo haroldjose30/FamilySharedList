@@ -5,16 +5,19 @@ import shared
 struct iOSApp: App {
     
     @Environment(\.scenePhase) private var scenePhase
+    private let resolverApp = ResolverApp()
     
     init() {
-        KoinApplication.start()
         configureIsRunningUITests()
+        KoinApplication.start()
     }
 	
     var body: some Scene {
         
        WindowGroup {
-            FamilyListPage()
+           FamilyListPage(
+            viewModel: resolverApp.resolve()
+           )
         }.onChange(of: scenePhase) { phase in
             
             switch phase {
