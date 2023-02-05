@@ -44,28 +44,34 @@ In which I intend to implement the following items as available
 ### Features to be developed: 
 - [ ] User account creation and login
 - [X] Adding, editing and deleting items on the list
+- [X] Item completion tracking
 - [ ] Sharing the list with multiple users
 - [ ] Item categorization
 - [ ] Item priority setting
-- [X] Item completion tracking
 - [ ] Item search functionality
 
 ### IOS Layer:
 - [ ] Handle Error for each use case
-- [ ] Mocked service injection during preview process
+- [ ] Unit test for viewModel
+- [ ] UITest
 - [ ] Improve UI Design
 - [ ] Publish on Apple Store
+- [ ] Mocked service injection during preview process
+
 
 ### Android Layer:
 - [ ] Handle Error for each use case
-- [ ] Mocked service injection during preview process
+- [ ] Unit test for viewModel
+- [ ] UITest
 - [ ] Improve UI Design
 - [ ] Publish on Google Play
+- [ ] Mocked service injection during preview process
 
 ### KMM Shared Layer: 
 - [X] Put APIKey and url to enviroment variables
 - [ ] Handle Error in all request
 - [ ] Add HttpClient to DI
+- [ ] Unit test
 - [ ] Create KMM library layer to Data and Domain
 - [ ] Add Local database for cache request
 - [ ] Add offline and sync process
