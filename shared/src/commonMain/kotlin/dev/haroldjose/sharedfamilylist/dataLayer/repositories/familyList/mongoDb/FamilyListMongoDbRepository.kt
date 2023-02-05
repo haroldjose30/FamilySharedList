@@ -1,5 +1,6 @@
 package dev.haroldjose.sharedfamilylist.dataLayer.repositories.familyList.mongoDb
 
+import dev.haroldjose.sharedfamilylist.BuildKonfig
 import dev.haroldjose.sharedfamilylist.dataLayer.dto.FamilyListDto
 import dev.haroldjose.sharedfamilylist.dataLayer.repositories.familyList.IFamilyListRepository
 import dev.haroldjose.sharedfamilylist.isDebug
@@ -16,9 +17,8 @@ import kotlinx.serialization.json.Json
 internal class FamilyListMongoDbRepository: IFamilyListRepository {
 
     //TODO: handle Error in all request
-    //TODO: put this values on enviroment variable, see https://github.com/yshrsmz/BuildKonfig
-    private val baseUrl = "https://data.mongodb-api.com/app/data-kcqbh/endpoint/data/v1/action/"
-    private val apiKey = "bHI2NV07pNs6Xx2X8sVTvI5Fx6R6poymz2jt8Vv3eUtzFQYy0OK1FJmsFXAByKIA"
+    private val apiUrl = BuildKonfig.apiUrl
+    private val apiKey = BuildKonfig.apiKey
     private enum class Resources(val value: String) {
         FIND("find"),
         INSERT_ONE("insertOne"),
@@ -29,7 +29,7 @@ internal class FamilyListMongoDbRepository: IFamilyListRepository {
     //TODO: implement DI
     private val client = HttpClient() {
         defaultRequest {
-            url(baseUrl)
+            url(apiUrl)
             contentType(ContentType.Application.Json)
             headers {
                 append("api-key", apiKey)
@@ -63,7 +63,7 @@ internal class FamilyListMongoDbRepository: IFamilyListRepository {
 
     override suspend fun insert(item: FamilyListDto) {
 
-        var bodyRequest = MongoDbRequestDocumentDto<FamilyListDto>(
+        val bodyRequest = MongoDbRequestDocumentDto<FamilyListDto>(
             default = getDefaultRequestDto(),
             document = item
         )
@@ -89,7 +89,7 @@ internal class FamilyListMongoDbRepository: IFamilyListRepository {
 
     override suspend fun update(item: FamilyListDto) {
 
-        var bodyRequest = MongoDbRequestFilterUpdateDto(
+        val bodyRequest = MongoDbRequestFilterUpdateDto(
             default = getDefaultRequestDto(),
             filter = FilterByUUIdDto(
                 uuid = item.uuid
@@ -104,7 +104,7 @@ internal class FamilyListMongoDbRepository: IFamilyListRepository {
 
     override suspend fun delete(uuid: String) {
 
-        var bodyRequest = MongoDbRequestFilterDto(
+        val bodyRequest = MongoDbRequestFilterDto(
             default = getDefaultRequestDto(),
             filter = FilterByUUIdDto(
                 uuid = uuid

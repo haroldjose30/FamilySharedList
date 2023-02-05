@@ -1,8 +1,11 @@
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
+
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
     id("com.android.library")
     id("com.rickclephas.kmp.nativecoroutines") version "0.13.0"
+    id("com.codingfeline.buildkonfig") version "0.13.3"
 }
 
 kotlin {
@@ -79,5 +82,19 @@ android {
     defaultConfig {
         minSdk = 26
         targetSdk = 33
+    }
+}
+
+//To generate BuildKonfig file: ./gradlew -p shared generateBuildKonfig
+buildkonfig {
+    packageName = "dev.haroldjose.sharedfamilylist"
+
+    // default config is required
+    defaultConfigs {
+        val apiKey: String by project
+        val apiUrl: String by project
+
+        buildConfigField(STRING, "apiKey", apiKey)
+        buildConfigField(STRING, "apiUrl", apiUrl)
     }
 }

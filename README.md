@@ -21,7 +21,7 @@ Technical Android Layer:
 - [ ] Publish on Google Play
 
 Technical KMM shared Layer: 
-- [ ] Put APIKey and url to enviroment variables
+- [X] Put APIKey and url to enviroment variables
 - [ ] Handle Error in all request
 - [ ] Add HttpClient to DI
 - [ ] Create KMM library layer to Data and Domain
