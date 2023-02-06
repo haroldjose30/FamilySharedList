@@ -58,7 +58,6 @@ In which I intend to implement the following items as available
 - [ ] Publish on Apple Store
 - [ ] Mocked service injection during preview process
 
-
 ### Android Layer:
 - [ ] Handle Error for each use case
 - [ ] Unit test for viewModel
