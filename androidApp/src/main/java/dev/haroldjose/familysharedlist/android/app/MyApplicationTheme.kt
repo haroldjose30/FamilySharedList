@@ -1,4 +1,4 @@
-package dev.haroldjose.familysharedlist.android
+package dev.haroldjose.familysharedlist.android.app
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape

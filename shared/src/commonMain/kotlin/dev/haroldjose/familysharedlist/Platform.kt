@@ -1,7 +1,8 @@
 package dev.haroldjose.familysharedlist
 
-interface Platform {
+interface IPlatform {
     val name: String
 }
 
-expect fun getPlatform(): Platform
+expect fun getPlatform(): IPlatform
+expect val isDebug: Boolean

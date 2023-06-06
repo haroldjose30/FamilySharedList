@@ -4,8 +4,13 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
     kotlin("plugin.serialization")
+    id("com.google.devtools.ksp") version "1.8.21-1.0.11"
     id("com.rickclephas.kmp.nativecoroutines") version "1.0.0-ALPHA-10"
     id("com.codingfeline.buildkonfig") version "0.13.3"
+}
+
+kotlin.sourceSets.all {
+    languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
