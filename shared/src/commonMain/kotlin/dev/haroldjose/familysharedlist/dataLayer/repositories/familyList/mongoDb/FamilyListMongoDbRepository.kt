@@ -45,15 +45,16 @@ internal class FamilyListMongoDbRepository: IFamilyListRepository {
 
 
     private fun getDefaultRequestDto(): MongoDbRequestDto {
-
+        //TODO: config build config to PROD, DEV and QA
+        var enviroment = "PROD"
         var collection = "shoppingList"
-        var database = "familysharedlistDb"
+        var database = "FamilySharedListDB_$enviroment"
         val dataSource = "Cluster0"
-
-        if (isDebug) {
-            collection = "devCollection"
-            database = "devDatabase"
-        }
+        //FIXME: harold
+        //if (isDebug) {
+        //    collection = "devCollection"
+        //    database = "devDatabase"
+        //}
         return MongoDbRequestDto(
             collection = collection,
             database = database,

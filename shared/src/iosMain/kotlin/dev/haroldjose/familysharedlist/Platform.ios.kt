@@ -7,4 +7,5 @@ class IOSPlatform: IPlatform {
 }
 
 actual fun getPlatform(): IPlatform = IOSPlatform()
-actual val isDebug: Boolean = Platform.isDebugBinary
+//FIXME: harold
+actual val isDebug: Boolean = false //Platform.isDebugBinary

@@ -8,4 +8,4 @@ class AndroidPlatform : IPlatform {
 
 actual fun getPlatform(): IPlatform = AndroidPlatform()
 //FIXME: harold
-actual val isDebug: Boolean = true//BuildConfig.DEBUG
+actual val isDebug: Boolean = false//BuildConfig.DEBUG
