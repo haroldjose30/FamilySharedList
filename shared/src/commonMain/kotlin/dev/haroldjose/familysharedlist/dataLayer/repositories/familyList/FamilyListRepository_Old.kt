@@ -1,20 +1,27 @@
-package dev.haroldjose.familysharedlist.dataLayer.repositories.familyList.mongoDb
-
+package dev.haroldjose.familysharedlist.dataLayer.repositories.familyList
+/*
 import dev.haroldjose.familysharedlist.BuildKonfig
+import dev.haroldjose.familysharedlist.dataLayer.datasource.mongoDb.request.FilterByUuidDto
+import dev.haroldjose.familysharedlist.dataLayer.datasource.mongoDb.request.MongoDbRequestDocumentDto
+import dev.haroldjose.familysharedlist.dataLayer.datasource.mongoDb.request.MongoDbRequestDto
+import dev.haroldjose.familysharedlist.dataLayer.datasource.mongoDb.request.MongoDbRequestFilterDto
+import dev.haroldjose.familysharedlist.dataLayer.datasource.mongoDb.request.MongoDbRequestFilterUpdateDto
+import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.mongoDb.response.MongoDbResponseDto
 import dev.haroldjose.familysharedlist.dataLayer.dto.FamilyListDto
-import dev.haroldjose.familysharedlist.dataLayer.repositories.familyList.IFamilyListRepository
-import dev.haroldjose.familysharedlist.isDebug
-import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.plugins.*
-import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.client.request.*
-import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
-import kotlinx.serialization.Serializable
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.request.headers
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
+import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
-internal class FamilyListMongoDbRepository: IFamilyListRepository {
+
+internal class FamilyListRepository_Old: IFamilyListRepository {
 
     //TODO: handle Error in all request
     private val apiUrl = BuildKonfig.apiUrl
@@ -42,7 +49,6 @@ internal class FamilyListMongoDbRepository: IFamilyListRepository {
             })
         }
     }
-
 
     private fun getDefaultRequestDto(): MongoDbRequestDto {
         //TODO: config build config to PROD, DEV and QA
@@ -92,7 +98,7 @@ internal class FamilyListMongoDbRepository: IFamilyListRepository {
 
         val bodyRequest = MongoDbRequestFilterUpdateDto(
             default = getDefaultRequestDto(),
-            filter = FilterByUUIdDto(
+            filter = FilterByUuidDto(
                 uuid = item.uuid
             ),
             update = item
@@ -107,7 +113,7 @@ internal class FamilyListMongoDbRepository: IFamilyListRepository {
 
         val bodyRequest = MongoDbRequestFilterDto(
             default = getDefaultRequestDto(),
-            filter = FilterByUUIdDto(
+            filter = FilterByUuidDto(
                 uuid = uuid
             )
         )
@@ -117,13 +123,4 @@ internal class FamilyListMongoDbRepository: IFamilyListRepository {
         }
     }
 }
-
-@Serializable
-private data class FilterByUUIdDto(
-    val uuid: String
-)
-
-@Serializable
-private data class UpdateDto(
-    val isCompleted: Boolean
-)
+ */

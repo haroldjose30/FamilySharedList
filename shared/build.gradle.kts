@@ -41,6 +41,7 @@ kotlin {
         val coroutinesVersion: String by project
         val serializationVersion: String by project
         val koinVersion: String by project
+        val kotlinxDatetime: String by project
 
         val commonMain by getting {
             dependencies {
@@ -53,6 +54,7 @@ kotlin {
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
                 implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
                 implementation("io.insert-koin:koin-core:$koinVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinxDatetime")
             }
         }
         val commonTest by getting {

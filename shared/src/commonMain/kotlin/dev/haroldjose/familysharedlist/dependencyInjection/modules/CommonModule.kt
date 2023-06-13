@@ -1,9 +1,8 @@
 package dev.haroldjose.familysharedlist.dependencyInjection.modules
 
 
-import dev.haroldjose.familysharedlist.dataLayer.repositories.familyList.FamilyListInMemoryRepository
+import dev.haroldjose.familysharedlist.dataLayer.repositories.familyList.FamilyListRepository
 import dev.haroldjose.familysharedlist.dataLayer.repositories.familyList.IFamilyListRepository
-import dev.haroldjose.familysharedlist.dataLayer.repositories.familyList.mongoDb.FamilyListMongoDbRepository
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.CreateFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.DeleteFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.GetAllFamilyListUseCase
@@ -14,8 +13,7 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val commonModule = module {
-
-    singleOf(::FamilyListMongoDbRepository) bind IFamilyListRepository::class
+    singleOf(::FamilyListRepository) bind IFamilyListRepository::class
     factoryOf(::CreateFamilyListUseCase)
     factoryOf(::GetAllFamilyListUseCase)
     factoryOf(::UpdateFamilyListUseCase)
@@ -24,7 +22,7 @@ val commonModule = module {
 
 val commonTestModule = module {
 
-    singleOf(::FamilyListInMemoryRepository) bind IFamilyListRepository::class
+    //singleOf(::FamilyListInMemoryRepository) bind IFamilyListRepository::class
     factoryOf(::CreateFamilyListUseCase)
     factoryOf(::GetAllFamilyListUseCase)
     factoryOf(::UpdateFamilyListUseCase)
