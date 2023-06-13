@@ -14,15 +14,7 @@ internal class FamilyListRepository() : IFamilyListRepository {
     }
 
     override suspend fun findAll(): List<FamilyListDto> {
-
-        val httpResponse = remoteDataSource.findAll()
-
-        //if (httpResponse.status.value in 200..299) {
-        //    val responseDto = httpResponse.body<FamilyListFindAllResponseDto>()
-        //    return responseDto.documents
-        //}
-
-        return arrayListOf()
+        return remoteDataSource.findAll()
     }
 
     override suspend fun update(item: FamilyListDto) {

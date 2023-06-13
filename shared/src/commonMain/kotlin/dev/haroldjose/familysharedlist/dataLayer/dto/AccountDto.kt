@@ -7,12 +7,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AccountDto(
-    override val uuid: String,
+    override val uuid: String = "",
     val createdDate: Instant = Clock.System.now(),
     val updatedDate: Instant = Clock.System.now(),
-    val name: String = "Guest",
+    val name: String = "",
     val email: String = "",
-    val password: String = "",
     val myAccountIsSharedWith: List<String> = arrayListOf(),
     var accountsSharedWithMe: List<String> = arrayListOf(),
 ) : IMongoDbBaseDto

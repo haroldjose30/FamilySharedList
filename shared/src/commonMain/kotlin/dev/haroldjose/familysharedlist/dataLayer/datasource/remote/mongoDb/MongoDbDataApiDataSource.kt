@@ -7,7 +7,10 @@ import dev.haroldjose.familysharedlist.dataLayer.datasource.mongoDb.request.Mong
 import dev.haroldjose.familysharedlist.dataLayer.datasource.mongoDb.request.MongoDbRequestDto
 import dev.haroldjose.familysharedlist.dataLayer.datasource.mongoDb.request.MongoDbRequestFilterDto
 import dev.haroldjose.familysharedlist.dataLayer.datasource.mongoDb.request.MongoDbRequestFilterUpdateDto
-import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.mongoDb.response.MongoDbResponseDto
+import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.mongoDb.response.MongoDbFindAllResponseDto
+import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.mongoDb.response.MongoDbFindByUuidResponseDto
+import dev.haroldjose.familysharedlist.dataLayer.dto.AccountDto
+import dev.haroldjose.familysharedlist.dataLayer.dto.FamilyListDto
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -20,12 +23,14 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.modules.contextual
 
 open class MongoDbDataApiDataSource<T : IMongoDbBaseDto>(
     override val dataSource: String,
     override val database: String,
     override val collection: String,
-) : IMongoDbDataApiDataSource<T> {
+    override val serializers: SerializersModule) : IMongoDbDataApiDataSource<T> {
 
     //TODO: handle Error in all request
     private val apiUrl = BuildKonfig.apiUrl
@@ -51,6 +56,7 @@ open class MongoDbDataApiDataSource<T : IMongoDbBaseDto>(
             json(Json {
                 encodeDefaults = true
                 ignoreUnknownKeys = true
+                serializersModule = serializers
             })
         }
     }
@@ -76,23 +82,21 @@ open class MongoDbDataApiDataSource<T : IMongoDbBaseDto>(
         }
     }
 
-    override suspend fun findAll(): HttpResponse {
+    override suspend fun findAll(): List<T> {
 
-        val httpResponse = client.post(Resources.FIND_ONE.value) {
+        val httpResponse = client.post(Resources.FIND.value) {
             setBody(getDefaultRequestDto())
         }
 
-        //TODO: serialize here with generics or inject an serializer function to return List<T>
-        //This code does not work
         if (httpResponse.status.value in 200..299) {
-            //val mongoDbResponseDto = httpResponse.body<MongoDbResponseDto<T>>()
-            //val test = mongoDbResponseDto.documents
+            val mongoDbFindAllResponseDto = httpResponse.body<MongoDbFindAllResponseDto<T>>()
+            return mongoDbFindAllResponseDto.documents
         }
 
-        return httpResponse
+        return arrayListOf()
     }
 
-    override suspend fun findBy(uuid: String): HttpResponse {
+    override suspend fun findBy(uuid: String): T? {
 
         val bodyRequest = MongoDbRequestFilterDto(
             default = getDefaultRequestDto(),
@@ -101,18 +105,16 @@ open class MongoDbDataApiDataSource<T : IMongoDbBaseDto>(
             )
         )
 
-        val httpResponse = client.post(Resources.FIND.value) {
+        val httpResponse = client.post(Resources.FIND_ONE.value) {
             setBody(bodyRequest)
         }
 
-        //TODO: serialize here with generics or inject an serializer function to return List<T>
-        //This code does not work
-        //if (httpResponse.status.value in 200..299) {
-        //    val mongoDbResponseDto = httpResponse.body<MongoDbResponseDto<T>()
-        //    return mongoDbResponseDto.documents
-        //}
+        if (httpResponse.status.value in 200..299) {
+            val mongoDbFindAllResponseDto = httpResponse.body<MongoDbFindByUuidResponseDto<T>>()
+            return mongoDbFindAllResponseDto.document
+        }
 
-        return httpResponse
+        return null
     }
 
     override suspend fun update(item: T) {
