@@ -1,4 +1,4 @@
-package dev.haroldjose.familysharedlist.domainLayer.extensions
+package dev.haroldjose.familysharedlist.domainLayer.mappers
 
 
 import dev.haroldjose.familysharedlist.dataLayer.dto.AccountDto

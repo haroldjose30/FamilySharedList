@@ -8,7 +8,6 @@ import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.mongoDb.resou
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.mongoDb.response.MongoDbFindAllResponseDto
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.mongoDb.response.MongoDbFindByUuidResponseDto
 import dev.haroldjose.familysharedlist.dataLayer.dto.AccountDto
-import dev.haroldjose.familysharedlist.dataLayer.dto.FamilyListDto
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.contextual
 

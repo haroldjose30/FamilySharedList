@@ -8,28 +8,44 @@ class FamilyListViewModel: ObservableObject {
     @Published var familyListModels = [FamilyListModel]()
     @Published var loading = false
     @Published var newItemName = ""
+
+    private var accountModel: AccountModel?
     
-   private let createFamilyListUseCase: CreateFamilyListUseCase
-   private let getAllFamilyListUseCase: GetAllFamilyListUseCase
-   private let updateFamilyListUseCase: UpdateFamilyListUseCase
-   private let deleteFamilyListUseCase: DeleteFamilyListUseCase
+    private let createFamilyListUseCase: CreateFamilyListUseCase
+    private let getAllFamilyListUseCase: GetAllFamilyListUseCase
+    private let updateFamilyListUseCase: UpdateFamilyListUseCase
+    private let deleteFamilyListUseCase: DeleteFamilyListUseCase
+    private let getOrCreateAccountFromLocalUuidUseCase: GetOrCreateAccountFromLocalUuidUseCase
     
     init(
         createFamilyListUseCase: CreateFamilyListUseCase,
         getAllFamilyListUseCase: GetAllFamilyListUseCase,
         updateFamilyListUseCase: UpdateFamilyListUseCase,
-        deleteFamilyListUseCase: DeleteFamilyListUseCase
+        deleteFamilyListUseCase: DeleteFamilyListUseCase,
+        getOrCreateAccountFromLocalUuidUseCase: GetOrCreateAccountFromLocalUuidUseCase
     ) {
         
         self.createFamilyListUseCase = createFamilyListUseCase
         self.getAllFamilyListUseCase = getAllFamilyListUseCase
         self.updateFamilyListUseCase = updateFamilyListUseCase
         self.deleteFamilyListUseCase = deleteFamilyListUseCase
+        self.getOrCreateAccountFromLocalUuidUseCase = getOrCreateAccountFromLocalUuidUseCase
     }
     
     func loadData() async {
         
         loading = true
+
+        let accountResult = await asyncResult(for: getOrCreateAccountFromLocalUuidUseCase.execute())
+        switch accountResult {
+        case .success(let data):
+            accountModel = data
+            loading = false
+        case .failure(let error):
+            showError(error)
+            loading = false
+        }
+
         let result = await asyncResult(for: getAllFamilyListUseCase.execute())
         switch result {
         case .success(let data):

@@ -9,8 +9,6 @@ import dev.haroldjose.familysharedlist.dataLayer.datasource.mongoDb.request.Mong
 import dev.haroldjose.familysharedlist.dataLayer.datasource.mongoDb.request.MongoDbRequestFilterUpdateDto
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.mongoDb.response.MongoDbFindAllResponseDto
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.mongoDb.response.MongoDbFindByUuidResponseDto
-import dev.haroldjose.familysharedlist.dataLayer.dto.AccountDto
-import dev.haroldjose.familysharedlist.dataLayer.dto.FamilyListDto
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -18,17 +16,16 @@ import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.headers
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
-import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.contextual
 
 open class MongoDbDataApiDataSource<T : IMongoDbBaseDto>(
     override val dataSource: String,
-    override val database: String,
+    override var database: String,
     override val collection: String,
     override val serializers: SerializersModule) : IMongoDbDataApiDataSource<T> {
 
@@ -90,7 +87,9 @@ open class MongoDbDataApiDataSource<T : IMongoDbBaseDto>(
 
         if (httpResponse.status.value in 200..299) {
             val mongoDbFindAllResponseDto = httpResponse.body<MongoDbFindAllResponseDto<T>>()
-            return mongoDbFindAllResponseDto.documents
+             mongoDbFindAllResponseDto.documents?.let {
+                 return it
+             }
         }
 
         return arrayListOf()
@@ -143,5 +142,9 @@ open class MongoDbDataApiDataSource<T : IMongoDbBaseDto>(
         client.post(Resources.DELETE_ONE.value) {
             setBody(bodyRequest)
         }
+    }
+
+    override fun setDataBase(databaseName: String) {
+       database = databaseName
     }
 }

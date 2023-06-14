@@ -1,5 +1,6 @@
 package dev.haroldjose.familysharedlist.dataLayer.datasource.remote.familiList
 
+import dev.haroldjose.familysharedlist.GlobalState
 import dev.haroldjose.familysharedlist.dataLayer.datasource.mongoDb.request.FilterByUuidDto
 import dev.haroldjose.familysharedlist.dataLayer.datasource.mongoDb.request.MongoDbRequestDocumentDto
 import dev.haroldjose.familysharedlist.dataLayer.datasource.mongoDb.request.MongoDbRequestFilterUpdateDto
@@ -12,10 +13,10 @@ import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.contextual
 
 
-internal class FamilyListMongoDbDataApiDataSource: MongoDbDataApiDataSource<FamilyListDto>(
+internal class FamilyListMongoDbDataApiDataSource(): MongoDbDataApiDataSource<FamilyListDto>(
     dataSource = MongoDbResources.DataSource.CLUSTER0.value,
-    database = MongoDbResources.Database.FAMILYSHAREDLIST.value,
-    collection = MongoDbResources.Collection.SHOPPINGLIST.value,
+    database = MongoDbResources.Database.DEMO.value,
+    collection = MongoDbResources.Collection.MY_LIST.value,
     serializers = SerializersModule {
         contextual(MongoDbFindAllResponseDto.serializer(FamilyListDto.serializer()))
         contextual(MongoDbFindByUuidResponseDto.serializer(FamilyListDto.serializer()))

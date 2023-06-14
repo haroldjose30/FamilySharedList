@@ -6,7 +6,7 @@ import kotlinx.serialization.modules.SerializersModule
 interface IMongoDbDataApiDataSource<T: IMongoDbBaseDto> {
 
     val dataSource: String
-    val database: String
+    var database: String
     val collection: String
     val serializers: SerializersModule
 
@@ -15,4 +15,5 @@ interface IMongoDbDataApiDataSource<T: IMongoDbBaseDto> {
     suspend fun findBy(uuid: String): T?
     suspend fun update(item: T)
     suspend fun delete(uuid: String)
+    fun setDataBase(databaseName: String)
 }

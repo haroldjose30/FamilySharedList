@@ -19,6 +19,7 @@ extension KoinApplication {
         \.updateFamilyListUseCase,
         \.getAllFamilyListUseCase,
         \.deleteFamilyListUseCase,
+        \.getOrCreateAccountFromLocalUuidUseCase,
     ]
     
     static func inject<T>() -> T {

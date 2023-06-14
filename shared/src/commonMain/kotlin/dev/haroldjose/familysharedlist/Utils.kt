@@ -1,3 +1,4 @@
+/*
 fun randomString(
     length: Int
 ): String {
@@ -5,6 +6,7 @@ fun randomString(
     return List(length) { charPool.random() }.joinToString("")
 }
 
+//TODO: change to excpected/actual to get UUID from native platform
 fun generateUUID(): String {
     //XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
   return randomString(length = 32)
@@ -16,3 +18,5 @@ fun generateUUID(): String {
 
 fun String.addCharAtIndex(char: Char, index: Int) =
     StringBuilder(this).apply { insert(index, char) }.toString()
+
+ */

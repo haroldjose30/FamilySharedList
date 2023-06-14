@@ -14,13 +14,7 @@ internal class AccountRepository() : IAccountRepository {
     }
 
     override suspend fun findBy(uuid: String): AccountDto? {
-        val httpResponse = remoteDataSource.findBy(uuid)
-
-        //if (httpResponse.status.value in 200..299) {
-        //    val mongoDbResponseDto = httpResponse.body<AccountFindByUuidResponseDto>()
-        //    return mongoDbResponseDto.document
-        //}
-        return null
+        return remoteDataSource.findBy(uuid)
     }
 
     override suspend fun update(item: AccountDto) {

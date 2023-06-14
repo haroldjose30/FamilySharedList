@@ -6,7 +6,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.haroldjose.familysharedlist.domainLayer.models.AccountModel
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
+import dev.haroldjose.familysharedlist.domainLayer.usecases.account.GetOrCreateAccountFromLocalUuidUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.CreateFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.DeleteFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.GetAllFamilyListUseCase
@@ -19,17 +21,21 @@ class FamilyListViewModel(
     private val getAllFamilyListUseCase: GetAllFamilyListUseCase,
     private val createFamilyListUseCase: CreateFamilyListUseCase,
     private val updateFamilyListUseCase: UpdateFamilyListUseCase,
-    private val deleteFamilyListUseCase: DeleteFamilyListUseCase
+    private val deleteFamilyListUseCase: DeleteFamilyListUseCase,
+    private val getOrCreateAccountFromLocalUuidUseCase: GetOrCreateAccountFromLocalUuidUseCase
 ): ViewModel() {
 
     var familyListModels: List<FamilyListModel> by mutableStateOf(arrayListOf())
     var loading:Boolean by mutableStateOf(false)
     var newItemName: String by mutableStateOf("")
     var quantity: Int by mutableStateOf(1)
+    lateinit var accountModel: AccountModel
 
     suspend fun loadData() {
 
         loading = true
+
+        accountModel = getOrCreateAccountFromLocalUuidUseCase.execute()
         familyListModels = getAllFamilyListUseCase.execute()
         loading = false
     }

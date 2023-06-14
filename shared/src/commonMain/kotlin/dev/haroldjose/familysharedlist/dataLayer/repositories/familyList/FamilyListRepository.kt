@@ -7,7 +7,7 @@ import dev.haroldjose.familysharedlist.dataLayer.dto.FamilyListDto
 internal class FamilyListRepository() : IFamilyListRepository {
 
     //TODO: add to DI
-    val remoteDataSource: IFamilyListMongoDbDataApiDataSource = FamilyListMongoDbDataApiDataSource()
+    private val remoteDataSource: IFamilyListMongoDbDataApiDataSource = FamilyListMongoDbDataApiDataSource()
 
     override suspend fun insert(item: FamilyListDto) {
         remoteDataSource.insert(item)
@@ -23,5 +23,9 @@ internal class FamilyListRepository() : IFamilyListRepository {
 
     override suspend fun delete(uuid: String) {
         remoteDataSource.delete(uuid)
+    }
+
+    override fun setDataBase(databaseName: String) {
+        remoteDataSource.setDataBase(databaseName)
     }
 }
