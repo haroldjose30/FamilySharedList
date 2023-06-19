@@ -1,6 +1,6 @@
 package dev.haroldjose.familysharedlist.domainLayer.models
 
-import generateUUID
+import dev.haroldjose.familysharedlist.generateUUID
 
 data class FamilyListModel(
     var uuid: String = "",

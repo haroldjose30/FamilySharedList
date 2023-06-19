@@ -2,6 +2,7 @@ package dev.haroldjose.familysharedlist.android.app
 
 import android.app.Application
 import dev.haroldjose.familysharedlist.android.dependencyInjection.androidModule
+import dev.haroldjose.familysharedlist.dataLayer.datasource.local.keyValueStorage.AndroidKeyValueStorageDataSource
 import dev.haroldjose.familysharedlist.dependencyInjection.modules.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -21,5 +22,6 @@ class MainApplication : Application() {
             modules(appModule() + androidModule)
         }
 
+        AndroidKeyValueStorageDataSource.Companion.context = this
     }
 }

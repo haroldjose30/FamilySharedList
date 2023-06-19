@@ -13,6 +13,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -97,60 +98,56 @@ fun FamilyListPage(
 
             ) {
 
-
-            items(viewModel.familyListModels) { familyList ->
-                val dismissState = rememberDismissState()
-                if (dismissState.isDismissed(DismissDirection.EndToStart)) {
-                    onItemRemoved(familyList)
-                }
-
-                SwipeToDismiss(
-                    state = dismissState,
-                    modifier = Modifier
-                        .padding(vertical = Dp(1f)),
-                    directions = setOf(
-                        DismissDirection.EndToStart
-                    ),
-                    dismissThresholds = { direction ->
-                        FractionalThreshold(if (direction == DismissDirection.EndToStart) 0.1f else 0.05f)
-                    },
-                    background = {
-                        val color by animateColorAsState(
-                            when (dismissState.targetValue) {
-                                DismissValue.Default -> Color.White
-                                else -> Color.Red
+            items(
+                items = viewModel.familyListModels,
+                key = { item -> item.uuid },
+                itemContent = { item ->
+                    val currentItem by rememberUpdatedState(item)
+                    val dismissState = rememberDismissState(
+                        confirmStateChange = {
+                            val result = when (it) {
+                                DismissValue.Default -> {
+                                    false
+                                }
+                                DismissValue.DismissedToStart -> {
+                                    onItemRemoved(currentItem)
+                                    true
+                                }
+                                DismissValue.DismissedToEnd -> {
+                                    item.isCompleted = true
+                                    onItemChanged(item)
+                                    false
+                                }
                             }
-                        )
-                        val alignment = Alignment.CenterEnd
-                        val icon = Icons.Default.Delete
 
-                        val scale by animateFloatAsState(
-                            if (dismissState.targetValue == DismissValue.Default) 0.75f else 1f
-                        )
+                            result
+                        }
+                    )
+                    SwipeToDismiss(
+                        state = dismissState,
+                        modifier = Modifier
+                            .padding(vertical = Dp(1f)),
+                        directions = setOf(
+                            //DismissDirection.StartToEnd, //disabled
+                            DismissDirection.EndToStart
+                        ),
+                        dismissThresholds = { direction ->
+                            FractionalThreshold(
+                                if (direction == DismissDirection.StartToEnd) 0.66f else 0.50f)
+                        },
+                        background = {
+                            SwipeBackground(dismissState)
+                        },
+                        dismissContent = {
 
-                        Box(
-                            Modifier
-                                .fillMaxSize()
-                                .background(color)
-                                .padding(horizontal = Dp(20f)),
-                            contentAlignment = alignment
-                        ) {
-                            Icon(
-                                icon,
-                                contentDescription = "Delete Icon",
-                                modifier = Modifier.scale(scale)
+                            FamilyListRow(
+                                item = item,
+                                onItemChanged = onItemChanged
                             )
                         }
-                    },
-                    dismissContent = {
-
-                        FamilyListRow(
-                            item = familyList,
-                            onItemChanged = onItemChanged
-                        )
-                    }
-                )
-            }
+                    )
+                }
+            )
 
             item {
                 Row {
@@ -190,13 +187,59 @@ fun FamilyListPage(
 }
 
 @Composable
+@OptIn(ExperimentalMaterialApi::class)
+fun SwipeBackground(dismissState: DismissState) {
+
+    val direction = dismissState.dismissDirection ?: return
+
+    val color by animateColorAsState(
+        when (dismissState.targetValue) {
+            DismissValue.Default -> Color.LightGray
+            DismissValue.DismissedToEnd -> Color.Green
+            DismissValue.DismissedToStart -> Color.Red
+        }
+    )
+
+    val alignment = when (direction) {
+        DismissDirection.StartToEnd -> Alignment.CenterStart
+        DismissDirection.EndToStart -> Alignment.CenterEnd
+    }
+
+    val icon = when (direction) {
+        DismissDirection.StartToEnd -> Icons.Default.Done
+        DismissDirection.EndToStart -> Icons.Default.Delete
+    }
+
+    val scale by animateFloatAsState(
+        if (dismissState.targetValue == DismissValue.Default) 0.75f else 1f
+    )
+
+    Box(
+        Modifier
+            .fillMaxSize()
+            .background(color)
+            .padding(horizontal = Dp(20f)),
+        contentAlignment = alignment
+    ) {
+        Icon(
+            icon,
+            contentDescription = "Delete Icon",
+            modifier = Modifier.scale(scale)
+        )
+    }
+}
+
+@Composable
 fun FamilyListRow(
     item: FamilyListModel,
     onItemChanged: ((FamilyListModel) -> Unit)
 ) {
     val checkedState = remember { mutableStateOf(item.isCompleted) }
-    Card(modifier = Modifier
-        .fillMaxWidth()) {
+
+    Card(
+        backgroundColor = if (item.isCompleted) Color.Green.copy(alpha = 0.1f) else Color.Red.copy(alpha = 0.1f),
+        modifier = Modifier.fillMaxWidth()
+    ) {
         Column(modifier = Modifier.padding(all = 10.dp)) {
             Text(item.name, fontSize = 16.sp, modifier = Modifier.padding(10.dp))
 
@@ -213,15 +256,21 @@ fun FamilyListRow(
                 )
 
                 Spacer(Modifier.weight(1f))
-
-                Switch(
-                    checked = checkedState.value,
-                    onCheckedChange = {
-                        checkedState.value = it
-                        item.isCompleted = it
-                        onItemChanged(item)
-                    }
-                )
+                Column(horizontalAlignment = Alignment.CenterHorizontally,){
+                    Text(
+                        if (item.isCompleted) "comprado" else "pendente",
+                        fontSize = 12.sp,
+                        modifier = Modifier.padding(5.dp)
+                    )
+                    Switch(
+                        checked = checkedState.value,
+                        onCheckedChange = {
+                            checkedState.value = it
+                            item.isCompleted = it
+                            onItemChanged(item)
+                        }
+                    )
+                }
             }
         }
     }
