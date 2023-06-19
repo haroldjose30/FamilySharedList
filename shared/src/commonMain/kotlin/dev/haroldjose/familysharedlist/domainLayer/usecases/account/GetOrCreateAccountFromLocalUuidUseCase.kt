@@ -36,6 +36,10 @@ class GetOrCreateAccountFromLocalUuidUseCase(
         accountRepository.insert(accountModel.toDto())
         //configure singleton
         familyListRepository.setDataBase(databaseName = accountModel.uuid)
+
+        //Generate SampleData for this new user
+        accountRepository.createSampleDataForFirstAccess(uuid = accountUuid)
+
         return accountModel
     }
 

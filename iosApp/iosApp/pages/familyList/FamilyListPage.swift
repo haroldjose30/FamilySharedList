@@ -107,9 +107,7 @@ private struct FamilyListRow: View {
         self.onItemChanged = onItemChanged
         self.checkedState = item.isCompleted
     }
-    
-    
-    
+
     var body: some View {
         VStack( alignment: HorizontalAlignment.leading) {
             Text(item.name)
@@ -130,17 +128,18 @@ private struct FamilyListRow: View {
                 )
                 
                 Spacer()
-                
-                Toggle("", isOn: $checkedState)
-                    .labelsHidden()
-                    .onChange(of: checkedState) { value in
-                        var itemMutable = item
-                        itemMutable.isCompleted = value
-                        onItemChanged(itemMutable)
-                    }
+                VStack{
+                    Text(item.isCompleted ? "comprado" : "pendente")
+                    Toggle("", isOn: $checkedState)
+                        .labelsHidden()
+                        .onChange(of: checkedState) { value in
+                            var itemMutable = item
+                            itemMutable.isCompleted = value
+                            onItemChanged(itemMutable)
+                        }
+                }
             }
-            
-        }
+        }.listRowBackground(item.isCompleted ? Color.green.opacity(0.1) : Color.red.opacity(0.1))
     }
 }
 

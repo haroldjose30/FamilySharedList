@@ -1,4 +1,4 @@
-package dev.haroldjose.familysharedlist.dataLayer.datasource.remote.account
+package dev.haroldjose.familysharedlist.dataLayer.datasource.remote.account.mongoDb
 
 import dev.haroldjose.familysharedlist.dataLayer.datasource.mongoDb.request.FilterByUuidDto
 import dev.haroldjose.familysharedlist.dataLayer.datasource.mongoDb.request.MongoDbRequestDocumentDto
@@ -12,7 +12,7 @@ import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.contextual
 
 internal class AccountMongoDbDataApiDataSource: MongoDbDataApiDataSource<AccountDto>(
-    dataSource = MongoDbResources.DataSource.CLUSTER0.value,
+    dataSource = MongoDbResources.DataSource.FAMILYSHAREDLISTBACKEND0.value,
     database = MongoDbResources.Database.ACCOUNT.value,
     collection = MongoDbResources.Collection.ACCOUNT.value,
     serializers = SerializersModule {

@@ -16,6 +16,7 @@ import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.headers
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
+import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
@@ -33,11 +34,11 @@ open class MongoDbDataApiDataSource<T : IMongoDbBaseDto>(
     private val apiUrl = BuildKonfig.apiUrl
     private val apiKey = BuildKonfig.apiKey
     private enum class Resources(val value: String) {
-        FIND("find"),
-        FIND_ONE("findOne"),
-        INSERT_ONE("insertOne"),
-        UPDATE_ONE("updateOne"),
-        DELETE_ONE("deleteOne")
+        FIND("data/v1/action/find"),
+        FIND_ONE("data/v1/action/findOne"),
+        INSERT_ONE("data/v1/action/insertOne"),
+        UPDATE_ONE("data/v1/action/updateOne"),
+        DELETE_ONE("data/v1/action/deleteOne")
     }
 
     //TODO: implement DI
@@ -74,19 +75,22 @@ open class MongoDbDataApiDataSource<T : IMongoDbBaseDto>(
             document = item
         )
 
-        client.post(Resources.INSERT_ONE.value) {
+        val response = client.post(Resources.INSERT_ONE.value) {
             setBody(bodyRequest)
         }
+
+        handleResponseError(response)
     }
 
     override suspend fun findAll(): List<T> {
 
-        val httpResponse = client.post(Resources.FIND.value) {
+        val response = client.post(Resources.FIND.value) {
             setBody(getDefaultRequestDto())
         }
+        handleResponseError(response)
 
-        if (httpResponse.status.value in 200..299) {
-            val mongoDbFindAllResponseDto = httpResponse.body<MongoDbFindAllResponseDto<T>>()
+        if (response.status.value in 200..299) {
+            val mongoDbFindAllResponseDto = response.body<MongoDbFindAllResponseDto<T>>()
              mongoDbFindAllResponseDto.documents?.let {
                  return it
              }
@@ -104,12 +108,13 @@ open class MongoDbDataApiDataSource<T : IMongoDbBaseDto>(
             )
         )
 
-        val httpResponse = client.post(Resources.FIND_ONE.value) {
+        val response = client.post(Resources.FIND_ONE.value) {
             setBody(bodyRequest)
         }
+        handleResponseError(response)
 
-        if (httpResponse.status.value in 200..299) {
-            val mongoDbFindAllResponseDto = httpResponse.body<MongoDbFindByUuidResponseDto<T>>()
+        if (response.status.value in 200..299) {
+            val mongoDbFindAllResponseDto = response.body<MongoDbFindByUuidResponseDto<T>>()
             return mongoDbFindAllResponseDto.document
         }
 
@@ -125,9 +130,11 @@ open class MongoDbDataApiDataSource<T : IMongoDbBaseDto>(
             update = item
         )
 
-        client.post(Resources.UPDATE_ONE.value) {
+        val response = client.post(Resources.UPDATE_ONE.value) {
             setBody(bodyRequest)
         }
+
+        handleResponseError(response)
     }
 
     override suspend fun delete(uuid: String) {
@@ -139,12 +146,21 @@ open class MongoDbDataApiDataSource<T : IMongoDbBaseDto>(
             )
         )
 
-        client.post(Resources.DELETE_ONE.value) {
+        val response = client.post(Resources.DELETE_ONE.value) {
             setBody(bodyRequest)
         }
+
+        handleResponseError(response)
     }
 
     override fun setDataBase(databaseName: String) {
        database = databaseName
+    }
+
+    private suspend fun handleResponseError(response: HttpResponse) {
+        if (response.status.value !in 200..299) {
+            val bodyAsText = response.bodyAsText()
+            print("HTTP ERROR: ${bodyAsText}")
+        }
     }
 }

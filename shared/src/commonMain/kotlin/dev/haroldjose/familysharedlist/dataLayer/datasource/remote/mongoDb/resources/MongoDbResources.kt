@@ -3,7 +3,7 @@ package dev.haroldjose.familysharedlist.dataLayer.datasource.remote.mongoDb.reso
 enum class MongoDbResources {;
 
     enum class DataSource(val value: String) {
-        CLUSTER0("Cluster0");
+        FAMILYSHAREDLISTBACKEND0("FAMILYSHAREDLISTBACKEND0")
     }
 
     enum class Database(val value: String) {

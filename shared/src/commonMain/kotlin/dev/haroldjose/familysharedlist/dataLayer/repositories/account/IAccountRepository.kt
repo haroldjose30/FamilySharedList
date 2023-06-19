@@ -7,4 +7,5 @@ interface IAccountRepository {
         suspend fun findBy(uuid: String): AccountDto?
         suspend fun update(item: AccountDto)
         suspend fun delete(uuid: String)
+        suspend fun createSampleDataForFirstAccess(uuid: String): Boolean
 }

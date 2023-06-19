@@ -14,7 +14,7 @@ import kotlinx.serialization.modules.contextual
 
 
 internal class FamilyListMongoDbDataApiDataSource(): MongoDbDataApiDataSource<FamilyListDto>(
-    dataSource = MongoDbResources.DataSource.CLUSTER0.value,
+    dataSource = MongoDbResources.DataSource.FAMILYSHAREDLISTBACKEND0.value,
     database = MongoDbResources.Database.DEMO.value,
     collection = MongoDbResources.Collection.MY_LIST.value,
     serializers = SerializersModule {
