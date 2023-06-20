@@ -8,11 +8,12 @@ class FamilyListViewModel: ObservableObject {
     @Published var familyListModels = [FamilyListModel]()
     @Published var loading = false
     @Published var newItemName = ""
+    @Published var filterByComprado = false
     
-   private let createFamilyListUseCase: CreateFamilyListUseCase
-   private let getAllFamilyListUseCase: GetAllFamilyListUseCase
-   private let updateFamilyListUseCase: UpdateFamilyListUseCase
-   private let deleteFamilyListUseCase: DeleteFamilyListUseCase
+    private let createFamilyListUseCase: CreateFamilyListUseCase
+    private let getAllFamilyListUseCase: GetAllFamilyListUseCase
+    private let updateFamilyListUseCase: UpdateFamilyListUseCase
+    private let deleteFamilyListUseCase: DeleteFamilyListUseCase
     
     init(
         createFamilyListUseCase: CreateFamilyListUseCase,
@@ -34,6 +35,10 @@ class FamilyListViewModel: ObservableObject {
         switch result {
         case .success(let data):
             familyListModels = data
+                .filter({$0.isCompleted == self.filterByComprado})
+                .sorted(by: { firstItem, secondItem in
+                    firstItem.name.lowercased() < secondItem.name.lowercased()
+                })
             loading = false
         case .failure(let error):
             showError(error)
@@ -103,5 +108,10 @@ class FamilyListViewModel: ObservableObject {
             }
 
         }
+    }
+
+    func filterBy(comprado: Bool) async {
+        self.filterByComprado = comprado
+        await loadData()
     }
 }
