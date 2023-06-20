@@ -19,22 +19,26 @@ class FamilyListViewModel(
     private val getAllFamilyListUseCase: GetAllFamilyListUseCase,
     private val createFamilyListUseCase: CreateFamilyListUseCase,
     private val updateFamilyListUseCase: UpdateFamilyListUseCase,
-    private val deleteFamilyListUseCase: DeleteFamilyListUseCase
-): ViewModel() {
+    private val deleteFamilyListUseCase: DeleteFamilyListUseCase,
+): ViewModel(), IFamilyListViewModel {
 
-    var familyListModels: List<FamilyListModel> by mutableStateOf(arrayListOf())
-    var loading:Boolean by mutableStateOf(false)
-    var newItemName: String by mutableStateOf("")
-    var quantity: Int by mutableStateOf(1)
+    override var familyListModels: List<FamilyListModel> by mutableStateOf(arrayListOf())
+    override var loading:Boolean by mutableStateOf(false)
+    override var newItemName: String by mutableStateOf("")
+    override var quantity: Int by mutableStateOf(1)
+    override var filterByCompleted: Boolean by mutableStateOf(false)
 
-    suspend fun loadData() {
+    override suspend fun loadData() {
 
         loading = true
-        familyListModels = getAllFamilyListUseCase.execute()
+        familyListModels = getAllFamilyListUseCase
+            .execute()
+            .filter { it.isCompleted == filterByCompleted }
+            .sortedBy { it.name.lowercase() }
         loading = false
     }
 
-    suspend fun add() {
+    override suspend fun add() {
 
         if (newItemName.isEmpty())
             return
@@ -49,15 +53,15 @@ class FamilyListViewModel(
         loadData()
     }
 
-    fun showError(e: Throwable) {
+    override fun showError(e: Throwable) {
 
         e.message?.let { Log.d("showError", it) }
     }
 
 
     //TODO: change debounce to UI component not in viewModel
-    private var updateDebounceJob: Job? = null
-    suspend fun update(item: FamilyListModel){
+    var updateDebounceJob: Job? = null
+    override suspend fun update(item: FamilyListModel){
 
         updateDebounceJob?.cancel()
         updateDebounceJob = viewModelScope.launch {
@@ -68,11 +72,16 @@ class FamilyListViewModel(
         }
     }
 
-    suspend fun remove(item: FamilyListModel){
+    override suspend fun remove(item: FamilyListModel){
 
         loading = true
         deleteFamilyListUseCase.execute(uuid = item.uuid)
         loadData()
         loading = false
+    }
+
+    override suspend fun filterBy(completed: Boolean) {
+        filterByCompleted = completed
+        loadData()
     }
 }
