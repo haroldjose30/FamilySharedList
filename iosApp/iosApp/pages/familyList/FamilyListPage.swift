@@ -2,9 +2,10 @@ import SwiftUI
 import shared
 
 struct FamilyListPage: View {
-    
+
     @StateObject var viewModel: FamilyListViewModel
-    
+    @State private var checkedFilterState: Bool = false
+
     var body: some View {
         VStack {
             HStack {
@@ -14,12 +15,29 @@ struct FamilyListPage: View {
                     .font(.title)
                 Spacer()
             }
-            
+            HStack {
+                Spacer()
+                Text("Pendente")
+                    .accessibilityIdentifier(Identifier.textTitle)
+                    .font(.subheadline)
+                Toggle("teste", isOn: $checkedFilterState)
+                    .labelsHidden()
+                    .onChange(of: checkedFilterState) { value in
+                        Task {
+                            await viewModel.filterBy(comprado: value)
+                        }
+                    }
+                Text("Comprado")
+                    .accessibilityIdentifier(Identifier.textTitle)
+                    .font(.subheadline)
+                Spacer()
+            }
+
             if viewModel.loading {
                 ProgressView()
             }
-            
-            
+
+
             if #available(iOS 15.0, *) {
                 List {
                     ForEach(viewModel.familyListModels) { item in
@@ -56,14 +74,14 @@ struct FamilyListPage: View {
                 }
             }
 
-            
+
             HStack {
-                
+
                 TextField(
                     "Informe o novo item",
                     text: $viewModel.newItemName
                 ).accessibilityIdentifier(Identifier.textFieldAdd)
-                
+
                 Button(action: {
                     Task {
                         await viewModel.add()
@@ -74,7 +92,7 @@ struct FamilyListPage: View {
                 }
                 .accessibilityIdentifier(Identifier.buttonAdd)
                 .frame(width: 50)
-                
+
             }.padding(
                 EdgeInsets(
                     top: 8,
@@ -89,16 +107,16 @@ struct FamilyListPage: View {
                 await viewModel.loadData()
             }
         }
-        
+
     }
 }
 
 private struct FamilyListRow: View {
-    
+
     let item: FamilyListModel
     let onItemChanged: ((FamilyListModel) -> Void)
     @State private var checkedState: Bool
-    
+
     init(
         item: FamilyListModel,
         onItemChanged: @escaping (FamilyListModel) -> Void
@@ -113,9 +131,9 @@ private struct FamilyListRow: View {
             Text(item.name)
                 .font(.system(size: 16))
                 .padding(10)
-            
+
             HStack {
-                
+
                 QuantitySelectionView(
                     value: item.quantity.toInt(),
                     minValue: 1,
@@ -126,7 +144,7 @@ private struct FamilyListRow: View {
                         onItemChanged(itemMutable)
                     }
                 )
-                
+
                 Spacer()
                 VStack{
                     Text(item.isCompleted ? "comprado" : "pendente")
@@ -145,7 +163,7 @@ private struct FamilyListRow: View {
 
 
 private extension FamilyListPage {
-    
+
     private enum Identifier {
         static let textTitle = AccessibilityId.FamilyListPage.textTitle.rawValue
         static let buttonAdd = AccessibilityId.FamilyListPage.buttonAdd.rawValue
@@ -157,7 +175,7 @@ struct FamilyListPage_Previews: PreviewProvider {
     static var previews: some View {
         //TODO: inject mocked service
         GlobalState.companion.isRunningUITests = true
-        
+
         return FamilyListPage(
             viewModel: ResolverPreview().resolve()
         )

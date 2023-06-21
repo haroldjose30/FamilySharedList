@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -38,7 +39,7 @@ import org.koin.androidx.compose.getViewModel
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FamilyListPage(
-    viewModel: FamilyListViewModel = getViewModel()
+    viewModel: IFamilyListViewModel = getViewModel<FamilyListViewModel>()
 ) {
 
     //region STATE
@@ -49,6 +50,8 @@ fun FamilyListPage(
         }
     })
     val listState = rememberLazyListState()
+    val checkedFilterState = remember { mutableStateOf(false) }
+
     //endregion
 
     //region FUNCTIONS
@@ -76,6 +79,27 @@ fun FamilyListPage(
             Text(
                 text = "Lista de Compras",
                 style = TextStyle(fontSize = 24.sp)
+            )
+            Spacer(Modifier.weight(1f))
+        }
+        Row(verticalAlignment =  Alignment.CenterVertically) {
+            Spacer(Modifier.weight(1f))
+            Text(
+                text = "Pendente",
+                style = TextStyle(fontSize = 12.sp)
+            )
+            Switch(
+                checked = checkedFilterState.value,
+                onCheckedChange = {
+                    checkedFilterState.value = it
+                    coroutineScope.launch {
+                        viewModel.filterBy(completed = it)
+                    }
+                }
+            )
+            Text(
+                text = "Comprados",
+                style = TextStyle(fontSize = 12.sp)
             )
             Spacer(Modifier.weight(1f))
         }
@@ -280,6 +304,6 @@ fun FamilyListRow(
 @Composable
 fun DefaultPreviewTaskListPage() {
     MyApplicationTheme {
-        //FamilyListPage(FamilyListViewModelPreview())
+        FamilyListPage(viewModel = FamilyListViewModelMocked())
     }
 }
