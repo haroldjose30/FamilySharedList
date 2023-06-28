@@ -9,6 +9,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import dev.haroldjose.familysharedlist.android.pages.familyList.FamilyListPage
+import dev.haroldjose.familysharedlist.presentationLayer.pages.settings.SettingsPage
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +20,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    FamilyListPage()
+                    SettingsPage()
+                    //FamilyListPage()
                 }
             }
         }

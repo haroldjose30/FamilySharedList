@@ -15,9 +15,10 @@ struct iOSApp: App {
     var body: some Scene {
 
        WindowGroup {
-           FamilyListPage(
-            viewModel: resolverApp.resolve()
-           )
+           SettingsPage()
+           //FamilyListPage(
+           // viewModel: resolverApp.resolve()
+           //)
         }.onChange(of: scenePhase) { phase in
 
             switch phase {
