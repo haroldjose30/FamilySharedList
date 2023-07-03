@@ -1,9 +1,11 @@
 package dev.haroldjose.familysharedlist.android.pages.familyList
 
 import QuantitySelectionView
+import android.util.Log
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -14,6 +16,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
+import androidx.compose.material.icons.rounded.KeyboardArrowRight
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -22,7 +26,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -31,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import dev.haroldjose.familysharedlist.android.app.MyApplicationTheme
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
 import kotlinx.coroutines.launch
@@ -39,7 +43,8 @@ import org.koin.androidx.compose.getViewModel
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FamilyListPage(
-    viewModel: IFamilyListViewModel = getViewModel<FamilyListViewModel>()
+    viewModel: IFamilyListViewModel = getViewModel<FamilyListViewModel>(),
+    goToSetting: () -> Unit
 ) {
 
     //region STATE
@@ -81,6 +86,13 @@ fun FamilyListPage(
                 style = TextStyle(fontSize = 24.sp)
             )
             Spacer(Modifier.weight(1f))
+            Icon(
+                Icons.Rounded.Settings,
+                contentDescription = "Icone de Configurações",
+                Modifier
+                    .padding(8.dp,8.dp,8.dp,0.dp)
+                    .clickable { goToSetting() }
+            )
         }
         Row(verticalAlignment =  Alignment.CenterVertically) {
             Spacer(Modifier.weight(1f))
@@ -112,15 +124,13 @@ fun FamilyListPage(
                 PullRefreshIndicator(viewModel.loading, pullRefreshState)
                 Spacer(Modifier.weight(1f))
             }
-
         }
 
         LazyColumn(
             state = listState,
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
-
-            ) {
+        ) {
 
             items(
                 items = viewModel.familyListModels,
@@ -304,6 +314,9 @@ fun FamilyListRow(
 @Composable
 fun DefaultPreviewTaskListPage() {
     MyApplicationTheme {
-        FamilyListPage(viewModel = FamilyListViewModelMocked())
+        FamilyListPage(
+            viewModel = FamilyListViewModelMocked(),
+            goToSetting = {}
+        )
     }
 }

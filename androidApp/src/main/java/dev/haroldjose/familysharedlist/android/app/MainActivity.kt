@@ -20,8 +20,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    SettingsPage()
-                    //FamilyListPage()
+                    NavigationView()
                 }
             }
         }

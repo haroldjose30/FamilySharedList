@@ -4,6 +4,7 @@ import shared
 struct FamilyListPage: View {
 
     @StateObject var viewModel: FamilyListViewModel
+    var goToSetting: () -> Void
     @State private var checkedFilterState: Bool = false
 
     var body: some View {
@@ -14,11 +15,15 @@ struct FamilyListPage: View {
                     .accessibilityIdentifier(Identifier.textTitle)
                     .font(.title)
                 Spacer()
+                Button {
+                    goToSetting()
+                } label: {
+                    Image(systemName: "gearshape.fill")
+                }.padding(8)
             }
             HStack {
                 Spacer()
                 Text("Pendente")
-                    .accessibilityIdentifier(Identifier.textTitle)
                     .font(.subheadline)
                 Toggle("teste", isOn: $checkedFilterState)
                     .labelsHidden()
@@ -28,7 +33,6 @@ struct FamilyListPage: View {
                         }
                     }
                 Text("Comprado")
-                    .accessibilityIdentifier(Identifier.textTitle)
                     .font(.subheadline)
                 Spacer()
             }
@@ -177,7 +181,8 @@ struct FamilyListPage_Previews: PreviewProvider {
         GlobalState.companion.isRunningUITests = true
 
         return FamilyListPage(
-            viewModel: ResolverPreview().resolve()
+            viewModel: ResolverPreview().resolve(),
+            goToSetting: {}
         )
     }
 }

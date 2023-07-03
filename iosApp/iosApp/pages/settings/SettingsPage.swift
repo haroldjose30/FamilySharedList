@@ -12,9 +12,13 @@ import SwiftUI
 import shared
 
 struct SettingsPage: UIViewControllerRepresentable {
+
+    var goBack: () -> Void
+
     func makeUIViewController(context: Context) -> UIViewController {
         SettingsSharedPage_iosKt.SettingsPageViewController()
     }
 
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+    }
 }

@@ -5,7 +5,7 @@ import shared
 struct iOSApp: App {
 
     @Environment(\.scenePhase) private var scenePhase
-    private let resolverApp = ResolverApp()
+    
 
     init() {
         configureIsRunningUITests()
@@ -14,11 +14,8 @@ struct iOSApp: App {
 
     var body: some Scene {
 
-       WindowGroup {
-           SettingsPage()
-           //FamilyListPage(
-           // viewModel: resolverApp.resolve()
-           //)
+        WindowGroup {
+            NavigationView()
         }.onChange(of: scenePhase) { phase in
 
             switch phase {
