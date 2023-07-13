@@ -7,5 +7,5 @@ import dev.haroldjose.familysharedlist.presentationLayer.pages.settings.Settings
 @Preview
 @Composable
 fun DefaultPreviewFromSharedPage() {
-    SettingsPage()
+    SettingsPage( goBack = {})
 }

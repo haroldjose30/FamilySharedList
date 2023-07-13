@@ -28,7 +28,10 @@ class GetOrCreateAccountFromLocalUuidUseCase(
         val accountUuid = getOrCreateUuid()
         accountRepository.findBy(uuid = accountUuid)?.toModel()?.let {
             //configure singleton
-            familyListRepository.setDataBase(databaseName = it.uuid)
+            //TODO: verify if accountsSharedWithMe was revoked
+            val defaultAccountSharedWithMe = it.accountsSharedWithMe.firstOrNull()
+            val selectedDatabaseName: String = defaultAccountSharedWithMe ?: it.uuid
+            familyListRepository.setDataBase(databaseName = selectedDatabaseName)
             return it
         }
 

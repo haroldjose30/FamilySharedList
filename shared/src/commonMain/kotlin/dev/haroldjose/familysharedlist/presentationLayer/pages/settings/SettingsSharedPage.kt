@@ -11,12 +11,14 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.rounded.KeyboardArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -31,7 +33,7 @@ import androidx.compose.ui.unit.dp
 //reference:
 //https://tomas-repcik.medium.com/making-extensible-settings-screen-in-jetpack-compose-from-scratch-2558170dd24d
 @Composable
-internal fun SettingsSharedPage() {
+internal fun SettingsSharedPage(goBack: () -> Unit) {
 
     Scaffold(
         topBar = {
@@ -41,11 +43,17 @@ internal fun SettingsSharedPage() {
                         text = "Configurações"
                     )
                 },
+                navigationIcon = {
+                    IconButton(onClick = { goBack() }) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = "Back"
+                        )
+                    }
+                }
             )
         }
     ) {
-        val checkedState = remember { mutableStateOf(false) }
-
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())

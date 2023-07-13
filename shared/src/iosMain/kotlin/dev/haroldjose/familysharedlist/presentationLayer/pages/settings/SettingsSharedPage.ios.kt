@@ -1,9 +1,11 @@
 package dev.haroldjose.familysharedlist.presentationLayer.pages.settings
 
-import androidx.compose.ui.window.Application
+import androidx.compose.ui.window.ComposeUIViewController
 import platform.UIKit.UIViewController
 
-fun SettingsPageViewController(): UIViewController =
-    Application("Example Application") {
-        SettingsSharedPage()
+fun SettingsPageViewController(goBack: () -> Unit): UIViewController {
+    return ComposeUIViewController {
+        SettingsSharedPage(goBack = goBack)
     }
+}
+

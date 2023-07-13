@@ -11,18 +11,20 @@ import dev.haroldjose.familysharedlist.presentationLayer.pages.settings.Settings
 fun NavigationView() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "home") {
-        composable(Destination.HOME.value) {
+        composable(ViewRouter.HOME.value) {
             FamilyListPage(
-                goToSetting = { navController.navigate(Destination.SETTINGS.value)}
+                goToSetting = { navController.navigate(ViewRouter.SETTINGS.value)}
             )
         }
-        composable(Destination.SETTINGS.value) {
-            SettingsPage()
+        composable(ViewRouter.SETTINGS.value) {
+            SettingsPage(
+                goBack = { navController.navigate(ViewRouter.HOME.value) }
+            )
         }
     }
 }
 
-private enum class Destination(val value: String) {
+private enum class ViewRouter(val value: String) {
     HOME("home"),
     SETTINGS("setting"),
 }

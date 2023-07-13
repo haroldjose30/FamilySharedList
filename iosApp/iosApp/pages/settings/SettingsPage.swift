@@ -16,7 +16,7 @@ struct SettingsPage: UIViewControllerRepresentable {
     var goBack: () -> Void
 
     func makeUIViewController(context: Context) -> UIViewController {
-        SettingsSharedPage_iosKt.SettingsPageViewController()
+        SettingsSharedPage_iosKt.SettingsPageViewController(goBack: goBack)
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {

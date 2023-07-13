@@ -14,4 +14,5 @@ data class AccountDto(
     val email: String = "",
     val myAccountIsSharedWith: List<String> = arrayListOf(),
     var accountsSharedWithMe: List<String> = arrayListOf(),
+    val platform: String = ""
 ) : IMongoDbBaseDto

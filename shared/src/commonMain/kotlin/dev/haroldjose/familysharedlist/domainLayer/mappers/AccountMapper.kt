@@ -12,7 +12,8 @@ internal fun AccountDto.toModel(): AccountModel {
         name = this.name,
         email = this.email,
         myAccountIsSharedWith = this.myAccountIsSharedWith,
-        accountsSharedWithMe = this.accountsSharedWithMe
+        accountsSharedWithMe = this.accountsSharedWithMe,
+        platform = this.platform
     )
 }
 
@@ -24,7 +25,8 @@ internal fun AccountModel.toDto(): AccountDto {
         name = this.name,
         email = this.email,
         myAccountIsSharedWith = this.myAccountIsSharedWith,
-        accountsSharedWithMe = this.accountsSharedWithMe
+        accountsSharedWithMe = this.accountsSharedWithMe,
+        platform = this.platform
     )
 }
 
