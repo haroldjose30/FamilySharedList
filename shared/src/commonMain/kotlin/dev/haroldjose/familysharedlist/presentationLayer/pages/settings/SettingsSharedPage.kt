@@ -21,8 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.rounded.KeyboardArrowRight
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,7 +32,14 @@ import androidx.compose.ui.unit.dp
 //reference:
 //https://tomas-repcik.medium.com/making-extensible-settings-screen-in-jetpack-compose-from-scratch-2558170dd24d
 @Composable
-internal fun SettingsSharedPage(goBack: () -> Unit) {
+internal fun SettingsSharedPage(
+    goBack: () -> Unit,
+    viewModel: ISettingsSharedViewModel
+) {
+
+    LaunchedEffect(key1 = "FamilyListPage"){
+        viewModel.getAccount()
+    }
 
     Scaffold(
         topBar = {
@@ -60,14 +66,15 @@ internal fun SettingsSharedPage(goBack: () -> Unit) {
                 .padding(it)
                 .padding(16.dp)
         ) {
-            SettingsItemWithTitle(
-                title = "Compartilhar minha conta"
+            SettingsItem(
+                title = "Meu código de compartilhamento",
+                subtitle = viewModel.myAccount?.accountShortCodeForShare ?: "carregando..."
             ) {
-                // here you can do anything - navigate - open other settings, ...
+                //TODO: open default share mobile plataform with code
             }
 
-            SettingsItemWithTitle(
-                title = "Acessar conta com um código"
+            SettingsItem(
+                title = "Acessar conta compartilhada"
             ) {
                 // here you can do anything - navigate - open other settings, ...
             }
@@ -75,9 +82,10 @@ internal fun SettingsSharedPage(goBack: () -> Unit) {
     }
 }
 
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun SettingsItemWithTitle(
+private fun SettingsItem(
     title: String,
     onClick: () -> Unit
 ) {
@@ -98,7 +106,7 @@ private fun SettingsItemWithTitle(
                         text = title,
                         style = MaterialTheme.typography.body1,
                         modifier = Modifier
-                            .padding(16.dp),
+                            .padding(16.dp,8.dp,16.dp,8.dp),
                         textAlign = TextAlign.Start,
                         overflow = TextOverflow.Ellipsis,
                     )
@@ -112,5 +120,56 @@ private fun SettingsItemWithTitle(
             Divider()
         }
 
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+private fun SettingsItem(
+    title: String,
+    subtitle: String,
+    onClick: () -> Unit
+) {
+    Surface(
+        color = Color.Transparent,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        onClick = onClick,
+    ) {
+        Column {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.body1,
+                    modifier = Modifier
+                        .padding(16.dp,8.dp,16.dp,0.dp),
+                    textAlign = TextAlign.Start,
+                    overflow = TextOverflow.Ellipsis,
+                )
+                Spacer(modifier = Modifier.weight(1.0f))
+                Icon(
+                    Icons.Rounded.KeyboardArrowRight,
+                    contentDescription = title
+                )
+            }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = subtitle,
+                    style = MaterialTheme.typography.subtitle2,
+                    modifier = Modifier
+                        .padding(16.dp,0.dp,16.dp,8.dp),
+                    textAlign = TextAlign.Start,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+            Divider()
+        }
     }
 }

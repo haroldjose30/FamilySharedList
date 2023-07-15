@@ -12,15 +12,16 @@ import dev.haroldjose.familysharedlist.domainLayer.mappers.toModel
 import dev.haroldjose.familysharedlist.domainLayer.models.AccountModel
 import dev.haroldjose.familysharedlist.generateUUID
 
+
+object Constants {
+    const val ACCOUNT_PREFIX = "DbAcc"
+}
+
 class GetOrCreateAccountFromLocalUuidUseCase(
     private val keyValueStorageRepository: IKeyValueStorageRepository,
     private val accountRepository: IAccountRepository,
     private val familyListRepository: IFamilyListRepository
 )  {
-
-    private object Constants {
-        const val ACCOUNT_PREFIX = "DbAcc"
-    }
 
     @NativeCoroutines
     suspend fun execute(): AccountModel {

@@ -13,31 +13,16 @@ import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.CreateFam
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.DeleteFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.GetAllFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.UpdateFamilyListUseCase
-import dev.haroldjose.familysharedlist.presentationLayer.pages.settings.ISettingsSharedViewModel
-import dev.haroldjose.familysharedlist.presentationLayer.pages.settings.SettingsSharedViewModel
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-val commonModule = module {
+val commonTestModule = module {
 
-    singleOf(::FamilyListRepository) bind IFamilyListRepository::class
-    singleOf(::KeyValueStorageRepository) bind IKeyValueStorageRepository::class
-    singleOf(::AccountRepository) bind IAccountRepository::class
-
-    //FamilyList
+    //singleOf(::FamilyListInMemoryRepository) bind IFamilyListRepository::class
     factoryOf(::CreateFamilyListUseCase)
     factoryOf(::GetAllFamilyListUseCase)
     factoryOf(::UpdateFamilyListUseCase)
     factoryOf(::DeleteFamilyListUseCase)
-
-    //account
-    factoryOf(::GetAccountUseCase)
-    factoryOf(::GetLocalAccountUuidUseCase)
-    factoryOf(::GetOrCreateAccountFromLocalUuidUseCase)
-
-    //UI
-    factoryOf(::SettingsSharedViewModel) bind ISettingsSharedViewModel::class
 }
-

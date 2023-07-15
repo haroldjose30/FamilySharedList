@@ -2,6 +2,7 @@ package dev.haroldjose.familysharedlist.domainLayer.models
 
 import dev.haroldjose.familysharedlist.generateUUID
 import dev.haroldjose.familysharedlist.getPlatform
+import generateShortCodeByUuid
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 
@@ -13,7 +14,8 @@ data class AccountModel(
     var email: String = "",
     var myAccountIsSharedWith: List<String> = arrayListOf(),
     var accountsSharedWithMe: List<String> = arrayListOf(),
-    var platform: String = getPlatform().name
+    var platform: String = getPlatform().name,
+    var accountShortCodeForShare: String = ""
 ) {
     init {
         this.uuid = if (uuid.isEmpty()) generateUUID() else uuid
@@ -25,5 +27,6 @@ data class AccountModel(
         this.myAccountIsSharedWith = myAccountIsSharedWith
         this.accountsSharedWithMe = accountsSharedWithMe
         this.platform = getPlatform().name
+        this.accountShortCodeForShare = if (accountShortCodeForShare.isEmpty()) generateShortCodeByUuid(uuid = this.uuid) else accountShortCodeForShare
     }
 }

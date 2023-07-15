@@ -45,6 +45,7 @@ android {
         val composeFoundation: String by project
         val composeMaterial: String by project
         val activityCompose: String by project
+        val kotlinxDatetime: String by project
 
         implementation(project(":shared"))
         implementation("androidx.compose.ui:ui:$composeUi")
@@ -58,5 +59,6 @@ android {
         implementation("io.insert-koin:koin-core:$koinVersion")
         implementation("io.insert-koin:koin-android:$koinAndroidVersion")
         implementation("io.insert-koin:koin-androidx-compose:$koinAndroidComposeVersion")
+        implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinxDatetime")
     }
 }
