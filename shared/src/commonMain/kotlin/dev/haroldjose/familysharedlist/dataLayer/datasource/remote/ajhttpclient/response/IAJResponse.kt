@@ -1,3 +1,3 @@
-import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.ajhttpclient.AJHttpMethod
+package dev.haroldjose.familysharedlist.dataLayer.datasource.remote.ajhttpclient.response
 
 interface IAJHttpResponse {}

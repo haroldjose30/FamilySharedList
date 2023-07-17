@@ -41,17 +41,24 @@ android {
         val koinVersion: String by project
         val koinAndroidVersion: String by project
         val koinAndroidComposeVersion: String by project
+        val composeUi: String by project
+        val composeFoundation: String by project
+        val composeMaterial: String by project
+        val activityCompose: String by project
+        val kotlinxDatetime: String by project
 
         implementation(project(":shared"))
-        implementation("androidx.compose.ui:ui:1.4.3")
-        implementation("androidx.compose.ui:ui-tooling:1.4.3")
-        implementation("androidx.compose.ui:ui-tooling-preview:1.4.3")
-        implementation("androidx.compose.foundation:foundation:1.4.3")
-        implementation("androidx.compose.material:material:1.4.3")
-        implementation("androidx.activity:activity-compose:1.7.2")
+        implementation("androidx.compose.ui:ui:$composeUi")
+        implementation("androidx.compose.ui:ui-tooling:$composeUi")
+        implementation("androidx.compose.ui:ui-tooling-preview:$composeUi")
+        implementation("androidx.compose.foundation:foundation:$composeFoundation")
+        implementation("androidx.compose.material:material:$composeMaterial")
+        implementation("androidx.navigation:navigation-compose:2.6.0")
+        implementation("androidx.activity:activity-compose:$activityCompose")
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
         implementation("io.insert-koin:koin-core:$koinVersion")
         implementation("io.insert-koin:koin-android:$koinAndroidVersion")
         implementation("io.insert-koin:koin-androidx-compose:$koinAndroidComposeVersion")
+        implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinxDatetime")
     }
 }

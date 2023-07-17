@@ -1,52 +1,34 @@
 package dev.haroldjose.familysharedlist.dataLayer.datasource.remote.account.api
 
-import IAJHttpResponse
-import dev.haroldjose.familysharedlist.BuildKonfig
+import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.account.api.request.AccountCreateSampleDataForFirstAccessPostRequest
+import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.account.api.request.SetSharedAccountByCodePostRequest
+import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.account.api.response.AccountCreateSampleDataForFirstAccessPostResponse
+import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.account.api.response.SetSharedAccountByCodePostResponse
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.ajhttpclient.AJHttpClient
-import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.ajhttpclient.AJHttpMethod
-import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.ajhttpclient.request.AJHttpHeaders
-import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.ajhttpclient.request.AJHttpQueryParameters
-import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.ajhttpclient.request.IAJHttpRequest
-import kotlinx.serialization.Serializable
 
 class AccountApiDataSource: IAccountApiDataSource {
-
     //todo: add DI
     private val client: AJHttpClient = AJHttpClient()
     override suspend fun createSampleDataForFirstAccess(uuid: String): Boolean {
-        val request = AccountCreateSampleDataForFirstAccessPostRequest(uuid)
+
+        val request = AccountCreateSampleDataForFirstAccessPostRequest(
+            uuid = uuid
+        )
         val response = client.send<AccountCreateSampleDataForFirstAccessPostResponse>(request)
         return response?.dataCreated ?: false
     }
-}
 
-class AccountCreateSampleDataForFirstAccessPostRequest(uuid: String) : IAJHttpRequest {
-    override val urlBase: String
-        get() =  BuildKonfig.apiUrl
-    override val path: String
-        get() = "custom/v1/account/CreateSampleDataForFirstAccess"
-    override val method: AJHttpMethod
-        get() = AJHttpMethod.POST
-    override val headers: AJHttpHeaders?
-        get() = mapOf(
-            "api-key" to BuildKonfig.apiKey,
+    override suspend fun setSharedAccountByCode(
+        accountUuid: String,
+        code: String
+    ): Boolean {
+
+        val request = SetSharedAccountByCodePostRequest(
+            accountUuid = accountUuid,
+            code = code
         )
-    override val queryParameters: AJHttpQueryParameters? = null
-    override var body: Any? = null
-
-    init {
-        val accountUUid = AccountCreateSampleDataForFirstAccessPostRequestBody(uuid)
-        body = accountUUid
+        val response = client.send<SetSharedAccountByCodePostResponse>(request)
+        return response?.result ?: false
     }
-
-    @Serializable
-    data class AccountCreateSampleDataForFirstAccessPostRequestBody(
-        val uuid: String
-    )
 }
-
-@Serializable
-class AccountCreateSampleDataForFirstAccessPostResponse(
-    val dataCreated: Boolean
-): IAJHttpResponse
 

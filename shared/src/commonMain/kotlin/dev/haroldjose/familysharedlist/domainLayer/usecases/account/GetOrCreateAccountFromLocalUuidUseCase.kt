@@ -12,15 +12,16 @@ import dev.haroldjose.familysharedlist.domainLayer.mappers.toModel
 import dev.haroldjose.familysharedlist.domainLayer.models.AccountModel
 import dev.haroldjose.familysharedlist.generateUUID
 
+
+object Constants {
+    const val ACCOUNT_PREFIX = "DbAcc"
+}
+
 class GetOrCreateAccountFromLocalUuidUseCase(
     private val keyValueStorageRepository: IKeyValueStorageRepository,
     private val accountRepository: IAccountRepository,
     private val familyListRepository: IFamilyListRepository
 )  {
-
-    private object Constants {
-        const val ACCOUNT_PREFIX = "DbAcc"
-    }
 
     @NativeCoroutines
     suspend fun execute(): AccountModel {
@@ -28,7 +29,10 @@ class GetOrCreateAccountFromLocalUuidUseCase(
         val accountUuid = getOrCreateUuid()
         accountRepository.findBy(uuid = accountUuid)?.toModel()?.let {
             //configure singleton
-            familyListRepository.setDataBase(databaseName = it.uuid)
+            //TODO: verify if accountsSharedWithMe was revoked
+            val defaultAccountSharedWithMe = it.accountsSharedWithMe.firstOrNull()
+            val selectedDatabaseName: String = defaultAccountSharedWithMe ?: it.uuid
+            familyListRepository.setDataBase(databaseName = selectedDatabaseName)
             return it
         }
 

@@ -1,12 +1,20 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
+import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 
 plugins {
     kotlin("multiplatform")
+    kotlin("native.cocoapods")
     id("com.android.library")
     kotlin("plugin.serialization")
     id("com.google.devtools.ksp") version "1.8.21-1.0.11"
     id("com.rickclephas.kmp.nativecoroutines") version "1.0.0-ALPHA-10"
     id("com.codingfeline.buildkonfig") version "0.13.3"
+    id("org.jetbrains.compose")
+}
+
+compose {
+    kotlinCompilerPlugin.set("org.jetbrains.compose.compiler:compiler:1.4.7-rc01")
+    kotlinCompilerPluginArgs.add("suppressKotlinVersionCompatibilityCheck=1.8.21")
 }
 
 kotlin.sourceSets.all {
@@ -24,16 +32,30 @@ kotlin {
             }
         }
     }
-    
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
+
+
+
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+
+    cocoapods {
+        version = "0.0.1"
+        summary = "FamilySharedList KMM shared module"
+        homepage = "https://github.com/haroldjose30/FamilySharedList"
+        ios.deploymentTarget = "14.1"
+        podfile = project.file("../iosApp/Podfile")
+        framework {
             baseName = "shared"
+            isStatic = true
+            binaryOption("bundleId", "dev.haroldjose.familysharedlist.ios")
         }
+        extraSpecAttributes["resources"] = "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
+        // Maps custom Xcode configuration to NativeBuildType
+        xcodeConfigurationToNativeBuildType["CUSTOM_DEBUG"] = NativeBuildType.DEBUG
+        xcodeConfigurationToNativeBuildType["CUSTOM_RELEASE"] = NativeBuildType.RELEASE
     }
+
 
     sourceSets {
 
@@ -55,6 +77,11 @@ kotlin {
                 implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
                 implementation("io.insert-koin:koin-core:$koinVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinxDatetime")
+
+                implementation(compose.ui)
+                implementation(compose.foundation)
+                implementation(compose.material)
+                implementation(compose.runtime)
             }
         }
         val commonTest by getting {

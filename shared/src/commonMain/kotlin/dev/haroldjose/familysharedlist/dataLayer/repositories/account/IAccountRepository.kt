@@ -8,4 +8,8 @@ interface IAccountRepository {
         suspend fun update(item: AccountDto)
         suspend fun delete(uuid: String)
         suspend fun createSampleDataForFirstAccess(uuid: String): Boolean
+        suspend fun setSharedAccountByCode(
+                accountUuid: String,
+                code: String
+        ): Boolean
 }
