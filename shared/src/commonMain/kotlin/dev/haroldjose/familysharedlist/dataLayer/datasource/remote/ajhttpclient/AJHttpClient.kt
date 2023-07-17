@@ -1,23 +1,17 @@
 package dev.haroldjose.familysharedlist.dataLayer.datasource.remote.ajhttpclient
 
-import IAJHttpResponse
-import dev.haroldjose.familysharedlist.BuildKonfig
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.ajhttpclient.request.IAJHttpRequest
+import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.ajhttpclient.response.IAJHttpResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
-import io.ktor.client.request.headers
 import io.ktor.client.request.prepareRequest
-import io.ktor.client.request.request
 import io.ktor.client.request.setBody
-import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.HttpStatement
 import io.ktor.http.ContentType
 import io.ktor.http.HttpMethod
-import io.ktor.http.URLProtocol
 import io.ktor.http.contentType
-import io.ktor.http.path
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
@@ -37,7 +31,7 @@ class AJHttpClient {
         }
     }
 
-     suspend inline fun <reified T:IAJHttpResponse> send(request: IAJHttpRequest): T? {
+     suspend inline fun <reified T: IAJHttpResponse> send(request: IAJHttpRequest): T? {
 
         val httpStatement: HttpStatement = client.prepareRequest(urlString = request.urlBase+request.path) {
             method = when (request.method) {

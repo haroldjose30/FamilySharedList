@@ -9,6 +9,7 @@ import dev.haroldjose.familysharedlist.dataLayer.repositories.keyValueStorage.Ke
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.GetAccountUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.GetLocalAccountUuidUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.GetOrCreateAccountFromLocalUuidUseCase
+import dev.haroldjose.familysharedlist.domainLayer.usecases.account.SetSharedAccountByCodeUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.CreateFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.DeleteFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.GetAllFamilyListUseCase
@@ -36,6 +37,7 @@ val commonModule = module {
     factoryOf(::GetAccountUseCase)
     factoryOf(::GetLocalAccountUuidUseCase)
     factoryOf(::GetOrCreateAccountFromLocalUuidUseCase)
+    factoryOf(::SetSharedAccountByCodeUseCase)
 
     //UI
     factoryOf(::SettingsSharedViewModel) bind ISettingsSharedViewModel::class

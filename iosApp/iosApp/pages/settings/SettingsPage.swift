@@ -13,10 +13,14 @@ import shared
 
 struct SettingsPage: UIViewControllerRepresentable {
 
+    private let resolverApp = ResolverApp()
     var goBack: () -> Void
 
     func makeUIViewController(context: Context) -> UIViewController {
-        SettingsSharedPage_iosKt.SettingsPageViewController(goBack: goBack)
+        SettingsSharedPage_iosKt.SettingsPageViewController(
+            goBack: goBack,
+            viewModel: resolverApp.resolve()
+        )
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {

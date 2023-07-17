@@ -18,7 +18,7 @@ data class AccountModel(
     var accountShortCodeForShare: String = ""
 ) {
     init {
-        this.uuid = if (uuid.isEmpty()) generateUUID() else uuid
+        this.uuid = uuid.ifEmpty { generateUUID() }
         this.name = name
         this.createdDate = createdDate
         this.updatedDate = updatedDate
@@ -27,6 +27,6 @@ data class AccountModel(
         this.myAccountIsSharedWith = myAccountIsSharedWith
         this.accountsSharedWithMe = accountsSharedWithMe
         this.platform = getPlatform().name
-        this.accountShortCodeForShare = if (accountShortCodeForShare.isEmpty()) generateShortCodeByUuid(uuid = this.uuid) else accountShortCodeForShare
+        this.accountShortCodeForShare = accountShortCodeForShare.ifEmpty { generateShortCodeByUuid(uuid = this.uuid) }
     }
 }

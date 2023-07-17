@@ -16,18 +16,25 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.rounded.KeyboardArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 
 //reference:
 //https://tomas-repcik.medium.com/making-extensible-settings-screen-in-jetpack-compose-from-scratch-2558170dd24d
@@ -36,6 +43,7 @@ internal fun SettingsSharedPage(
     goBack: () -> Unit,
     viewModel: ISettingsSharedViewModel
 ) {
+    val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = "FamilyListPage"){
         viewModel.getAccount()
@@ -66,17 +74,31 @@ internal fun SettingsSharedPage(
                 .padding(it)
                 .padding(16.dp)
         ) {
+
             SettingsItem(
                 title = "Meu código de compartilhamento",
-                subtitle = viewModel.myAccount?.accountShortCodeForShare ?: "carregando..."
+                subtitle = viewModel.accountShortCodeForShareTitle
             ) {
-                //TODO: open default share mobile plataform with code
+                coroutineScope.launch {
+                    viewModel.shareMyCode()
+                }
+            }
+
+            SettingsItemWithInputText(
+                title = viewModel.accountsSharedWithMeTitle,
+                subtitle = viewModel.accountsSharedWithMeSubtitle
+            ) {
+                coroutineScope.launch {
+                    viewModel.accessSharedAccountWithCode(code = it)
+                }
             }
 
             SettingsItem(
-                title = "Acessar conta compartilhada"
+                title = "Sobre este app",
             ) {
-                // here you can do anything - navigate - open other settings, ...
+                coroutineScope.launch {
+                    viewModel.openAppHomePage()
+                }
             }
         }
     }
@@ -101,16 +123,14 @@ private fun SettingsItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = title,
-                        style = MaterialTheme.typography.body1,
-                        modifier = Modifier
-                            .padding(16.dp,8.dp,16.dp,8.dp),
-                        textAlign = TextAlign.Start,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                }
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.body1,
+                    modifier = Modifier
+                        .padding(16.dp,8.dp,16.dp,8.dp),
+                    textAlign = TextAlign.Start,
+                    overflow = TextOverflow.Ellipsis,
+                )
                 Spacer(modifier = Modifier.weight(1.0f))
                 Icon(
                     Icons.Rounded.KeyboardArrowRight,
@@ -119,7 +139,6 @@ private fun SettingsItem(
             }
             Divider()
         }
-
     }
 }
 
@@ -142,6 +161,51 @@ private fun SettingsItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
+                Column {
+                    Text(
+                        text = title,
+                        style = MaterialTheme.typography.body1,
+                        modifier = Modifier
+                            .padding(16.dp,8.dp,16.dp,0.dp),
+                        textAlign = TextAlign.Start,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                    Text(
+                        text = subtitle,
+                        style = MaterialTheme.typography.subtitle2,
+                        modifier = Modifier
+                            .padding(16.dp,0.dp,16.dp,8.dp),
+                        textAlign = TextAlign.Start,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+                Spacer(modifier = Modifier.weight(1.0f))
+                Icon(
+                    Icons.Rounded.KeyboardArrowRight,
+                    contentDescription = title
+                )
+            }
+            Divider()
+        }
+    }
+}
+
+const val maxChar = 5
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+private fun SettingsItemWithInputText(
+    title: String,
+    subtitle: String,
+    onClick: (text:String) -> Unit
+) {
+    var textFieldState by remember { mutableStateOf("") }
+
+    Column {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column {
                 Text(
                     text = title,
                     style = MaterialTheme.typography.body1,
@@ -150,16 +214,6 @@ private fun SettingsItem(
                     textAlign = TextAlign.Start,
                     overflow = TextOverflow.Ellipsis,
                 )
-                Spacer(modifier = Modifier.weight(1.0f))
-                Icon(
-                    Icons.Rounded.KeyboardArrowRight,
-                    contentDescription = title
-                )
-            }
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
                 Text(
                     text = subtitle,
                     style = MaterialTheme.typography.subtitle2,
@@ -168,8 +222,29 @@ private fun SettingsItem(
                     textAlign = TextAlign.Start,
                     overflow = TextOverflow.Ellipsis,
                 )
+                TextField(
+                    value = textFieldState,
+                    onValueChange = {
+                        if (it.length <= maxChar) textFieldState = it
+                    },
+                    placeholder = { Text("ex: XY75K") },
+                    singleLine = true,
+                    modifier = Modifier
+                        .padding(16.dp,0.dp,16.dp,8.dp),
+                )
             }
-            Divider()
+            Spacer(modifier = Modifier.weight(1.0f))
+            IconButton(
+                onClick = {
+                    onClick(textFieldState)
+                },
+            ) {
+                Icon(
+                    Icons.Rounded.KeyboardArrowRight,
+                    contentDescription = title
+                )
+            }
         }
+        Divider()
     }
 }
