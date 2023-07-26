@@ -31,7 +31,7 @@ This app provides a simple solution for users to create, manage and track items 
 ### Shared Layer
 | Library | description |
 | ----------- | ----------- | 
-|  [Compose for IOS]([https://ktor.io/](https://blog.jetbrains.com/kotlin/2023/05/compose-multiplatform-for-ios-is-in-alpha/)) | for study proposes this is in alpha |
+|  [Compose for IOS](https://blog.jetbrains.com/kotlin/2023/05/compose-multiplatform-for-ios-is-in-alpha/) | for study proposes this is in alpha |
 | UseCase Pattern | |
 | Repository Pattern | |
 | [ktor](https://ktor.io/) | Asynchronous HTTP client for requests | 
