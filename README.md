@@ -1,10 +1,10 @@
 # **Family Shared List**
 
-This project aims to utilize the power of [KMM - Kotlin Multiplatform Mobile](https://kotlinlang.org/lp/mobile/) to develop native Android and iOS mobile app with a shared codebase for bussines and data layer. 
+This project aims to utilize the power of [KMM - Kotlin Multiplatform Mobile](https://kotlinlang.org/lp/mobile/) to develop native Android and iOS mobile apps with a shared codebase for business and data layers. 
 
 If anyone wants to join the study, they will be welcome, just request access to this repository.
 
-The main focus of this study project is to utilize the benefits of KMM to create a shared codebase for both platforms, resulting in efficient and streamlined development process.
+The main focus of this study project is to utilize the benefits of KMM to create a shared codebase for both platforms, resulting in an efficient and streamlined development process.
 
 ## About the mobile application
 
@@ -31,6 +31,7 @@ This app provides a simple solution for users to create, manage and track items 
 ### Shared Layer
 | Library | description |
 | ----------- | ----------- | 
+|  [Compose for IOS]([https://ktor.io/](https://blog.jetbrains.com/kotlin/2023/05/compose-multiplatform-for-ios-is-in-alpha/)) | for study proposes this is in alpha |
 | UseCase Pattern | |
 | Repository Pattern | |
 | [ktor](https://ktor.io/) | Asynchronous HTTP client for requests | 
@@ -39,13 +40,13 @@ This app provides a simple solution for users to create, manage and track items 
 
 ## TODO:
 
-In which I intend to implement the following items as available
+I intend to implement the following items as available
 
 ### Features to be developed: 
-- [ ] User account creation and login
+- [X] User account creation and login (guess account)
 - [X] Adding, editing and deleting items on the list
 - [X] Item completion tracking
-- [ ] Sharing the list with multiple users
+- [X] Sharing the list with multiple users
 - [ ] Item categorization
 - [ ] Item priority setting
 - [ ] Item search functionality
@@ -56,7 +57,7 @@ In which I intend to implement the following items as available
 - [ ] UITest
 - [ ] Improve UI Design
 - [ ] Publish on Apple Store
-- [ ] Mocked service injection during preview process
+- [X] Mocked service injection during the preview process
 
 ### Android Layer:
 - [ ] Handle Error for each use case
@@ -64,14 +65,14 @@ In which I intend to implement the following items as available
 - [ ] UITest
 - [ ] Improve UI Design
 - [ ] Publish on Google Play
-- [ ] Mocked service injection during preview process
+- [X] Mocked service injection during the preview process
 
 ### KMM Shared Layer: 
-- [X] Put APIKey and url to enviroment variables
+- [X] Put APIKey and url to environment variables
 - [ ] Handle Error in all request
 - [ ] Add HttpClient to DI
 - [ ] Unit test
 - [ ] Create KMM library layer to Data and Domain
-- [ ] Add Local database for cache request
+- [ ] Add Local database for cached request
 - [ ] Add offline and sync process
-- [ ] Real Time database
+- [ ] Real-Time Database with Realm or Socket.io
