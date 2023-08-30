@@ -1,12 +1,20 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
+import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
 
 plugins {
     kotlin("multiplatform")
+    kotlin("native.cocoapods")
     id("com.android.library")
     kotlin("plugin.serialization")
     id("com.google.devtools.ksp") version "1.8.21-1.0.11"
     id("com.rickclephas.kmp.nativecoroutines") version "1.0.0-ALPHA-10"
     id("com.codingfeline.buildkonfig") version "0.13.3"
+    id("org.jetbrains.compose")
+}
+
+compose {
+    kotlinCompilerPlugin.set("org.jetbrains.compose.compiler:compiler:1.4.7-rc01")
+    kotlinCompilerPluginArgs.add("suppressKotlinVersionCompatibilityCheck=1.8.21")
 }
 
 kotlin.sourceSets.all {
@@ -24,16 +32,30 @@ kotlin {
             }
         }
     }
-    
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
+
+
+
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+
+    cocoapods {
+        version = "0.0.1"
+        summary = "FamilySharedList KMM shared module"
+        homepage = "https://github.com/haroldjose30/FamilySharedList"
+        ios.deploymentTarget = "14.1"
+        podfile = project.file("../iosApp/Podfile")
+        framework {
             baseName = "shared"
+            isStatic = true
+            binaryOption("bundleId", "dev.haroldjose.familysharedlist.ios")
         }
+        extraSpecAttributes["resources"] = "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
+        // Maps custom Xcode configuration to NativeBuildType
+        xcodeConfigurationToNativeBuildType["CUSTOM_DEBUG"] = NativeBuildType.DEBUG
+        xcodeConfigurationToNativeBuildType["CUSTOM_RELEASE"] = NativeBuildType.RELEASE
     }
+
 
     sourceSets {
 
@@ -41,6 +63,7 @@ kotlin {
         val coroutinesVersion: String by project
         val serializationVersion: String by project
         val koinVersion: String by project
+        val kotlinxDatetime: String by project
 
         val commonMain by getting {
             dependencies {
@@ -53,6 +76,12 @@ kotlin {
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
                 implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
                 implementation("io.insert-koin:koin-core:$koinVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinxDatetime")
+
+                implementation(compose.ui)
+                implementation(compose.foundation)
+                implementation(compose.material)
+                implementation(compose.runtime)
             }
         }
         val commonTest by getting {
@@ -66,26 +95,14 @@ kotlin {
             }
         }
         val androidUnitTest by getting
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
         val iosMain by getting {
             dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
             dependencies {
                 implementation("io.ktor:ktor-client-darwin:$ktorVersion")
             }
         }
-        val iosX64Test by getting
-        val iosArm64Test by getting
-        val iosSimulatorArm64Test by getting
         val iosTest by getting {
             dependsOn(commonTest)
-            iosX64Test.dependsOn(this)
-            iosArm64Test.dependsOn(this)
-            iosSimulatorArm64Test.dependsOn(this)
         }
     }
 }

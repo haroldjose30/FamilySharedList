@@ -1,7 +1,6 @@
-package dev.haroldjose.familysharedlist.dataLayer.repositories.familyList.mongoDb
+package dev.haroldjose.familysharedlist.dataLayer.datasource.mongoDb.request
 
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonNames
 
 interface IMongoDbRequestDto {
     val collection: String

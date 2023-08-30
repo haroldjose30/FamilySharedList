@@ -1,18 +1,28 @@
-fun randomString(
-    length: Int
+import androidx.compose.ui.text.toUpperCase
+import dev.haroldjose.familysharedlist.domainLayer.usecases.account.Constants
+
+private fun randomString(
+    length: Int,
+    charPool: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
 ): String {
-    val charPool: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
-    return List(length) { charPool.random() }.joinToString("")
+    val allowedCharsPoll: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+    val selectedCharPoll: List<Char> = charPool.filter { allowedCharsPoll.contains(it) }
+    return List(length) { selectedCharPoll.random() }.joinToString("")
 }
 
-fun generateUUID(): String {
-    //XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
-  return randomString(length = 32)
-      .addCharAtIndex(char = '-', index = 8)
-      .addCharAtIndex(char = '-', index = 13)
-      .addCharAtIndex(char = '-', index = 18)
-
-}
-
-fun String.addCharAtIndex(char: Char, index: Int) =
+private fun String.addCharAtIndex(char: Char, index: Int) =
     StringBuilder(this).apply { insert(index, char) }.toString()
+
+fun generateShortCodeByUuid(uuid: String): String {
+
+    //TODO: improve this code to avoid collision
+
+    //remove prefix
+    val uuidWithoutPrefix  = uuid.uppercase().replace(Constants.ACCOUNT_PREFIX.uppercase(), "")
+    val distinctCharPool = uuidWithoutPrefix.toList().distinct()
+    return randomString(
+        length = 5,
+        charPool = distinctCharPool
+    ).uppercase()
+}
+

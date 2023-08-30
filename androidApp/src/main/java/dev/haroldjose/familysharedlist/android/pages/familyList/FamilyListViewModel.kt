@@ -6,7 +6,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.haroldjose.familysharedlist.domainLayer.models.AccountModel
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
+import dev.haroldjose.familysharedlist.domainLayer.usecases.account.GetOrCreateAccountFromLocalUuidUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.CreateFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.DeleteFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.GetAllFamilyListUseCase
@@ -20,6 +22,7 @@ class FamilyListViewModel(
     private val createFamilyListUseCase: CreateFamilyListUseCase,
     private val updateFamilyListUseCase: UpdateFamilyListUseCase,
     private val deleteFamilyListUseCase: DeleteFamilyListUseCase,
+    private val getOrCreateAccountFromLocalUuidUseCase: GetOrCreateAccountFromLocalUuidUseCase
 ): ViewModel(), IFamilyListViewModel {
 
     override var familyListModels: List<FamilyListModel> by mutableStateOf(arrayListOf())
@@ -27,10 +30,13 @@ class FamilyListViewModel(
     override var newItemName: String by mutableStateOf("")
     override var quantity: Int by mutableStateOf(1)
     override var filterByCompleted: Boolean by mutableStateOf(false)
+    lateinit var accountModel: AccountModel
 
     override suspend fun loadData() {
 
         loading = true
+
+        accountModel = getOrCreateAccountFromLocalUuidUseCase.execute()
         familyListModels = getAllFamilyListUseCase
             .execute()
             .filter { it.isCompleted == filterByCompleted }

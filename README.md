@@ -31,7 +31,7 @@ This app provides a simple solution for users to create, manage and track items 
 ### Shared Layer
 | Library | description |
 | ----------- | ----------- | 
-|  [Compose for IOS](https://blog.jetbrains.com/kotlin/2023/05/compose-multiplatform-for-ios-is-in-alpha/) | for study proposes this is in alpha |
+| [Compose for IOS](https://blog.jetbrains.com/kotlin/2023/05/compose-multiplatform-for-ios-is-in-alpha/) | Shared interface using Compose Multiplatform for IOS to build user interface once, 100% in Kotlin, and use it on Android and iOS |
 | UseCase Pattern | |
 | Repository Pattern | |
 | [ktor](https://ktor.io/) | Asynchronous HTTP client for requests | 
@@ -40,7 +40,8 @@ This app provides a simple solution for users to create, manage and track items 
 
 ## TODO:
 
-I intend to implement the following items as available
+In which I intend to implement the following items as available:
+[Project Board](https://github.com/users/haroldjose30/projects/1/views/2)
 
 ### Features to be developed: 
 - [X] User account creation and login (guess account)

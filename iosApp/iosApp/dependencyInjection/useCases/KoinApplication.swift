@@ -15,10 +15,20 @@ extension KoinApplication {
 extension KoinApplication {
     
     private static let keyPaths: [PartialKeyPath<Koin>] = [
+        //FAMILYLIST
         \.createFamilyListUseCase,
-        \.updateFamilyListUseCase,
-        \.getAllFamilyListUseCase,
-        \.deleteFamilyListUseCase,
+         \.updateFamilyListUseCase,
+         \.getAllFamilyListUseCase,
+         \.deleteFamilyListUseCase,
+
+         //ACCOUNT
+         \.getAccountUseCase,
+         \.getLocalAccountUuidUseCase,
+         \.getOrCreateAccountFromLocalUuidUseCase,
+         \.setSharedAccountByCodeUseCase,
+
+         //PRESENTATION
+         \.iSettingsSharedViewModel
     ]
     
     static func inject<T>() -> T {
