@@ -1,4 +1,4 @@
-package dev.haroldjose.familysharedlist.android.pages.familyList
+package dev.haroldjose.familysharedlist.presentationLayer.pages.familyList
 
 import QuantitySelectionView
 import androidx.compose.animation.animateColorAsState
@@ -26,12 +26,15 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FractionalThreshold
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
 import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.rounded.Settings
@@ -54,19 +57,16 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.haroldjose.familysharedlist.android.app.MyApplicationTheme
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun FamilyListPage(
-    viewModel: IFamilyListViewModel = getViewModel<FamilyListViewModel>(),
+internal fun FamilyListSharedPage(
+    viewModel: IFamilyListSharedViewModel,
     goToSetting: () -> Unit
 ) {
 
@@ -100,143 +100,150 @@ fun FamilyListPage(
         viewModel.loadData()
     }
 
-    //pullRefresh modifier
-    Column(Modifier.pullRefresh(pullRefreshState)) {
-        Row {
-            Spacer(Modifier.weight(1f))
-            Text(
-                text = "Lista de Compras",
-                style = TextStyle(fontSize = 24.sp)
-            )
-            Spacer(Modifier.weight(1f))
-            Icon(
-                Icons.Rounded.Settings,
-                contentDescription = "Icone de Configurações",
-                Modifier
-                    .padding(8.dp,8.dp,8.dp,0.dp)
-                    .clickable { goToSetting() }
-            )
-        }
-        Row(verticalAlignment =  Alignment.CenterVertically) {
-            Spacer(Modifier.weight(1f))
-            Text(
-                text = "Pendente",
-                style = TextStyle(fontSize = 12.sp)
-            )
-            Switch(
-                checked = checkedFilterState.value,
-                onCheckedChange = {
-                    checkedFilterState.value = it
-                    coroutineScope.launch {
-                        viewModel.filterBy(completed = it)
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "Lista de Compras"
+                    )
+                },
+                actions = {
+                    IconButton(onClick = { goToSetting() }) {
+                        Icon(
+                            imageVector = Icons.Rounded.Settings,
+                            contentDescription = "Configurações"
+                        )
                     }
-                }
+                },
             )
-            Text(
-                text = "Comprados",
-                style = TextStyle(fontSize = 12.sp)
-            )
-            Spacer(Modifier.weight(1f))
         }
-
-        if (viewModel.loading) {
-
-            Row {
+    ) {
+        Column(Modifier.pullRefresh(pullRefreshState)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 Spacer(Modifier.weight(1f))
-                //standard Pull-Refresh indicator. You can also use a custom indicator
-                PullRefreshIndicator(viewModel.loading, pullRefreshState)
+                Text(
+                    text = "Pendente",
+                    style = TextStyle(fontSize = 12.sp)
+                )
+                Switch(
+                    checked = checkedFilterState.value,
+                    onCheckedChange = {
+                        checkedFilterState.value = it
+                        coroutineScope.launch {
+                            viewModel.filterBy(completed = it)
+                        }
+                    }
+                )
+                Text(
+                    text = "Comprados",
+                    style = TextStyle(fontSize = 12.sp)
+                )
                 Spacer(Modifier.weight(1f))
             }
-        }
 
-        LazyColumn(
-            state = listState,
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
+            if (viewModel.loading) {
 
-            items(
-                items = viewModel.familyListModels,
-                key = { item -> item.uuid },
-                itemContent = { item ->
-                    val currentItem by rememberUpdatedState(item)
-                    val dismissState = rememberDismissState(
-                        confirmStateChange = {
-                            val result = when (it) {
-                                DismissValue.Default -> {
-                                    false
-                                }
-                                DismissValue.DismissedToStart -> {
-                                    onItemRemoved(currentItem)
-                                    true
-                                }
-                                DismissValue.DismissedToEnd -> {
-                                    item.isCompleted = true
-                                    onItemChanged(item)
-                                    false
-                                }
-                            }
-
-                            result
-                        }
-                    )
-                    SwipeToDismiss(
-                        state = dismissState,
-                        modifier = Modifier
-                            .padding(vertical = Dp(1f)),
-                        directions = setOf(
-                            //DismissDirection.StartToEnd, //disabled
-                            DismissDirection.EndToStart
-                        ),
-                        dismissThresholds = { direction ->
-                            FractionalThreshold(
-                                if (direction == DismissDirection.StartToEnd) 0.66f else 0.50f)
-                        },
-                        background = {
-                            SwipeBackground(dismissState)
-                        },
-                        dismissContent = {
-
-                            FamilyListRow(
-                                item = item,
-                                onItemChanged = onItemChanged
-                            )
-                        }
-                    )
-                }
-            )
-
-            item {
                 Row {
                     Spacer(Modifier.weight(1f))
-                    TextField(
-                        value = viewModel.newItemName,
-                        onValueChange = { viewModel.newItemName = it },
-                        placeholder = { Text( "Informe o novo item")  },
-                        maxLines = 1,
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(
-                            capitalization = KeyboardCapitalization.None,
-                            autoCorrect = true,
-                            keyboardType = KeyboardType.Text,
-                            imeAction = ImeAction.Done
-                        ),
-
-                        )
+                    //standard Pull-Refresh indicator. You can also use a custom indicator
+                    PullRefreshIndicator(viewModel.loading, pullRefreshState)
                     Spacer(Modifier.weight(1f))
-                    IconButton(
-                        onClick = {
-                            coroutineScope.launch {
-                                viewModel.add()
+                }
+            }
+
+            LazyColumn(
+                state = listState,
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+
+                items(
+                    items = viewModel.familyListModels,
+                    key = { item -> item.uuid },
+                    itemContent = { item ->
+                        val currentItem by rememberUpdatedState(item)
+                        val dismissState = rememberDismissState(
+                            confirmStateChange = {
+                                val result = when (it) {
+                                    DismissValue.Default -> {
+                                        false
+                                    }
+
+                                    DismissValue.DismissedToStart -> {
+                                        onItemRemoved(currentItem)
+                                        true
+                                    }
+
+                                    DismissValue.DismissedToEnd -> {
+                                        item.isCompleted = true
+                                        onItemChanged(item)
+                                        false
+                                    }
+                                }
+
+                                result
                             }
-                        }
-                    ) {
-                        Icon(
-                            Icons.Default.AddCircle,
-                            contentDescription = "Add"
+                        )
+                        SwipeToDismiss(
+                            state = dismissState,
+                            modifier = Modifier
+                                .padding(vertical = Dp(1f)),
+                            directions = setOf(
+                                //DismissDirection.StartToEnd, //disabled
+                                DismissDirection.EndToStart
+                            ),
+                            dismissThresholds = { direction ->
+                                FractionalThreshold(
+                                    if (direction == DismissDirection.StartToEnd) 0.66f else 0.50f
+                                )
+                            },
+                            background = {
+                                SwipeBackground(dismissState)
+                            },
+                            dismissContent = {
+
+                                FamilyListRow(
+                                    item = item,
+                                    onItemChanged = onItemChanged
+                                )
+                            }
                         )
                     }
-                    Spacer(Modifier.weight(1f))
+                )
+
+                item {
+                    Row {
+                        Spacer(Modifier.weight(1f))
+                        TextField(
+                            value = viewModel.newItemName,
+                            onValueChange = { viewModel.newItemName = it },
+                            placeholder = { Text("Informe o novo item") },
+                            maxLines = 1,
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(
+                                capitalization = KeyboardCapitalization.None,
+                                autoCorrect = true,
+                                keyboardType = KeyboardType.Text,
+                                imeAction = ImeAction.Done
+                            ),
+
+                            )
+                        Spacer(Modifier.weight(1f))
+                        IconButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    viewModel.add()
+                                }
+                            }
+                        ) {
+                            Icon(
+                                Icons.Default.AddCircle,
+                                contentDescription = "Add"
+                            )
+                        }
+                        Spacer(Modifier.weight(1f))
+                    }
                 }
             }
         }
@@ -330,16 +337,5 @@ fun FamilyListRow(
                 }
             }
         }
-    }
-}
-
-@Preview(showBackground = false)
-@Composable
-fun DefaultPreviewFamilyListPage() {
-    MyApplicationTheme {
-        FamilyListPage(
-            viewModel = FamilyListViewModelMocked(),
-            goToSetting = {}
-        )
     }
 }

@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun SettingsPage(
-    goBack: () -> Unit,
-    viewModel: ISettingsSharedViewModel
+    viewModel: ISettingsSharedViewModel,
+    goBack: () -> Unit
 ) {
     SettingsSharedPage(
         goBack = goBack,

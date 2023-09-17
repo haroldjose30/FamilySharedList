@@ -1,9 +1,8 @@
-package dev.haroldjose.familysharedlist.android.pages.familyList
+package dev.haroldjose.familysharedlist.presentationLayer.pages.familyList
 
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
-import kotlinx.coroutines.Job
 
-interface IFamilyListViewModel {
+interface IFamilyListSharedViewModel {
     var familyListModels: List<FamilyListModel>
     var loading: Boolean
     var newItemName: String

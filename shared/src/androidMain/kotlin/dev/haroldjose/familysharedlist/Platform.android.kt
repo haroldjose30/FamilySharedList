@@ -23,11 +23,10 @@ actual fun getKeyValueStorageDataSource(): IKeyValueStorageDataSource = AndroidK
 public var androidContextForKmm: Context? = null
 actual fun openUrlOnDefaultBrowser(url: String) {
     var urlString = url
-    if (!urlString.startsWith("http://") && !urlString.startsWith("https://")) {
+    if (!(urlString.startsWith("http://") || urlString.startsWith("https://"))) {
         urlString = "http://$url"
     }
-
-    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(urlString))
     androidContextForKmm?.startActivity(browserIntent)
 }
 actual fun openShareOptionsWithText(text: String) {

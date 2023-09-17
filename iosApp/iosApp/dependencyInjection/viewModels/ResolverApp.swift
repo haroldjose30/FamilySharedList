@@ -2,7 +2,7 @@ import shared
 
 protocol ResolverAppProtocol: ResolverProtocol {
     
-    @MainActor func resolve() -> FamilyListViewModel
+    @MainActor func resolve() -> FamilyListSharedViewModel
     @MainActor func resolve() -> SettingsSharedViewModel
 }
 
@@ -11,11 +11,11 @@ class ResolverApp: ResolverAppProtocol {}
 extension ResolverAppProtocol {
     
     @MainActor
-    func resolve() -> FamilyListViewModel {
-        
-        FamilyListViewModel(
+    func resolve() -> FamilyListSharedViewModel {
+
+        FamilyListSharedViewModel(
+            getAllFamilyListUseCase: KoinApplication.shared.inject(), 
             createFamilyListUseCase: KoinApplication.shared.inject(),
-            getAllFamilyListUseCase: KoinApplication.shared.inject(),
             updateFamilyListUseCase: KoinApplication.shared.inject(),
             deleteFamilyListUseCase: KoinApplication.shared.inject(),
             getOrCreateAccountFromLocalUuidUseCase: KoinApplication.shared.inject()

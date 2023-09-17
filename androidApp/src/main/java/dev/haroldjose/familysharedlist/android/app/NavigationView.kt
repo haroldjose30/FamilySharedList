@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import dev.haroldjose.familysharedlist.android.pages.familyList.FamilyListPage
+import dev.haroldjose.familysharedlist.presentationLayer.pages.familyList.FamilyListPage
 import dev.haroldjose.familysharedlist.presentationLayer.pages.settings.SettingsPage
 import org.koin.compose.koinInject
 
@@ -14,13 +14,14 @@ fun NavigationView() {
     NavHost(navController = navController, startDestination = "home") {
         composable(ViewRouter.HOME.value) {
             FamilyListPage(
+                viewModel = koinInject(),
                 goToSetting = { navController.navigate(ViewRouter.SETTINGS.value)}
             )
         }
         composable(ViewRouter.SETTINGS.value) {
             SettingsPage(
-                goBack = { navController.navigate(ViewRouter.HOME.value) },
-                viewModel = koinInject()
+                viewModel = koinInject(),
+                goBack = { navController.navigate(ViewRouter.HOME.value) }
             )
         }
     }

@@ -40,8 +40,8 @@ import kotlinx.coroutines.launch
 //https://tomas-repcik.medium.com/making-extensible-settings-screen-in-jetpack-compose-from-scratch-2558170dd24d
 @Composable
 internal fun SettingsSharedPage(
-    goBack: () -> Unit,
-    viewModel: ISettingsSharedViewModel
+    viewModel: ISettingsSharedViewModel,
+    goBack: () -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
 

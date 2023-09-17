@@ -17,9 +17,9 @@ struct SettingsPage: UIViewControllerRepresentable {
     var goBack: () -> Void
 
     func makeUIViewController(context: Context) -> UIViewController {
-        SettingsSharedPage_iosKt.SettingsPageViewController(
-            goBack: goBack,
-            viewModel: resolverApp.resolve()
+        SettingsPage_iosKt.SettingsPageViewController(
+            viewModel: resolverApp.resolve(),
+            goBack: goBack
         )
     }
 
