@@ -11,7 +11,6 @@ struct NavigationView: View {
         switch page {
         case .home:
             FamilyListPage(
-                viewModel: resolverApp.resolve(),
                 goToSetting: { page = .settings }
             )
         case .settings:

@@ -16,6 +16,4 @@ public extension AccessibilityId {
         case buttonAdd
         case textFieldAdd
     }
-
-    
 }

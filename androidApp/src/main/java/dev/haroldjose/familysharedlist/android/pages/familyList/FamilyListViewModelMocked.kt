@@ -1,6 +1,7 @@
 package dev.haroldjose.familysharedlist.android.pages.familyList
 
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
+import dev.haroldjose.familysharedlist.presentationLayer.pages.familyList.IFamilyListSharedViewModel
 
 class FamilyListViewModelMocked(
     override var familyListModels: List<FamilyListModel> = arrayListOf(
@@ -27,7 +28,7 @@ class FamilyListViewModelMocked(
     override var newItemName: String = "newItem",
     override var quantity: Int = 1,
     override var filterByCompleted: Boolean = false
-) : IFamilyListViewModel {
+) : IFamilyListSharedViewModel {
     override suspend fun loadData() {}
     override suspend fun add() {}
     override fun showError(e: Throwable) {}

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -22,10 +22,11 @@
 		520B261C2A2E9D6400B55EE9 /* FamilyListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520B260A2A2E9D6400B55EE9 /* FamilyListModel.swift */; };
 		520B261E2A2E9D6400B55EE9 /* iOSApp+configureIsRunningUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520B260D2A2E9D6400B55EE9 /* iOSApp+configureIsRunningUITests.swift */; };
 		520B261F2A2E9D6400B55EE9 /* AccessibilityId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520B260F2A2E9D6400B55EE9 /* AccessibilityId.swift */; };
-		520B26202A2E9D6400B55EE9 /* FamilyListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520B26112A2E9D6400B55EE9 /* FamilyListViewModel.swift */; };
-		520B26212A2E9D6400B55EE9 /* FamilyListPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520B26122A2E9D6400B55EE9 /* FamilyListPage.swift */; };
+		520B26202A2E9D6400B55EE9 /* old_FamilyListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520B26112A2E9D6400B55EE9 /* old_FamilyListViewModel.swift */; };
+		520B26212A2E9D6400B55EE9 /* old_FamilyListPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520B26122A2E9D6400B55EE9 /* old_FamilyListPage.swift */; };
 		520B262E2A2EA01000B55EE9 /* KMPNativeCoroutinesAsync in Frameworks */ = {isa = PBXBuildFile; productRef = 520B262D2A2EA01000B55EE9 /* KMPNativeCoroutinesAsync */; };
 		520B26302A2EA01000B55EE9 /* KMPNativeCoroutinesCore in Frameworks */ = {isa = PBXBuildFile; productRef = 520B262F2A2EA01000B55EE9 /* KMPNativeCoroutinesCore */; };
+		528B97112AB72DF2007C0E69 /* FamilyListPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528B97102AB72DF2007C0E69 /* FamilyListPage.swift */; };
 		52AA74102A538BF4000D3B24 /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AA740F2A538BF4000D3B24 /* NavigationView.swift */; };
 		52ECA1182A4BD0DB00285EEF /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A210CBFDFF0030E573342DDC /* Pods_iosApp.framework */; };
 		52ECA1192A4BD0DB00285EEF /* Pods_iosApp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A210CBFDFF0030E573342DDC /* Pods_iosApp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -64,8 +65,9 @@
 		520B260A2A2E9D6400B55EE9 /* FamilyListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamilyListModel.swift; sourceTree = "<group>"; };
 		520B260D2A2E9D6400B55EE9 /* iOSApp+configureIsRunningUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "iOSApp+configureIsRunningUITests.swift"; sourceTree = "<group>"; };
 		520B260F2A2E9D6400B55EE9 /* AccessibilityId.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessibilityId.swift; sourceTree = "<group>"; };
-		520B26112A2E9D6400B55EE9 /* FamilyListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamilyListViewModel.swift; sourceTree = "<group>"; };
-		520B26122A2E9D6400B55EE9 /* FamilyListPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamilyListPage.swift; sourceTree = "<group>"; };
+		520B26112A2E9D6400B55EE9 /* old_FamilyListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = old_FamilyListViewModel.swift; sourceTree = "<group>"; };
+		520B26122A2E9D6400B55EE9 /* old_FamilyListPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = old_FamilyListPage.swift; sourceTree = "<group>"; };
+		528B97102AB72DF2007C0E69 /* FamilyListPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListPage.swift; sourceTree = "<group>"; };
 		52AA740F2A538BF4000D3B24 /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
 		52ECA11B2A4BD57000285EEF /* SettingsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPage.swift; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* Family List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Family List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -198,8 +200,9 @@
 		520B26102A2E9D6400B55EE9 /* familyList */ = {
 			isa = PBXGroup;
 			children = (
-				520B26112A2E9D6400B55EE9 /* FamilyListViewModel.swift */,
-				520B26122A2E9D6400B55EE9 /* FamilyListPage.swift */,
+				520B26122A2E9D6400B55EE9 /* old_FamilyListPage.swift */,
+				520B26112A2E9D6400B55EE9 /* old_FamilyListViewModel.swift */,
+				528B97102AB72DF2007C0E69 /* FamilyListPage.swift */,
 			);
 			path = familyList;
 			sourceTree = "<group>";
@@ -390,18 +393,19 @@
 				520B26172A2E9D6400B55EE9 /* ResolverApp.swift in Sources */,
 				520B26132A2E9D6400B55EE9 /* QuantitySelectionView.swift in Sources */,
 				520B26162A2E9D6400B55EE9 /* StringConstants.swift in Sources */,
+				528B97112AB72DF2007C0E69 /* FamilyListPage.swift in Sources */,
 				520B261A2A2E9D6400B55EE9 /* LazyKoin.swift in Sources */,
 				520B261F2A2E9D6400B55EE9 /* AccessibilityId.swift in Sources */,
 				520B26192A2E9D6400B55EE9 /* ResolverPreview.swift in Sources */,
 				520B261B2A2E9D6400B55EE9 /* KoinApplication.swift in Sources */,
-				520B26212A2E9D6400B55EE9 /* FamilyListPage.swift in Sources */,
+				520B26212A2E9D6400B55EE9 /* old_FamilyListPage.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				52AA74102A538BF4000D3B24 /* NavigationView.swift in Sources */,
 				520B26182A2E9D6400B55EE9 /* ResolverProtocol.swift in Sources */,
 				520B26152A2E9D6400B55EE9 /* toInt32.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				520B261E2A2E9D6400B55EE9 /* iOSApp+configureIsRunningUITests.swift in Sources */,
-				520B26202A2E9D6400B55EE9 /* FamilyListViewModel.swift in Sources */,
+				520B26202A2E9D6400B55EE9 /* old_FamilyListViewModel.swift in Sources */,
 				52ECA11C2A4BD57000285EEF /* SettingsPage.swift in Sources */,
 				520B261C2A2E9D6400B55EE9 /* FamilyListModel.swift in Sources */,
 			);

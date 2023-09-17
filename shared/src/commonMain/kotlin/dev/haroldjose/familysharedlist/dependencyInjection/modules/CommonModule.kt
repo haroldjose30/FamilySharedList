@@ -14,6 +14,8 @@ import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.CreateFam
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.DeleteFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.GetAllFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.UpdateFamilyListUseCase
+import dev.haroldjose.familysharedlist.presentationLayer.pages.familyList.FamilyListSharedViewModel
+import dev.haroldjose.familysharedlist.presentationLayer.pages.familyList.IFamilyListSharedViewModel
 import dev.haroldjose.familysharedlist.presentationLayer.pages.settings.ISettingsSharedViewModel
 import dev.haroldjose.familysharedlist.presentationLayer.pages.settings.SettingsSharedViewModel
 import org.koin.core.module.dsl.factoryOf
@@ -41,5 +43,6 @@ val commonModule = module {
 
     //UI
     factoryOf(::SettingsSharedViewModel) bind ISettingsSharedViewModel::class
+    factoryOf(::FamilyListSharedViewModel) bind IFamilyListSharedViewModel::class
 }
 

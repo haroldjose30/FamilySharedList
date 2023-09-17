@@ -4,13 +4,13 @@ import androidx.compose.ui.window.ComposeUIViewController
 import platform.UIKit.UIViewController
 
 fun SettingsPageViewController(
-    goBack: () -> Unit,
-    viewModel: ISettingsSharedViewModel
+    viewModel: ISettingsSharedViewModel,
+    goBack: () -> Unit
 ): UIViewController {
     return ComposeUIViewController {
         SettingsSharedPage(
-            goBack = goBack,
-            viewModel = viewModel
+            viewModel = viewModel,
+            goBack = goBack
         )
     }
 }
