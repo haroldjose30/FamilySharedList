@@ -7,12 +7,11 @@ interface IFamilyListSharedViewModel {
     var loading: Boolean
     var newItemName: String
     var quantity: Int
-    var filterByCompleted: Boolean
+    var tabIndex: Int
 
-    suspend fun loadData()
+    suspend fun loadData(tabIndex: Int)
     suspend fun add()
     fun showError(e: Throwable)
     suspend fun update(item: FamilyListModel)
     suspend fun remove(item: FamilyListModel)
-    suspend fun filterBy(completed: Boolean)
 }

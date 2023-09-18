@@ -6,6 +6,7 @@ data class FamilyListModel(
     var uuid: String = "",
     var name: String,
     var isCompleted: Boolean = false,
+    var isPriorized: Boolean = false,
     var quantity: Int = 1
 ) {
     init {

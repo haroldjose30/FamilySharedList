@@ -13,7 +13,8 @@ extension FamilyListModel: Identifiable {
         self.init(
             uuid: "",
             name: name,
-            isCompleted: false,
+            isCompleted: false, 
+            isPriorized: false,
             quantity: 1
         )
     }

@@ -27,12 +27,11 @@ class FamilyListViewModelMocked(
     override var loading: Boolean = false,
     override var newItemName: String = "newItem",
     override var quantity: Int = 1,
-    override var filterByCompleted: Boolean = false
+    override var tabIndex: Int = 0
 ) : IFamilyListSharedViewModel {
-    override suspend fun loadData() {}
+    override suspend fun loadData(tabIndex: Int) {}
     override suspend fun add() {}
     override fun showError(e: Throwable) {}
     override suspend fun update(item: FamilyListModel) {}
     override suspend fun remove(item: FamilyListModel) {}
-    override suspend fun filterBy(completed: Boolean) {}
 }
