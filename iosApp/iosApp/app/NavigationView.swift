@@ -10,9 +10,11 @@ struct NavigationView: View {
     var body: some View {
         switch page {
         case .home:
-            FamilyListWithScannerPage(
+            FamilyListPage(
                 viewModel: resolverApp.resolve(), 
-                goToSetting: { page = .settings }
+                goToSetting: { page = .settings },
+                //TODO: remove goToScanner
+                goToScanner: { print("not used") }
             )
         case .settings:
             SettingsPage(

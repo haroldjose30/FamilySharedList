@@ -1,163 +1,239 @@
 package dev.haroldjose.familysharedlist.presentationLayer.pages.familyList
 
 import QuantitySelectionView
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Card
-import androidx.compose.material.DismissDirection
-import androidx.compose.material.DismissState
-import androidx.compose.material.DismissValue
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.FractionalThreshold
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.SwipeToDismiss
-import androidx.compose.material.Switch
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TopAppBar
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.rounded.Settings
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
-import androidx.compose.material.rememberDismissState
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SheetValue
+import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
+import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.haroldjose.familysharedlist.Logger
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
 import dev.haroldjose.familysharedlist.presentationLayer.Components.QrCodeScannerIconView
+import dev.haroldjose.familysharedlist.presentationLayer.pages.barcodeScanner.QrScannerScreen
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun FamilyListSharedPage(
     viewModel: IFamilyListSharedViewModel,
-    goToSetting: () -> Unit,
-    goToScanner: () -> Unit
+    goToSetting: () -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
-    var tabIndex by remember { mutableStateOf(0) }
+    var tabIndex by remember { mutableStateOf(1) }
 
     LaunchedEffect(key1 = "FamilyListPage"){
         viewModel.loadData(tabIndex)
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = "Lista de Compras"
-                    )
-                },
-                actions = {
-                    IconButton(onClick = { goToSetting() }) {
-                        Icon(
-                            imageVector = Icons.Rounded.Settings,
-                            contentDescription = "Configurações"
-                        )
-                    }
-                },
-            )
-        }
-    ) {
-        val tabs = listOf("Priorizado", "Pendente", "Comprado")
-        Column(modifier = Modifier.fillMaxWidth()) {
-            TabRow(selectedTabIndex = tabIndex) {
-                tabs.forEachIndexed { index, title ->
-                    Tab(text = { Text(title) },
-                        selected = tabIndex == index,
-                        onClick = { tabIndex = index
-                            coroutineScope.launch {
-                                viewModel.loadData(tabIndex)
+    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
+
+    BottomSheetScaffold(
+        scaffoldState = bottomSheetScaffoldState,
+        sheetPeekHeight = 128.dp,
+        sheetContent = {
+            Box(
+                Modifier
+                    .fillMaxWidth()
+                    .height(60.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Column {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        Arrangement.SpaceBetween
+                    ) {
+                        Spacer(Modifier.width(8.dp))
+                        IconButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    if (bottomSheetScaffoldState.bottomSheetState.currentValue == SheetValue.Expanded) {
+                                        bottomSheetScaffoldState.bottomSheetState.partialExpand()
+                                    } else {
+                                        bottomSheetScaffoldState.bottomSheetState.expand()
+                                    }
+                                }
                             }
-                        },
-                        icon = {
-                            when (index) {
-                                0 -> Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = null)
-                                1 -> Icon(imageVector = Icons.Default.List, contentDescription = null)
-                                2 -> Icon(imageVector = Icons.Default.Check, contentDescription = null)
+                        ) {
+                            Icon(
+                                QrCodeScannerIconView(),
+                                contentDescription = "Scanner"
+                            )
+                        }
+                        TextField(
+                            value = viewModel.newItemName,
+                            onValueChange = { viewModel.newItemName = it },
+                            placeholder = { Text("Informe o novo item") },
+                            maxLines = 1,
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(
+                                capitalization = KeyboardCapitalization.None,
+                                autoCorrect = true,
+                                keyboardType = KeyboardType.Text,
+                                imeAction = ImeAction.Done
+                            )
+                        )
+                        IconButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    viewModel.add()
+                                }
+                            }
+                        ) {
+                            Icon(
+                                Icons.Default.AddCircle,
+                                contentDescription = "Add"
+                            )
+                        }
+                        Spacer(Modifier.width(8.dp))
+                    }
+                }
+            }
+            Column(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(64.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                if (bottomSheetScaffoldState.bottomSheetState.currentValue == SheetValue.Expanded) {
+                    Logger.d("FamilyListSharedPage","Scanner open")
+                    QrScannerScreen(
+                        modifier = Modifier.fillMaxWidth(),
+                        onQrCodeScanned = { barcodeScanned ->
+                            Logger.d("FamilyListSharedPage","barcodeScanned $barcodeScanned")
+                            coroutineScope.launch {
+                                bottomSheetScaffoldState.bottomSheetState.partialExpand()
+                                viewModel.addBy(barcode = barcodeScanned)
                             }
                         }
                     )
                 }
             }
-            when (tabIndex) {
-                0 -> FamilyListSharedTab(
-                    viewModel = viewModel,
-                    tabIndex = tabIndex,
-                    goToScanner = goToScanner
+        }) { innerBottonPadding ->
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    colors = topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        titleContentColor = MaterialTheme.colorScheme.primary,
+                    ),
+                    title = {
+                        Text("Lista de Compras")
+                    },
+                    actions = {
+                        IconButton(onClick = { goToSetting() }) {
+                            Icon(
+                                imageVector = Icons.Rounded.Settings,
+                                contentDescription = "Configurações"
+                            )
+                        }
+                    },
                 )
-                1 -> FamilyListSharedTab(
-                    viewModel = viewModel,
-                    tabIndex = tabIndex,
-                    goToScanner = goToScanner
-                )
-                2 -> FamilyListSharedTab(
-                    viewModel = viewModel,
-                    tabIndex = tabIndex,
-                    goToScanner = goToScanner
-                )
+            }
+        ) { innerPadding ->
+            val tabs = listOf("Priorizado", "Pendente", "Comprado")
+            Column(modifier = Modifier.padding(innerPadding)) {
+                TabRow(selectedTabIndex = tabIndex) {
+                    tabs.forEachIndexed { index, title ->
+                        Tab(text = { Text(title) },
+                            selected = tabIndex == index,
+                            onClick = { tabIndex = index
+                                coroutineScope.launch {
+                                    viewModel.loadData(tabIndex)
+                                }
+                            },
+                            icon = {
+                                when (index) {
+                                    0 -> Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = null)
+                                    1 -> Icon(imageVector = Icons.Default.List, contentDescription = null)
+                                    2 -> Icon(imageVector = Icons.Default.Check, contentDescription = null)
+                                }
+                            }
+                        )
+                    }
+                }
+                when (tabIndex) {
+                    else -> {
+                        FamilyListSharedTab(
+                            viewModel = viewModel,
+                            tabIndex = tabIndex
+                        )
+                    }
+                }
             }
         }
     }
 }
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FamilyListSharedTab(
     viewModel: IFamilyListSharedViewModel,
-    tabIndex: Int,
-    goToScanner: () -> Unit
+    tabIndex: Int
 ) {
 
     //region STATE
+
     val coroutineScope = rememberCoroutineScope()
-    val pullRefreshState = rememberPullRefreshState(viewModel.loading, {
-        coroutineScope.launch {
-            viewModel.loadData(tabIndex)
-        }
-    })
+    //TODO: PULL REFRESH
+//    val pullRefreshState = rememberPullRefreshState(viewModel.loading, {
+//        coroutineScope.launch {
+//            viewModel.loadData(tabIndex)
+//        }
+//    })
     val listState = rememberLazyListState()
+    //TODO: Modal Sheet
+//    val modalSheetState = rememberModalBottomSheetState(
+//        initialValue = ModalBottomSheetValue.Hidden,
+//        confirmValueChange = { it != ModalBottomSheetValue.HalfExpanded },
+//        skipHalfExpanded = true
+//    )
 
     //endregion
 
@@ -175,160 +251,25 @@ private fun FamilyListSharedTab(
     }
     //endregion
 
-    Column(Modifier.pullRefresh(pullRefreshState)) {
-        if (viewModel.loading) {
-
-            Row {
-                Spacer(Modifier.weight(1f))
-                //standard Pull-Refresh indicator. You can also use a custom indicator
-                PullRefreshIndicator(viewModel.loading, pullRefreshState)
-                Spacer(Modifier.weight(1f))
-            }
-        }
-
-        LazyColumn(
-            state = listState,
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-
-            items(
-                items = viewModel.familyListModels,
-                key = { item -> item.uuid },
-                itemContent = { item ->
-                    val currentItem by rememberUpdatedState(item)
-                    val dismissState = rememberDismissState(
-                        confirmStateChange = {
-                            val result = when (it) {
-                                DismissValue.Default -> {
-                                    false
-                                }
-
-                                DismissValue.DismissedToStart -> {
-                                    onItemRemoved(currentItem)
-                                    true
-                                }
-
-                                DismissValue.DismissedToEnd -> {
-                                    item.isCompleted = true
-                                    onItemChanged(item)
-                                    false
-                                }
-                            }
-
-                            result
-                        }
-                    )
-                    SwipeToDismiss(
-                        state = dismissState,
-                        modifier = Modifier
-                            .padding(vertical = Dp(1f)),
-                        directions = setOf(
-                            //DismissDirection.StartToEnd, //disabled
-                            DismissDirection.EndToStart
-                        ),
-                        dismissThresholds = { direction ->
-                            FractionalThreshold(
-                                if (direction == DismissDirection.StartToEnd) 0.66f else 0.50f
-                            )
-                        },
-                        background = {
-                            SwipeBackground(dismissState)
-                        },
-                        dismissContent = {
-
-                            FamilyListRow(
-                                item = item,
-                                onItemChanged = onItemChanged
-                            )
-                        }
-                    )
-                }
-            )
-
-            item {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    Arrangement.SpaceBetween
-                ) {
-                    IconButton(
-                        onClick = { goToScanner() }
-                    ) {
-                        Icon(
-                            QrCodeScannerIconView(),
-                            contentDescription = "Scanner"
-                        )
-                    }
-                    TextField(
-                        value = viewModel.newItemName,
-                        onValueChange = { viewModel.newItemName = it },
-                        placeholder = { Text("Informe o novo item") },
-                        maxLines = 1,
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(
-                            capitalization = KeyboardCapitalization.None,
-                            autoCorrect = true,
-                            keyboardType = KeyboardType.Text,
-                            imeAction = ImeAction.Done
-                        )
-                    )
-                    IconButton(
-                        onClick = {
-                            coroutineScope.launch {
-                                viewModel.add()
-                            }
-                        }
-                    ) {
-                        Icon(
-                            Icons.Default.AddCircle,
-                            contentDescription = "Add"
-                        )
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-@OptIn(ExperimentalMaterialApi::class)
-fun SwipeBackground(dismissState: DismissState) {
-
-    val direction = dismissState.dismissDirection ?: return
-
-    val color by animateColorAsState(
-        when (dismissState.targetValue) {
-            DismissValue.Default -> Color.LightGray
-            DismissValue.DismissedToEnd -> Color.Green
-            DismissValue.DismissedToStart -> Color.Red
-        }
-    )
-
-    val alignment = when (direction) {
-        DismissDirection.StartToEnd -> Alignment.CenterStart
-        DismissDirection.EndToStart -> Alignment.CenterEnd
-    }
-
-    val icon = when (direction) {
-        DismissDirection.StartToEnd -> Icons.Default.Done
-        DismissDirection.EndToStart -> Icons.Default.Delete
-    }
-
-    val scale by animateFloatAsState(
-        if (dismissState.targetValue == DismissValue.Default) 0.75f else 1f
-    )
-
-    Box(
-        Modifier
-            .fillMaxSize()
-            .background(color)
-            .padding(horizontal = Dp(20f)),
-        contentAlignment = alignment
+    LazyColumn(
+        state = listState,
+        contentPadding = PaddingValues(
+            top = 8.dp,
+            start = 8.dp,
+            end = 8.dp,
+            bottom = 128.dp,
+        ),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Icon(
-            icon,
-            contentDescription = "Delete Icon",
-            modifier = Modifier.scale(scale)
+        items(
+            items = viewModel.familyListModels,
+            key = { item -> item.uuid },
+            itemContent = { item ->
+                FamilyListRow(
+                    item = item,
+                    onItemChanged = onItemChanged
+                )
+            }
         )
     }
 }
@@ -350,7 +291,6 @@ fun FamilyListRow(
     }
 
     Card(
-        backgroundColor = backgroundColor,
         modifier = Modifier.fillMaxWidth()
     ) {
         Column(modifier = Modifier.padding(all = 10.dp)) {

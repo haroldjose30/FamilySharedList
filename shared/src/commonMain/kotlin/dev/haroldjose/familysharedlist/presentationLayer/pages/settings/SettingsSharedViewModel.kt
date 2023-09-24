@@ -7,8 +7,7 @@ import dev.haroldjose.familysharedlist.domainLayer.models.AccountModel
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.GetAccountUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.GetLocalAccountUuidUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.SetSharedAccountByCodeUseCase
-import dev.haroldjose.familysharedlist.openShareOptionsWithText
-import dev.haroldjose.familysharedlist.openUrlOnDefaultBrowser
+import dev.haroldjose.familysharedlist.getPlatform
 
 class SettingsSharedViewModel(
     private val getAccountUseCase: GetAccountUseCase,
@@ -54,11 +53,11 @@ class SettingsSharedViewModel(
 
     override suspend fun shareMyCode() {
         myAccount?.accountShortCodeForShare?.let {
-            openShareOptionsWithText(text = it)
+            getPlatform().openShareOptionsWithText(text = it)
         }
     }
 
     override suspend fun openAppHomePage() {
-        openUrlOnDefaultBrowser(url = "https://github.com/haroldjose30/FamilySharedList")
+        getPlatform().openUrlOnDefaultBrowser(url = "https://github.com/haroldjose30/FamilySharedList")
     }
 }

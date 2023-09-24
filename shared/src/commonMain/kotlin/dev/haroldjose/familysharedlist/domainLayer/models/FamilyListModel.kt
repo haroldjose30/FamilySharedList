@@ -1,6 +1,7 @@
 package dev.haroldjose.familysharedlist.domainLayer.models
 
-import dev.haroldjose.familysharedlist.generateUUID
+import dev.haroldjose.familysharedlist.getPlatform
+
 
 data class FamilyListModel(
     var uuid: String = "",
@@ -10,7 +11,7 @@ data class FamilyListModel(
     var quantity: Int = 1
 ) {
     init {
-        this.uuid = if (uuid.isEmpty()) generateUUID() else uuid
+        this.uuid = if (uuid.isEmpty()) getPlatform().generateUUID() else uuid
         this.name = name
         this.isCompleted = isCompleted
         this.quantity = quantity

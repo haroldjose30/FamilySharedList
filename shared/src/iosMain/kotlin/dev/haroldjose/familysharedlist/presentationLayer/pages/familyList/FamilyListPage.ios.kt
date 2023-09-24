@@ -11,8 +11,7 @@ fun FamilyListPageViewController(
     return ComposeUIViewController {
         FamilyListSharedPage(
             viewModel = viewModel,
-            goToSetting = goToSetting,
-            goToScanner = goToScanner
+            goToSetting = goToSetting
         )
     }
 }

@@ -4,11 +4,11 @@ import dev.haroldjose.familysharedlist.dataLayer.datasource.local.keyValueStorag
 
 interface IPlatform {
     val name: String
+    val isDebug: Boolean
+    fun generateUUID(): String
+    fun getKeyValueStorageDataSource(): IKeyValueStorageDataSource
+    fun openUrlOnDefaultBrowser(url: String)
+    fun openShareOptionsWithText(text: String)
 }
 
 expect fun getPlatform(): IPlatform
-expect val isDebug: Boolean
-expect fun generateUUID(): String
-expect fun getKeyValueStorageDataSource(): IKeyValueStorageDataSource
-expect fun openUrlOnDefaultBrowser(url: String)
-expect fun openShareOptionsWithText(text: String)

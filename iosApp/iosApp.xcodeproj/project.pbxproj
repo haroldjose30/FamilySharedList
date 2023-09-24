@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
-		2152FB042600AC8F00CF470E /* iOSApp_old.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp_old.swift */; };
 		522F40572AC070AB00E96E8F /* ResolverApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522F40392AC070AB00E96E8F /* ResolverApp.swift */; };
 		522F40582AC070AB00E96E8F /* ResolverProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522F403A2AC070AB00E96E8F /* ResolverProtocol.swift */; };
 		522F40592AC070AB00E96E8F /* ResolverPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522F403B2AC070AB00E96E8F /* ResolverPreview.swift */; };
@@ -27,13 +26,11 @@
 		522F40662AC070AB00E96E8F /* toInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522F40522AC070AB00E96E8F /* toInt.swift */; };
 		522F40672AC070AB00E96E8F /* toInt32.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522F40542AC070AB00E96E8F /* toInt32.swift */; };
 		522F40682AC070AB00E96E8F /* StringConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522F40562AC070AB00E96E8F /* StringConstants.swift */; };
-		7555FF83242A565900829871 /* ContentView_old.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView_old.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		2152FB032600AC8F00CF470E /* iOSApp_old.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp_old.swift; sourceTree = "<group>"; };
 		522F40392AC070AB00E96E8F /* ResolverApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolverApp.swift; sourceTree = "<group>"; };
 		522F403A2AC070AB00E96E8F /* ResolverProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolverProtocol.swift; sourceTree = "<group>"; };
 		522F403B2AC070AB00E96E8F /* ResolverPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolverPreview.swift; sourceTree = "<group>"; };
@@ -52,7 +49,6 @@
 		522F40542AC070AB00E96E8F /* toInt32.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = toInt32.swift; sourceTree = "<group>"; };
 		522F40562AC070AB00E96E8F /* StringConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringConstants.swift; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* Family List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Family List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		7555FF82242A565900829871 /* ContentView_old.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView_old.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB3632DC29227652001CCB65 /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -234,9 +230,7 @@
 				522F40482AC070AB00E96E8F /* models */,
 				522F403F2AC070AB00E96E8F /* pages */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
-				7555FF82242A565900829871 /* ContentView_old.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
-				2152FB032600AC8F00CF470E /* iOSApp_old.swift */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
 			);
 			path = iosApp;
@@ -342,7 +336,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2152FB042600AC8F00CF470E /* iOSApp_old.swift in Sources */,
 				522F40592AC070AB00E96E8F /* ResolverPreview.swift in Sources */,
 				522F40602AC070AB00E96E8F /* FamilyListPage.swift in Sources */,
 				522F40622AC070AB00E96E8F /* iOSApp.swift in Sources */,
@@ -359,7 +352,6 @@
 				522F40572AC070AB00E96E8F /* ResolverApp.swift in Sources */,
 				522F40612AC070AB00E96E8F /* FamilyListModel.swift in Sources */,
 				522F405D2AC070AB00E96E8F /* AccessibilityId.swift in Sources */,
-				7555FF83242A565900829871 /* ContentView_old.swift in Sources */,
 				522F405B2AC070AB00E96E8F /* KoinApplication.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

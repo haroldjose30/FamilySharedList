@@ -10,7 +10,6 @@ fun FamilyListPage(
 ) {
     FamilyListSharedPage(
         viewModel = viewModel,
-        goToSetting = goToSetting,
-        goToScanner = goToScanner
+        goToSetting = goToSetting
     )
 }

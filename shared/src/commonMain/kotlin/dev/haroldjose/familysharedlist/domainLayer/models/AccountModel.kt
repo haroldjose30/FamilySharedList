@@ -1,6 +1,5 @@
 package dev.haroldjose.familysharedlist.domainLayer.models
 
-import dev.haroldjose.familysharedlist.generateUUID
 import dev.haroldjose.familysharedlist.getPlatform
 import generateShortCodeByUuid
 import kotlinx.datetime.Clock
@@ -18,7 +17,7 @@ data class AccountModel(
     var accountShortCodeForShare: String = ""
 ) {
     init {
-        this.uuid = uuid.ifEmpty { generateUUID() }
+        this.uuid = uuid.ifEmpty { getPlatform().generateUUID() }
         this.name = name
         this.createdDate = createdDate
         this.updatedDate = updatedDate

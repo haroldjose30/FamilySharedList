@@ -8,19 +8,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Divider
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TopAppBar
+import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.rounded.KeyboardArrowRight
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -38,6 +39,7 @@ import kotlinx.coroutines.launch
 
 //reference:
 //https://tomas-repcik.medium.com/making-extensible-settings-screen-in-jetpack-compose-from-scratch-2558170dd24d
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SettingsSharedPage(
     viewModel: ISettingsSharedViewModel,
@@ -52,6 +54,10 @@ internal fun SettingsSharedPage(
     Scaffold(
         topBar = {
             TopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.primary,
+                ),
                 title = {
                     Text(
                         text = "Configurações"
@@ -105,7 +111,6 @@ internal fun SettingsSharedPage(
 }
 
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun SettingsItem(
     title: String,
@@ -125,7 +130,7 @@ private fun SettingsItem(
             ) {
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier
                         .padding(16.dp,8.dp,16.dp,8.dp),
                     textAlign = TextAlign.Start,
@@ -142,7 +147,6 @@ private fun SettingsItem(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun SettingsItem(
     title: String,
@@ -164,7 +168,7 @@ private fun SettingsItem(
                 Column {
                     Text(
                         text = title,
-                        style = MaterialTheme.typography.body1,
+                        style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier
                             .padding(16.dp,8.dp,16.dp,0.dp),
                         textAlign = TextAlign.Start,
@@ -172,7 +176,7 @@ private fun SettingsItem(
                     )
                     Text(
                         text = subtitle,
-                        style = MaterialTheme.typography.subtitle2,
+                        style = MaterialTheme.typography.titleSmall,
                         modifier = Modifier
                             .padding(16.dp,0.dp,16.dp,8.dp),
                         textAlign = TextAlign.Start,
@@ -191,7 +195,6 @@ private fun SettingsItem(
 }
 
 const val maxChar = 5
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun SettingsItemWithInputText(
     title: String,
@@ -208,7 +211,7 @@ private fun SettingsItemWithInputText(
             Column {
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.body1,
+                    style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier
                         .padding(16.dp,8.dp,16.dp,0.dp),
                     textAlign = TextAlign.Start,
@@ -216,7 +219,7 @@ private fun SettingsItemWithInputText(
                 )
                 Text(
                     text = subtitle,
-                    style = MaterialTheme.typography.subtitle2,
+                    style = MaterialTheme.typography.titleSmall,
                     modifier = Modifier
                         .padding(16.dp,0.dp,16.dp,8.dp),
                     textAlign = TextAlign.Start,

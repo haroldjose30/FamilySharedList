@@ -35,7 +35,8 @@ kotlin {
             dependencies {
                 implementation(compose.runtime)
                 implementation(compose.foundation)
-                implementation(compose.material)
+                implementation(compose.material3)
+                implementation(compose.ui)
 
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
@@ -49,6 +50,15 @@ kotlin {
                 implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
                 implementation("io.insert-koin:koin-core:$koinCoreVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinxDatetimeVersion")
+
+                implementation("androidx.camera:camera-camera2:1.2.3")
+                implementation("androidx.camera:camera-core:1.2.3")
+                implementation("androidx.camera:camera-extensions:1.2.3")
+                implementation("androidx.camera:camera-lifecycle:1.2.3")
+                implementation("androidx.camera:camera-view:1.2.3")
+                implementation("androidx.camera:camera-video:1.2.3")
+
+                implementation("com.google.mlkit:barcode-scanning:17.2.0")
             }
         }
         val androidMain by getting {
@@ -92,6 +102,9 @@ android {
     kotlin {
         jvmToolchain(17)
     }
+}
+dependencies {
+    implementation("androidx.core:core-ktx:+")
 }
 
 //To generate BuildKonfig file: ./gradlew -p shared generateBuildKonfig

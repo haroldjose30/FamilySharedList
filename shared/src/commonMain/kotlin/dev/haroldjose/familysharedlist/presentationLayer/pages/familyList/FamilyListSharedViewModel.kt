@@ -3,6 +3,7 @@ package dev.haroldjose.familysharedlist.presentationLayer.pages.familyList
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import dev.haroldjose.familysharedlist.Logger
 import dev.haroldjose.familysharedlist.domainLayer.models.AccountModel
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.GetOrCreateAccountFromLocalUuidUseCase
@@ -23,7 +24,7 @@ class FamilyListSharedViewModel(
     override var loading:Boolean by mutableStateOf(false)
     override var newItemName: String by mutableStateOf("")
     override var quantity: Int by mutableStateOf(1)
-    override var tabIndex: Int by mutableStateOf(0)
+    override var tabIndex: Int by mutableStateOf(1)
     private lateinit var accountModel: AccountModel
 
     override suspend fun loadData(tabIndex: Int) {
@@ -65,7 +66,9 @@ class FamilyListSharedViewModel(
 
         val item = FamilyListModel(
             name = newItemName,
-            quantity = quantity
+            quantity = quantity,
+            isPriorized = this.tabIndex == 0,
+            isCompleted = false
         )
         newItemName = ""
         loading = true
@@ -74,6 +77,7 @@ class FamilyListSharedViewModel(
     }
 
     override suspend fun addBy(barcode: String) {
+        Logger.d("FamilyListSharedViewModel", "barcode: $barcode")
         if (barcode.isEmpty())
             return
 
@@ -81,12 +85,16 @@ class FamilyListSharedViewModel(
 
         val item = FamilyListModel(
             name = barcode,
-            quantity = quantity
+            quantity = quantity,
+            isPriorized = this.tabIndex == 0,
+            isCompleted = false
         )
 
         loading = true
         createFamilyListUseCase.execute(item = item)
+        Logger.d("FamilyListSharedViewModel", "createFamilyListUseCase executed")
         loadData(this.tabIndex)
+        Logger.d("FamilyListSharedViewModel", "loadData executed")
     }
 
     override fun showError(e: Throwable) {

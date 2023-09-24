@@ -7,7 +7,7 @@ import dev.haroldjose.familysharedlist.dataLayer.repositories.keyValueStorage.Ke
 import dev.haroldjose.familysharedlist.domainLayer.mappers.toDto
 import dev.haroldjose.familysharedlist.domainLayer.mappers.toModel
 import dev.haroldjose.familysharedlist.domainLayer.models.AccountModel
-import dev.haroldjose.familysharedlist.generateUUID
+import dev.haroldjose.familysharedlist.getPlatform
 
 
 object Constants {
@@ -61,7 +61,7 @@ class GetOrCreateAccountFromLocalUuidUseCase(
         }
 
         //Generate new Account UUID for this device
-        val sanitizedUuid = sanitizeUuid(generateUUID())
+        val sanitizedUuid = sanitizeUuid(getPlatform().generateUUID())
         val newAccountUuid = "${Constants.ACCOUNT_PREFIX}_${sanitizedUuid}"
 
         //Save Account UUID on localStorage
