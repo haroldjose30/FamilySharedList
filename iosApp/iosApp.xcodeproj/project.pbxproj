@@ -9,16 +9,50 @@
 /* Begin PBXBuildFile section */
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
-		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
-		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
+		2152FB042600AC8F00CF470E /* iOSApp_old.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp_old.swift */; };
+		522F40572AC070AB00E96E8F /* ResolverApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522F40392AC070AB00E96E8F /* ResolverApp.swift */; };
+		522F40582AC070AB00E96E8F /* ResolverProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522F403A2AC070AB00E96E8F /* ResolverProtocol.swift */; };
+		522F40592AC070AB00E96E8F /* ResolverPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522F403B2AC070AB00E96E8F /* ResolverPreview.swift */; };
+		522F405A2AC070AB00E96E8F /* LazyKoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522F403D2AC070AB00E96E8F /* LazyKoin.swift */; };
+		522F405B2AC070AB00E96E8F /* KoinApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522F403E2AC070AB00E96E8F /* KoinApplication.swift */; };
+		522F405C2AC070AB00E96E8F /* SettingsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522F40412AC070AB00E96E8F /* SettingsPage.swift */; };
+		522F405D2AC070AB00E96E8F /* AccessibilityId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522F40422AC070AB00E96E8F /* AccessibilityId.swift */; };
+		522F405E2AC070AB00E96E8F /* BarcodeScannerPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522F40442AC070AB00E96E8F /* BarcodeScannerPage.swift */; };
+		522F405F2AC070AB00E96E8F /* FamilyListWithScannerPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522F40462AC070AB00E96E8F /* FamilyListWithScannerPage.swift */; };
+		522F40602AC070AB00E96E8F /* FamilyListPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522F40472AC070AB00E96E8F /* FamilyListPage.swift */; };
+		522F40612AC070AB00E96E8F /* FamilyListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522F40492AC070AB00E96E8F /* FamilyListModel.swift */; };
+		522F40622AC070AB00E96E8F /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522F404B2AC070AB00E96E8F /* iOSApp.swift */; };
+		522F40632AC070AB00E96E8F /* iOSApp+configureIsRunningUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522F404C2AC070AB00E96E8F /* iOSApp+configureIsRunningUITests.swift */; };
+		522F40642AC070AB00E96E8F /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522F404D2AC070AB00E96E8F /* NavigationView.swift */; };
+		522F40662AC070AB00E96E8F /* toInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522F40522AC070AB00E96E8F /* toInt.swift */; };
+		522F40672AC070AB00E96E8F /* toInt32.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522F40542AC070AB00E96E8F /* toInt32.swift */; };
+		522F40682AC070AB00E96E8F /* StringConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522F40562AC070AB00E96E8F /* StringConstants.swift */; };
+		7555FF83242A565900829871 /* ContentView_old.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView_old.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
-		7555FF7B242A565900829871 /* My application.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "My application.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		2152FB032600AC8F00CF470E /* iOSApp_old.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp_old.swift; sourceTree = "<group>"; };
+		522F40392AC070AB00E96E8F /* ResolverApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolverApp.swift; sourceTree = "<group>"; };
+		522F403A2AC070AB00E96E8F /* ResolverProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolverProtocol.swift; sourceTree = "<group>"; };
+		522F403B2AC070AB00E96E8F /* ResolverPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolverPreview.swift; sourceTree = "<group>"; };
+		522F403D2AC070AB00E96E8F /* LazyKoin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LazyKoin.swift; sourceTree = "<group>"; };
+		522F403E2AC070AB00E96E8F /* KoinApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KoinApplication.swift; sourceTree = "<group>"; };
+		522F40412AC070AB00E96E8F /* SettingsPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPage.swift; sourceTree = "<group>"; };
+		522F40422AC070AB00E96E8F /* AccessibilityId.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessibilityId.swift; sourceTree = "<group>"; };
+		522F40442AC070AB00E96E8F /* BarcodeScannerPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeScannerPage.swift; sourceTree = "<group>"; };
+		522F40462AC070AB00E96E8F /* FamilyListWithScannerPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamilyListWithScannerPage.swift; sourceTree = "<group>"; };
+		522F40472AC070AB00E96E8F /* FamilyListPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamilyListPage.swift; sourceTree = "<group>"; };
+		522F40492AC070AB00E96E8F /* FamilyListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamilyListModel.swift; sourceTree = "<group>"; };
+		522F404B2AC070AB00E96E8F /* iOSApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
+		522F404C2AC070AB00E96E8F /* iOSApp+configureIsRunningUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "iOSApp+configureIsRunningUITests.swift"; sourceTree = "<group>"; };
+		522F404D2AC070AB00E96E8F /* NavigationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
+		522F40522AC070AB00E96E8F /* toInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = toInt.swift; sourceTree = "<group>"; };
+		522F40542AC070AB00E96E8F /* toInt32.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = toInt32.swift; sourceTree = "<group>"; };
+		522F40562AC070AB00E96E8F /* StringConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringConstants.swift; sourceTree = "<group>"; };
+		7555FF7B242A565900829871 /* Family List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Family List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7555FF82242A565900829871 /* ContentView_old.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView_old.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB3632DC29227652001CCB65 /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -49,6 +83,129 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		522F40372AC070AB00E96E8F /* dependencyInjection */ = {
+			isa = PBXGroup;
+			children = (
+				522F40382AC070AB00E96E8F /* viewModels */,
+				522F403C2AC070AB00E96E8F /* useCases */,
+			);
+			path = dependencyInjection;
+			sourceTree = "<group>";
+		};
+		522F40382AC070AB00E96E8F /* viewModels */ = {
+			isa = PBXGroup;
+			children = (
+				522F40392AC070AB00E96E8F /* ResolverApp.swift */,
+				522F403A2AC070AB00E96E8F /* ResolverProtocol.swift */,
+				522F403B2AC070AB00E96E8F /* ResolverPreview.swift */,
+			);
+			path = viewModels;
+			sourceTree = "<group>";
+		};
+		522F403C2AC070AB00E96E8F /* useCases */ = {
+			isa = PBXGroup;
+			children = (
+				522F403D2AC070AB00E96E8F /* LazyKoin.swift */,
+				522F403E2AC070AB00E96E8F /* KoinApplication.swift */,
+			);
+			path = useCases;
+			sourceTree = "<group>";
+		};
+		522F403F2AC070AB00E96E8F /* pages */ = {
+			isa = PBXGroup;
+			children = (
+				522F40402AC070AB00E96E8F /* settings */,
+				522F40422AC070AB00E96E8F /* AccessibilityId.swift */,
+				522F40432AC070AB00E96E8F /* BarcodeScanner */,
+				522F40452AC070AB00E96E8F /* familyList */,
+			);
+			path = pages;
+			sourceTree = "<group>";
+		};
+		522F40402AC070AB00E96E8F /* settings */ = {
+			isa = PBXGroup;
+			children = (
+				522F40412AC070AB00E96E8F /* SettingsPage.swift */,
+			);
+			path = settings;
+			sourceTree = "<group>";
+		};
+		522F40432AC070AB00E96E8F /* BarcodeScanner */ = {
+			isa = PBXGroup;
+			children = (
+				522F40442AC070AB00E96E8F /* BarcodeScannerPage.swift */,
+			);
+			path = BarcodeScanner;
+			sourceTree = "<group>";
+		};
+		522F40452AC070AB00E96E8F /* familyList */ = {
+			isa = PBXGroup;
+			children = (
+				522F40462AC070AB00E96E8F /* FamilyListWithScannerPage.swift */,
+				522F40472AC070AB00E96E8F /* FamilyListPage.swift */,
+			);
+			path = familyList;
+			sourceTree = "<group>";
+		};
+		522F40482AC070AB00E96E8F /* models */ = {
+			isa = PBXGroup;
+			children = (
+				522F40492AC070AB00E96E8F /* FamilyListModel.swift */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
+		522F404A2AC070AB00E96E8F /* app */ = {
+			isa = PBXGroup;
+			children = (
+				522F404B2AC070AB00E96E8F /* iOSApp.swift */,
+				522F404C2AC070AB00E96E8F /* iOSApp+configureIsRunningUITests.swift */,
+				522F404D2AC070AB00E96E8F /* NavigationView.swift */,
+			);
+			path = app;
+			sourceTree = "<group>";
+		};
+		522F404E2AC070AB00E96E8F /* components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = components;
+			sourceTree = "<group>";
+		};
+		522F40502AC070AB00E96E8F /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				522F40512AC070AB00E96E8F /* Int32 */,
+				522F40532AC070AB00E96E8F /* Int */,
+				522F40552AC070AB00E96E8F /* String */,
+			);
+			path = extensions;
+			sourceTree = "<group>";
+		};
+		522F40512AC070AB00E96E8F /* Int32 */ = {
+			isa = PBXGroup;
+			children = (
+				522F40522AC070AB00E96E8F /* toInt.swift */,
+			);
+			path = Int32;
+			sourceTree = "<group>";
+		};
+		522F40532AC070AB00E96E8F /* Int */ = {
+			isa = PBXGroup;
+			children = (
+				522F40542AC070AB00E96E8F /* toInt32.swift */,
+			);
+			path = Int;
+			sourceTree = "<group>";
+		};
+		522F40552AC070AB00E96E8F /* String */ = {
+			isa = PBXGroup;
+			children = (
+				522F40562AC070AB00E96E8F /* StringConstants.swift */,
+			);
+			path = String;
+			sourceTree = "<group>";
+		};
 		7555FF72242A565900829871 = {
 			isa = PBXGroup;
 			children = (
@@ -62,7 +219,7 @@
 		7555FF7C242A565900829871 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7555FF7B242A565900829871 /* My application.app */,
+				7555FF7B242A565900829871 /* Family List.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,10 +227,16 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				522F404A2AC070AB00E96E8F /* app */,
+				522F404E2AC070AB00E96E8F /* components */,
+				522F40372AC070AB00E96E8F /* dependencyInjection */,
+				522F40502AC070AB00E96E8F /* extensions */,
+				522F40482AC070AB00E96E8F /* models */,
+				522F403F2AC070AB00E96E8F /* pages */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
-				7555FF82242A565900829871 /* ContentView.swift */,
+				7555FF82242A565900829871 /* ContentView_old.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
-				2152FB032600AC8F00CF470E /* iOSApp.swift */,
+				2152FB032600AC8F00CF470E /* iOSApp_old.swift */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
 			);
 			path = iosApp;
@@ -105,7 +268,7 @@
 			);
 			name = iosApp;
 			productName = iosApp;
-			productReference = 7555FF7B242A565900829871 /* My application.app */;
+			productReference = 7555FF7B242A565900829871 /* Family List.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -179,8 +342,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
-				7555FF83242A565900829871 /* ContentView.swift in Sources */,
+				2152FB042600AC8F00CF470E /* iOSApp_old.swift in Sources */,
+				522F40592AC070AB00E96E8F /* ResolverPreview.swift in Sources */,
+				522F40602AC070AB00E96E8F /* FamilyListPage.swift in Sources */,
+				522F40622AC070AB00E96E8F /* iOSApp.swift in Sources */,
+				522F405E2AC070AB00E96E8F /* BarcodeScannerPage.swift in Sources */,
+				522F40632AC070AB00E96E8F /* iOSApp+configureIsRunningUITests.swift in Sources */,
+				522F405A2AC070AB00E96E8F /* LazyKoin.swift in Sources */,
+				522F405C2AC070AB00E96E8F /* SettingsPage.swift in Sources */,
+				522F40682AC070AB00E96E8F /* StringConstants.swift in Sources */,
+				522F405F2AC070AB00E96E8F /* FamilyListWithScannerPage.swift in Sources */,
+				522F40662AC070AB00E96E8F /* toInt.swift in Sources */,
+				522F40672AC070AB00E96E8F /* toInt32.swift in Sources */,
+				522F40582AC070AB00E96E8F /* ResolverProtocol.swift in Sources */,
+				522F40642AC070AB00E96E8F /* NavigationView.swift in Sources */,
+				522F40572AC070AB00E96E8F /* ResolverApp.swift in Sources */,
+				522F40612AC070AB00E96E8F /* FamilyListModel.swift in Sources */,
+				522F405D2AC070AB00E96E8F /* AccessibilityId.swift in Sources */,
+				7555FF83242A565900829871 /* ContentView_old.swift in Sources */,
+				522F405B2AC070AB00E96E8F /* KoinApplication.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,19 +491,23 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
-				DEVELOPMENT_TEAM = "${TEAM_ID}";
+				DEVELOPMENT_TEAM = 7TBCX7QSF9;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)\n",
 					"$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)\n",
 				);
 				INFOPLIST_FILE = iosApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Family List";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
@@ -331,7 +515,7 @@
 					"-framework",
 					"shared\n",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_ID}${TEAM_ID}";
+				PRODUCT_BUNDLE_IDENTIFIER = dev.haroldjose.familysharedlist.ios;
 				PRODUCT_NAME = "${APP_NAME}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -345,19 +529,23 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
-				DEVELOPMENT_TEAM = "${TEAM_ID}";
+				DEVELOPMENT_TEAM = 7TBCX7QSF9;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)\n",
 					"$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)\n",
 				);
 				INFOPLIST_FILE = iosApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Family List";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.food-and-drink";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
@@ -365,7 +553,7 @@
 					"-framework",
 					"shared\n",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_ID}${TEAM_ID}";
+				PRODUCT_BUNDLE_IDENTIFIER = dev.haroldjose.familysharedlist.ios;
 				PRODUCT_NAME = "${APP_NAME}";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
