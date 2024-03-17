@@ -5,8 +5,7 @@ import androidx.compose.runtime.Composable
 @Composable
 fun FamilyListPage(
     viewModel: IFamilyListSharedViewModel,
-    goToSetting: () -> Unit,
-    goToScanner: () -> Unit
+    goToSetting: () -> Unit
 ) {
     FamilyListSharedPage(
         viewModel = viewModel,

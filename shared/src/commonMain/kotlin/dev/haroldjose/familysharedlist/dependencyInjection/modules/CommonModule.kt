@@ -6,6 +6,8 @@ import dev.haroldjose.familysharedlist.dataLayer.repositories.familyList.FamilyL
 import dev.haroldjose.familysharedlist.dataLayer.repositories.familyList.IFamilyListRepository
 import dev.haroldjose.familysharedlist.dataLayer.repositories.keyValueStorage.IKeyValueStorageRepository
 import dev.haroldjose.familysharedlist.dataLayer.repositories.keyValueStorage.KeyValueStorageRepository
+import dev.haroldjose.familysharedlist.dataLayer.repositories.openfoodfacts.IOpenFoodFactsRepository
+import dev.haroldjose.familysharedlist.dataLayer.repositories.openfoodfacts.OpenFoodFactsRepository
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.GetAccountUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.GetLocalAccountUuidUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.GetOrCreateAccountFromLocalUuidUseCase
@@ -14,6 +16,7 @@ import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.CreateFam
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.DeleteFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.GetAllFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.UpdateFamilyListUseCase
+import dev.haroldjose.familysharedlist.domainLayer.usecases.product.GetProductByCodeUseCase
 import dev.haroldjose.familysharedlist.presentationLayer.pages.familyList.FamilyListSharedViewModel
 import dev.haroldjose.familysharedlist.presentationLayer.pages.familyList.IFamilyListSharedViewModel
 import dev.haroldjose.familysharedlist.presentationLayer.pages.settings.ISettingsSharedViewModel
@@ -28,6 +31,7 @@ val commonModule = module {
     singleOf(::FamilyListRepository) bind IFamilyListRepository::class
     singleOf(::KeyValueStorageRepository) bind IKeyValueStorageRepository::class
     singleOf(::AccountRepository) bind IAccountRepository::class
+    singleOf(::OpenFoodFactsRepository) bind IOpenFoodFactsRepository::class
 
     //FamilyList
     factoryOf(::CreateFamilyListUseCase)
@@ -40,6 +44,9 @@ val commonModule = module {
     factoryOf(::GetLocalAccountUuidUseCase)
     factoryOf(::GetOrCreateAccountFromLocalUuidUseCase)
     factoryOf(::SetSharedAccountByCodeUseCase)
+
+    //product
+    factoryOf(::GetProductByCodeUseCase)
 
     //UI
     factoryOf(::SettingsSharedViewModel) bind ISettingsSharedViewModel::class

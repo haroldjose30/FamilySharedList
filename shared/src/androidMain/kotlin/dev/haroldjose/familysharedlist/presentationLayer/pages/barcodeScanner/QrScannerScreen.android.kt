@@ -48,13 +48,13 @@ actual fun QrScannerScreen(modifier: Modifier, onQrCodeScanned: (String) -> Unit
     Box(modifier = modifier) {
         QRCodeComposable(onQrCodeScanned)
         Text(
-            text = "scan_barcode_instruction",
+            text = "Leia o código de barras",
             modifier = Modifier.background(Color.Black.copy(alpha = 0.3f))
                 .align(Alignment.TopCenter).padding(48.dp),
             style = MaterialTheme.typography.titleLarge.copy(color = Color.White)
         )
         Text(
-            text = "scan_qr_code",
+            text = "",
             modifier = Modifier.background(Color.Black.copy(alpha = 0.3f))
                 .align(Alignment.BottomCenter).padding(48.dp),
             style = MaterialTheme.typography.titleLarge.copy(color = Color.White)

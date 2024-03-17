@@ -11,48 +11,44 @@ import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.CreateFam
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.DeleteFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.GetAllFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.UpdateFamilyListUseCase
+import dev.haroldjose.familysharedlist.domainLayer.usecases.product.GetProductByCodeUseCase
+import dev.haroldjose.familysharedlist.getPlatform
 
 class FamilyListSharedViewModel(
     private val getAllFamilyListUseCase: GetAllFamilyListUseCase,
     private val createFamilyListUseCase: CreateFamilyListUseCase,
     private val updateFamilyListUseCase: UpdateFamilyListUseCase,
     private val deleteFamilyListUseCase: DeleteFamilyListUseCase,
-    private val getOrCreateAccountFromLocalUuidUseCase: GetOrCreateAccountFromLocalUuidUseCase
+    private val getOrCreateAccountFromLocalUuidUseCase: GetOrCreateAccountFromLocalUuidUseCase,
+    private val getProductByCodeUseCase: GetProductByCodeUseCase
 ): IFamilyListSharedViewModel {
-
+    private var familyListModelsCompleted: List<FamilyListModel> by mutableStateOf(arrayListOf())
     override var familyListModels: List<FamilyListModel> by mutableStateOf(arrayListOf())
     override var loading:Boolean by mutableStateOf(false)
     override var newItemName: String by mutableStateOf("")
     override var quantity: Int by mutableStateOf(1)
-    override var tabIndex: Int by mutableStateOf(1)
+    override var tabIndex: FamilyListSharePageTabEnum by mutableStateOf(FamilyListSharePageTabEnum.PENDING)
     private lateinit var accountModel: AccountModel
 
-    override suspend fun loadData(tabIndex: Int) {
+    override suspend fun loadData(tabIndex: FamilyListSharePageTabEnum) {
         this.tabIndex = tabIndex
         loading = true
 
         accountModel = getOrCreateAccountFromLocalUuidUseCase.execute()
 
+        familyListModelsCompleted = getAllFamilyListUseCase.execute().sortedBy { it.name.lowercase() }
         familyListModels = when (tabIndex) {
-            0 -> getAllFamilyListUseCase
-                .execute()
-                .filter {
-                    !it.isCompleted && it.isPriorized
-                }
-                .sortedBy { it.name.lowercase() }
-            1 -> getAllFamilyListUseCase
-                .execute()
+            FamilyListSharePageTabEnum.PRIORIZED -> familyListModelsCompleted
+                .filter { !it.isCompleted && it.isPriorized }
+
+            FamilyListSharePageTabEnum.PENDING -> familyListModelsCompleted
                 .filter { !it.isCompleted }
-                .sortedBy { it.name.lowercase() }
-            2 -> getAllFamilyListUseCase
-                .execute()
+
+            FamilyListSharePageTabEnum.COMPLETED -> familyListModelsCompleted
                 .filter { it.isCompleted }
-                .sortedBy { it.name.lowercase() }
 
             else -> {
-                getAllFamilyListUseCase
-                    .execute()
-                    .sortedBy { it.name.lowercase() }
+                familyListModelsCompleted
             }
         }
 
@@ -64,10 +60,17 @@ class FamilyListSharedViewModel(
         if (newItemName.isEmpty())
             return
 
+        if (getPlatform().isDebug && newItemName.startsWith("debug", ignoreCase = true)) {
+            newItemName = newItemName.replace(oldValue = "debug", newValue = "", ignoreCase = true)
+            addBy(barcode = newItemName)
+            newItemName = ""
+            return
+        }
+
         val item = FamilyListModel(
             name = newItemName,
             quantity = quantity,
-            isPriorized = this.tabIndex == 0,
+            isPriorized = this.tabIndex.isPriorized(),
             isCompleted = false
         )
         newItemName = ""
@@ -81,20 +84,50 @@ class FamilyListSharedViewModel(
         if (barcode.isEmpty())
             return
 
-        //TODO: create logic to search product by barcode
-
-        val item = FamilyListModel(
-            name = barcode,
-            quantity = quantity,
-            isPriorized = this.tabIndex == 0,
-            isCompleted = false
-        )
-
         loading = true
-        createFamilyListUseCase.execute(item = item)
-        Logger.d("FamilyListSharedViewModel", "createFamilyListUseCase executed")
-        loadData(this.tabIndex)
-        Logger.d("FamilyListSharedViewModel", "loadData executed")
+        val productModelFounded = getProductByCodeUseCase.execute(code = barcode)
+
+        productModelFounded?.let { productModel ->
+
+            //verifica se o item ja foi adicionado
+            familyListModelsCompleted.firstOrNull { familyListModel ->
+                familyListModel.name.compareTo(productModel.productName, ignoreCase = true) == 0
+            }?.let { itemFounded ->
+
+                //se o item estiver concluido, altera para pendente e muda a tab
+                if (itemFounded.isCompleted) {
+                    itemFounded.isCompleted = false
+                    itemFounded.isPriorized = this.tabIndex.isPriorized()
+                    update(item = itemFounded)
+                    if (this.tabIndex.isCompleted())
+                        this.tabIndex = FamilyListSharePageTabEnum.PENDING
+
+                    loadData(this.tabIndex)
+                    return
+                }
+
+                //se nao estiver concluido aumenta a quantidade do mesmo em 1
+                if (!itemFounded.isCompleted) {
+                    itemFounded.isPriorized = this.tabIndex.isPriorized()
+                    itemFounded.quantity += 1
+                    update(item = itemFounded)
+                    loadData(this.tabIndex)
+                    return
+                }
+            }
+
+            val item = FamilyListModel(
+                name = productModel.productName,
+                quantity = quantity,
+                isPriorized = this.tabIndex == FamilyListSharePageTabEnum.PRIORIZED,
+                isCompleted = false
+            )
+
+            createFamilyListUseCase.execute(item = item)
+            Logger.d("FamilyListSharedViewModel", "createFamilyListUseCase executed")
+            loadData(this.tabIndex)
+            Logger.d("FamilyListSharedViewModel", "loadData executed")
+        }
     }
 
     override fun showError(e: Throwable) {

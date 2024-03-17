@@ -6,12 +6,12 @@ import platform.Foundation.NSURL
 import platform.Foundation.NSUUID
 import platform.UIKit.UIApplication
 import platform.UIKit.UIDevice
+import kotlin.native.Platform
 
 class IOSPlatform: IPlatform {
     override val name: String = UIDevice.currentDevice.systemName() + " " + UIDevice.currentDevice.systemVersion
 
-    //FIXME: harold
-    override val isDebug: Boolean = false //Platform.isDebugBinary
+    override val isDebug: Boolean = Platform.isDebugBinary
     override fun generateUUID(): String = NSUUID().UUIDString()
     override fun getKeyValueStorageDataSource(): IKeyValueStorageDataSource = IOSKeyValueStorageDataSource()
 

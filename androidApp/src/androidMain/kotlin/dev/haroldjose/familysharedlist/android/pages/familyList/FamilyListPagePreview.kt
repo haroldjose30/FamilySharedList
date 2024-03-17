@@ -11,6 +11,5 @@ fun FamilyListPagePreview() {
     FamilyListPage(
         viewModel = FamilyListSharedViewModelMocked(),
         goToSetting = {},
-        goToScanner = {}
     )
 }
