@@ -26,8 +26,8 @@ class FamilyListSharedViewModelMocked() : IFamilyListSharedViewModel {
     override var loading: Boolean = false
     override var newItemName: String = "newItem"
     override var quantity: Int = 1
-    override var tabIndex: Int = 0
-    override suspend fun loadData(tabIndex: Int) {}
+    override var tabIndex: FamilyListSharePageTabEnum = FamilyListSharePageTabEnum.PRIORIZED
+    override suspend fun loadData(tabIndex: FamilyListSharePageTabEnum) {}
     override suspend fun add() {}
     override suspend fun addBy(barcode: String) {}
 

@@ -15,8 +15,7 @@ fun NavigationView() {
         composable(ViewRouter.HOME.value) {
             FamilyListPage(
                 viewModel = koinInject(),
-                goToSetting = { navController.navigate(ViewRouter.SETTINGS.value)},
-                goToScanner = {}
+                goToSetting = { navController.navigate(ViewRouter.SETTINGS.value)}
             )
         }
         composable(ViewRouter.SETTINGS.value) {

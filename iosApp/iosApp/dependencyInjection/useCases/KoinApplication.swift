@@ -27,6 +27,9 @@ extension KoinApplication {
          \.getOrCreateAccountFromLocalUuidUseCase,
          \.setSharedAccountByCodeUseCase,
 
+        //Product
+        \.getProductByCodeUseCase,
+
          //PRESENTATION
          \.iSettingsSharedViewModel
     ]

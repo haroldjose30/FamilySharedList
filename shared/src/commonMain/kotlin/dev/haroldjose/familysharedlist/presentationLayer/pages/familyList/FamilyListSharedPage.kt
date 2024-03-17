@@ -32,9 +32,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.rounded.Settings
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomSheetScaffold
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
@@ -67,7 +65,7 @@ internal fun FamilyListSharedPage(
     goToSetting: () -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
-    var tabIndex by remember { mutableStateOf(1) }
+    var tabIndex: FamilyListSharePageTabEnum by remember { mutableStateOf(FamilyListSharePageTabEnum.PENDING) }
 
     LaunchedEffect(key1 = "FamilyListPage"){
         viewModel.loadData(tabIndex)
@@ -180,11 +178,12 @@ internal fun FamilyListSharedPage(
         ) { innerPadding ->
             val tabs = listOf("Priorizado", "Pendente", "Comprado")
             Column(modifier = Modifier.padding(innerPadding)) {
-                TabRow(selectedTabIndex = tabIndex) {
+                TabRow(selectedTabIndex = tabIndex.value) {
                     tabs.forEachIndexed { index, title ->
                         Tab(text = { Text(title) },
-                            selected = tabIndex == index,
-                            onClick = { tabIndex = index
+                            selected = tabIndex.value == index,
+                            onClick = {
+                                tabIndex = FamilyListSharePageTabEnum.getBy(index)
                                 coroutineScope.launch {
                                     viewModel.loadData(tabIndex)
                                 }
@@ -215,7 +214,7 @@ internal fun FamilyListSharedPage(
 @Composable
 private fun FamilyListSharedTab(
     viewModel: IFamilyListSharedViewModel,
-    tabIndex: Int
+    tabIndex: FamilyListSharePageTabEnum
 ) {
 
     //region STATE

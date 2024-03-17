@@ -18,13 +18,6 @@ data class AccountModel(
 ) {
     init {
         this.uuid = uuid.ifEmpty { getPlatform().generateUUID() }
-        this.name = name
-        this.createdDate = createdDate
-        this.updatedDate = updatedDate
-        this.name = name
-        this.email = email
-        this.myAccountIsSharedWith = myAccountIsSharedWith
-        this.accountsSharedWithMe = accountsSharedWithMe
         this.platform = getPlatform().name
         this.accountShortCodeForShare = accountShortCodeForShare.ifEmpty { generateShortCodeByUuid(uuid = this.uuid) }
     }

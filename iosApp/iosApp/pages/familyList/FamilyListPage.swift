@@ -15,13 +15,11 @@ struct FamilyListPage: UIViewControllerRepresentable {
 
     var viewModel: IFamilyListSharedViewModel
     var goToSetting: () -> Void
-    var goToScanner: () -> Void
 
     func makeUIViewController(context: Context) -> UIViewController {
         FamilyListPage_iosKt.FamilyListPageViewController(
             viewModel: viewModel,
-            goToSetting: goToSetting, 
-            goToScanner: goToScanner
+            goToSetting: goToSetting
         )
     }
 
@@ -33,6 +31,5 @@ struct FamilyListPage: UIViewControllerRepresentable {
     FamilyListPage(
         viewModel: FamilyListSharedViewModelMocked(),
         goToSetting: {},
-        goToScanner: {}
     )
 }

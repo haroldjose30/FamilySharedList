@@ -18,7 +18,8 @@ extension ResolverAppProtocol {
             createFamilyListUseCase: KoinApplication.shared.inject(),
             updateFamilyListUseCase: KoinApplication.shared.inject(),
             deleteFamilyListUseCase: KoinApplication.shared.inject(),
-            getOrCreateAccountFromLocalUuidUseCase: KoinApplication.shared.inject()
+            getOrCreateAccountFromLocalUuidUseCase: KoinApplication.shared.inject(),
+            getProductByCodeUseCase: KoinApplication.shared.inject()
         )
     }
 
