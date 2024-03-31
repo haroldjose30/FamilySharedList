@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
+
+    alias(libs.plugins.serialization)
 }
 
 android {
@@ -47,7 +49,6 @@ dependencies {
     implementation(libs.navigation.compose)
     debugImplementation(libs.compose.ui.tooling)
 
-    //mudar para android nativo
     implementation(libs.camera.camera2)
     implementation(libs.camera.core)
     implementation(libs.camera.extensions)
@@ -60,7 +61,14 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
 
+    implementation(libs.kotlinx.datetime)
 
-    //api("androidx.appcompat:appcompat:1.6.1")
-    //api("androidx.core:core-ktx:1.12.0")
+    //implementation(libs.kotlinx.coroutines.core)
+    //implementation(libs.kotlinx.serialization.core)
+    //implementation(libs.kotlinx.serialization.json)
+    //implementation(libs.ktor.client.core)
+    //implementation(libs.ktor.client.serialization)
+    //implementation(libs.ktor.serialization.kotlinx.json)
+    //implementation(libs.ktor.client.content.negotiation)
+    //implementation(libs.ktor.client.okhttp)
 }
