@@ -1,12 +1,13 @@
 *.iml
 .gradle
-/local.properties
-/.idea
+.idea
 .DS_Store
-build/
-/captures
+build
+captures
 .externalNativeBuild
 .cxx
+local.properties
+xcuserdata
 iosApp/iosApp.xcworkspace/*
 iosApp/iosApp.xcodeproj/*
 !iosApp/iosApp.xcodeproj/project.pbxproj

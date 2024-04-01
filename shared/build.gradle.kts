@@ -1,111 +1,72 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 
 plugins {
-    kotlin("multiplatform")
-    id("com.android.library")
-    id("org.jetbrains.compose")
+    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.androidLibrary)
 
-    kotlin("plugin.serialization")
-    id("com.codingfeline.buildkonfig")
+    alias(libs.plugins.serialization)
+    alias(libs.plugins.buildkonfig)
 }
 
 kotlin {
-    androidTarget()
+    //to avoid testClasses not found by compiler
+    task("testClasses")
 
+    androidTarget {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = "1.8"
+            }
+        }
+    }
+    
     listOf(
         iosX64(),
         iosArm64(),
         iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
+    ).forEach {
+        it.binaries.framework {
             baseName = "shared"
             isStatic = true
         }
     }
 
     sourceSets {
-
-        val ktorVersion = extra["ktor.version"] as String
-        val coroutinesVersion = extra["coroutines.version"] as String
-        val serializationVersion = extra["serialization.version"] as String
-        val koinCoreVersion = extra["koin.core.version"] as String
-        val kotlinxDatetimeVersion = extra["kotlinx.datetime.version"] as String
-
-        val commonMain by getting {
-            dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.ui)
-
-                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
-                implementation(compose.components.resources)
-
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
-                implementation("io.ktor:ktor-client-core:$ktorVersion")
-                implementation("io.ktor:ktor-client-serialization:$ktorVersion")
-                implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
-                implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-                implementation("io.insert-koin:koin-core:$koinCoreVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:$kotlinxDatetimeVersion")
-
-                implementation("androidx.camera:camera-camera2:1.2.3")
-                implementation("androidx.camera:camera-core:1.2.3")
-                implementation("androidx.camera:camera-extensions:1.2.3")
-                implementation("androidx.camera:camera-lifecycle:1.2.3")
-                implementation("androidx.camera:camera-view:1.2.3")
-                implementation("androidx.camera:camera-video:1.2.3")
-
-                implementation("com.google.mlkit:barcode-scanning:17.2.0")
-            }
+        commonMain.dependencies {
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.kotlinx.serialization.core)
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.serialization)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.koin.core)
+            implementation(libs.kotlinx.datetime)
         }
-        val androidMain by getting {
-            dependencies {
-                api("androidx.activity:activity-compose:1.7.2")
-                api("androidx.appcompat:appcompat:1.6.1")
-                api("androidx.core:core-ktx:1.10.1")
-                implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
-            }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
         }
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-            dependencies {
-                implementation("io.ktor:ktor-client-darwin:$ktorVersion")
-            }
+        androidMain.dependencies {
+            implementation(libs.ktor.client.okhttp)
+        }
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
         }
     }
 }
 
 android {
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    namespace = "dev.haroldjose.familysharedlist.common"
-
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    sourceSets["main"].res.srcDirs("src/androidMain/res")
-    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
-
+    namespace = "dev.haroldjose.familysharedlist"
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
     defaultConfig {
-        minSdk = (findProperty("android.minSdk") as String).toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-    kotlin {
-        jvmToolchain(17)
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
-dependencies {
-    implementation("androidx.core:core-ktx:+")
-}
+
 
 //To generate BuildKonfig file: ./gradlew -p shared generateBuildKonfig
 buildkonfig {

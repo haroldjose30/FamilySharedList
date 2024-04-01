@@ -1,60 +1,74 @@
 plugins {
-    kotlin("multiplatform")
-    id("com.android.application")
-    id("org.jetbrains.compose")
-}
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.kotlinAndroid)
 
-kotlin {
-    androidTarget()
-    sourceSets {
-        val koinCoreVersion = extra["koin.core.version"] as String
-        val koinAndroidVersion = extra["koin.android.version"] as String
-        val koinAndroidComposeVersion = extra["koin.android.compose.version"] as String
-        val navigationComposeVersion = extra["navigation.compose.version"] as String
-
-        val androidMain by getting {
-            dependencies {
-                implementation(project(":shared"))
-
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.preview)
-                implementation(compose.uiTooling)
-                implementation(compose.ui)
-
-                implementation("androidx.navigation:navigation-compose:$navigationComposeVersion")
-
-
-                implementation("io.insert-koin:koin-core:$koinCoreVersion")
-                implementation("io.insert-koin:koin-android:$koinAndroidVersion")
-                implementation("io.insert-koin:koin-androidx-compose:$koinAndroidComposeVersion")
-            }
-        }
-    }
+    alias(libs.plugins.serialization)
 }
 
 android {
-    compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    namespace = "dev.haroldjose"
-
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-
+    namespace = "dev.haroldjose.familysharedlist.android"
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
     defaultConfig {
         applicationId = "dev.haroldjose.familysharedlist.android"
-        minSdk = (findProperty("android.minSdk") as String).toInt()
-        targetSdk = (findProperty("android.targetSdk") as String).toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+    buildFeatures {
+        compose = true
     }
-    kotlin {
-        jvmToolchain(17)
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
+
 dependencies {
-    implementation("androidx.core:core-ktx:+")
+    implementation(projects.shared)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.tooling.preview)
+    implementation(libs.compose.material3)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.navigation.compose)
+    debugImplementation(libs.compose.ui.tooling)
+
+    implementation(libs.camera.camera2)
+    implementation(libs.camera.core)
+    implementation(libs.camera.extensions)
+    implementation(libs.camera.lifecycle)
+    implementation(libs.camera.view)
+    implementation(libs.camera.video)
+    implementation(libs.barcode.scanning)
+
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+
+    implementation(libs.kotlinx.datetime)
+
+    //implementation(libs.kotlinx.coroutines.core)
+    //implementation(libs.kotlinx.serialization.core)
+    //implementation(libs.kotlinx.serialization.json)
+    //implementation(libs.ktor.client.core)
+    //implementation(libs.ktor.client.serialization)
+    //implementation(libs.ktor.serialization.kotlinx.json)
+    //implementation(libs.ktor.client.content.negotiation)
+    //implementation(libs.ktor.client.okhttp)
 }

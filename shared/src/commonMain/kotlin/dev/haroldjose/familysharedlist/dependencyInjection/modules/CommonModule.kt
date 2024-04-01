@@ -17,10 +17,6 @@ import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.DeleteFam
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.GetAllFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.UpdateFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.product.GetProductByCodeUseCase
-import dev.haroldjose.familysharedlist.presentationLayer.pages.familyList.FamilyListSharedViewModel
-import dev.haroldjose.familysharedlist.presentationLayer.pages.familyList.IFamilyListSharedViewModel
-import dev.haroldjose.familysharedlist.presentationLayer.pages.settings.ISettingsSharedViewModel
-import dev.haroldjose.familysharedlist.presentationLayer.pages.settings.SettingsSharedViewModel
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
@@ -47,9 +43,5 @@ val commonModule = module {
 
     //product
     factoryOf(::GetProductByCodeUseCase)
-
-    //UI
-    factoryOf(::SettingsSharedViewModel) bind ISettingsSharedViewModel::class
-    factoryOf(::FamilyListSharedViewModel) bind IFamilyListSharedViewModel::class
 }
 
