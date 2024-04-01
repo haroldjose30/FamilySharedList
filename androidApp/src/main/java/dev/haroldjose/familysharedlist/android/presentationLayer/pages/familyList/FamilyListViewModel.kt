@@ -30,16 +30,22 @@ class FamilyListViewModel(
     override var tabIndex: FamilyListPageTabEnum by mutableStateOf(FamilyListPageTabEnum.PENDING)
     private lateinit var accountModel: AccountModel
 
-    override suspend fun loadData(tabIndex: FamilyListPageTabEnum) {
+    override var goToSetting: () -> Unit = {}
+    override var goToEditItem: (FamilyListModel) -> Unit = {}
+
+    override suspend fun loadData(tabIndex: FamilyListPageTabEnum, fromNetwork: Boolean) {
         this.tabIndex = tabIndex
         loading = true
 
         accountModel = getOrCreateAccountFromLocalUuidUseCase.execute()
 
-        familyListModelsCompleted = getAllFamilyListUseCase.execute().sortedBy { it.name.lowercase() }
+        if (fromNetwork) {
+            familyListModelsCompleted = getAllFamilyListUseCase.execute().sortedBy { it.name.lowercase() }
+        }
+
         familyListModels = when (tabIndex) {
             FamilyListPageTabEnum.PRIORIZED -> familyListModelsCompleted
-                .filter { !it.isCompleted && it.isPriorized }
+                .filter { !it.isCompleted && it.isPrioritized }
 
             FamilyListPageTabEnum.PENDING -> familyListModelsCompleted
                 .filter { !it.isCompleted }
@@ -66,13 +72,13 @@ class FamilyListViewModel(
         val item = FamilyListModel(
             name = newItemName,
             quantity = quantity,
-            isPriorized = this.tabIndex.isPriorized(),
+            isPrioritized = this.tabIndex.isPriorized(),
             isCompleted = false
         )
         newItemName = ""
         loading = true
         createFamilyListUseCase.execute(item = item)
-        loadData(this.tabIndex)
+        loadData(this.tabIndex, fromNetwork = true)
     }
 
     override suspend fun addBy(barcode: String) {
@@ -93,19 +99,19 @@ class FamilyListViewModel(
                 //se o item estiver concluido, altera para pendente e muda a tab
                 if (itemFounded.isCompleted) {
                     itemFounded.isCompleted = false
-                    itemFounded.isPriorized = this.tabIndex.isPriorized()
+                    itemFounded.isPrioritized = this.tabIndex.isPriorized()
                     update(item = itemFounded)
                     if (this.tabIndex.isCompleted())
                         this.tabIndex = FamilyListPageTabEnum.PENDING
 
-                    loadData(this.tabIndex)
+                    loadData(this.tabIndex, fromNetwork = true)
                     return
                 } else {
                     //se nao estiver concluido aumenta a quantidade do mesmo em 1
-                    itemFounded.isPriorized = this.tabIndex.isPriorized()
+                    itemFounded.isPrioritized = this.tabIndex.isPriorized()
                     itemFounded.quantity += 1
                     update(item = itemFounded)
-                    loadData(this.tabIndex)
+                    loadData(this.tabIndex, fromNetwork = true)
                     return
                 }
             }
@@ -113,13 +119,13 @@ class FamilyListViewModel(
             val item = FamilyListModel(
                 name = productModel.productName,
                 quantity = quantity,
-                isPriorized = this.tabIndex == FamilyListPageTabEnum.PRIORIZED,
+                isPrioritized = this.tabIndex == FamilyListPageTabEnum.PRIORIZED,
                 isCompleted = false
             )
 
             createFamilyListUseCase.execute(item = item)
             Logger.d("FamilyListSharedViewModel", "createFamilyListUseCase executed")
-            loadData(this.tabIndex)
+            loadData(this.tabIndex, fromNetwork = true)
             Logger.d("FamilyListSharedViewModel", "loadData executed")
         }
     }
@@ -129,18 +135,51 @@ class FamilyListViewModel(
         //e.message?.let { Log.d("showError", it) }
     }
 
-    override suspend fun update(item: FamilyListModel){
-
-        loading = true
-        updateFamilyListUseCase.execute(item = item)
-        loading = false
+    override suspend fun remove(uuid: String){
+        familyListModelsCompleted.firstOrNull { it.uuid ==  uuid}?.let { item ->
+            loading = true
+            deleteFamilyListUseCase.execute(uuid = item.uuid)
+            familyListModelsCompleted = familyListModelsCompleted.filter { it.uuid != uuid }
+            loadData(this.tabIndex, fromNetwork = false)
+            loading = false
+        }
     }
 
-    override suspend fun remove(item: FamilyListModel){
+    override suspend fun updateIsCompleted(uuid: String, isCompleted: Boolean) {
+        familyListModelsCompleted.firstOrNull { it.uuid ==  uuid}?.let { item ->
+            item.isCompleted = isCompleted
+            if (item.isCompleted) {
+                item.isPrioritized = false
+            }
+            update(item)
+        }
+    }
 
+    override suspend fun updateIsPrioritized(uuid: String, isPrioritized: Boolean) {
+        familyListModelsCompleted.firstOrNull { it.uuid ==  uuid}?.let { item ->
+            item.isPrioritized = isPrioritized
+            update(item)
+        }
+    }
+
+    override suspend fun updateName(uuid: String, name: String) {
+        familyListModelsCompleted.firstOrNull { it.uuid ==  uuid}?.let { item ->
+            item.name = name
+            update(item)
+        }
+    }
+
+    override suspend fun updateQuantity(uuid: String, quantity: Int) {
+        familyListModelsCompleted.firstOrNull { it.uuid ==  uuid}?.let { item ->
+            item.quantity = quantity
+            update(item)
+        }
+    }
+
+    private suspend fun update(item: FamilyListModel){
         loading = true
-        deleteFamilyListUseCase.execute(uuid = item.uuid)
-        loadData(this.tabIndex)
+        updateFamilyListUseCase.execute(item = item)
+        loadData(this.tabIndex, fromNetwork = false)
         loading = false
     }
 }

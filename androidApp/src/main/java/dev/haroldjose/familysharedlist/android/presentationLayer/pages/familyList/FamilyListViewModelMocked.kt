@@ -4,7 +4,7 @@ import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyLis
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.IFamilyListViewModel
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
 
-class FamilyListViewModelMocked() : IFamilyListViewModel {
+class FamilyListViewModelMocked : IFamilyListViewModel {
     override var familyListModels: List<FamilyListModel> = arrayListOf(
         FamilyListModel(
             uuid = "sample1",
@@ -29,11 +29,22 @@ class FamilyListViewModelMocked() : IFamilyListViewModel {
     override var newItemName: String = "newItem"
     override var quantity: Int = 1
     override var tabIndex: FamilyListPageTabEnum = FamilyListPageTabEnum.PRIORIZED
-    override suspend fun loadData(tabIndex: FamilyListPageTabEnum) {}
+
+    override var goToSetting: () -> Unit = {}
+    override var goToEditItem: (FamilyListModel) -> Unit = {}
+
+    override suspend fun loadData(tabIndex: FamilyListPageTabEnum, fromNetwork: Boolean) {}
     override suspend fun add() {}
     override suspend fun addBy(barcode: String) {}
 
     override fun showError(e: Throwable) {}
-    override suspend fun update(item: FamilyListModel) {}
-    override suspend fun remove(item: FamilyListModel) {}
+    override suspend fun remove(uuid: String) {}
+
+    override suspend fun updateIsCompleted(uuid: String, isCompleted: Boolean) {}
+
+    override suspend fun updateIsPrioritized(uuid: String, isPrioritized: Boolean) {}
+
+    override suspend fun updateName(uuid: String, name: String) {}
+
+    override suspend fun updateQuantity(uuid: String, quantity: Int) {}
 }
