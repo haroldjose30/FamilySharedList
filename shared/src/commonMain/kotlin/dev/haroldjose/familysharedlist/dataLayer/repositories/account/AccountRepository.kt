@@ -1,35 +1,32 @@
 package dev.haroldjose.familysharedlist.dataLayer.repositories.account
 
-import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.account.api.AccountApiDataSource
-import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.account.api.IAccountApiDataSource
-import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.account.mongoDb.AccountMongoDbDataApiDataSource
-import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.account.mongoDb.IAccountMongoDbDataApiDataSource
+import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.account.AccountRemoteDataSource
+import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.account.IAccountRemoteDataSource
 import dev.haroldjose.familysharedlist.dataLayer.dto.AccountDto
 
 internal class AccountRepository() : IAccountRepository {
     //TODO: add to DI
-    private val accountMongoDbDataApiDataSource: IAccountMongoDbDataApiDataSource = AccountMongoDbDataApiDataSource()
-    private val accountApiDataSource: IAccountApiDataSource = AccountApiDataSource()
+    private val accountRemoteDataSource: IAccountRemoteDataSource = AccountRemoteDataSource()
     override suspend fun insert(item: AccountDto) {
-        accountMongoDbDataApiDataSource.insert(item)
+        accountRemoteDataSource.insert(item)
     }
     override suspend fun findBy(uuid: String): AccountDto? {
-        return accountMongoDbDataApiDataSource.findBy(uuid)
+        return accountRemoteDataSource.findBy(uuid)
     }
     override suspend fun update(item: AccountDto) {
-        accountMongoDbDataApiDataSource.update(item)
+        accountRemoteDataSource.update(item)
     }
     override suspend fun delete(uuid: String) {
-        accountMongoDbDataApiDataSource.delete(uuid)
+        accountRemoteDataSource.delete(uuid)
     }
     override suspend fun createSampleDataForFirstAccess(uuid: String): Boolean {
-        return accountApiDataSource.createSampleDataForFirstAccess(uuid = uuid)
+        return accountRemoteDataSource.createSampleDataForFirstAccess(uuid = uuid)
     }
     override suspend fun setSharedAccountByCode(
         accountUuid: String,
         code: String
     ): Boolean {
-        return accountApiDataSource.setSharedAccountByCode(
+        return accountRemoteDataSource.setSharedAccountByCode(
             accountUuid = accountUuid,
             code = code
         )

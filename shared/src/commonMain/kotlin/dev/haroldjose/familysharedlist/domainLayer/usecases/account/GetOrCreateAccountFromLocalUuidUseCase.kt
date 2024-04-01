@@ -17,7 +17,6 @@ object Constants {
 class GetOrCreateAccountFromLocalUuidUseCase(
     private val keyValueStorageRepository: IKeyValueStorageRepository,
     private val accountRepository: IAccountRepository,
-    private val familyListRepository: IFamilyListRepository
 )  {
 
     suspend fun execute(): AccountModel {
@@ -28,14 +27,13 @@ class GetOrCreateAccountFromLocalUuidUseCase(
             //TODO: verify if accountsSharedWithMe was revoked
             val defaultAccountSharedWithMe = it.accountsSharedWithMe.firstOrNull()
             val selectedDatabaseName: String = defaultAccountSharedWithMe ?: it.uuid
-            familyListRepository.setDataBase(databaseName = selectedDatabaseName)
+            keyValueStorageRepository.put(KeyValueStorageRepositoryEnum.SELECTED_DATABASE_NAME, selectedDatabaseName)
             return it
         }
 
         val accountModel = AccountModel(uuid = accountUuid)
         accountRepository.insert(accountModel.toDto())
-        //configure singleton
-        familyListRepository.setDataBase(databaseName = accountModel.uuid)
+        keyValueStorageRepository.put(KeyValueStorageRepositoryEnum.SELECTED_DATABASE_NAME, accountModel.uuid)
 
         //Generate SampleData for this new user
         accountRepository.createSampleDataForFirstAccess(uuid = accountUuid)
@@ -73,8 +71,7 @@ class GetOrCreateAccountFromLocalUuidUseCase(
         return newAccountUuid
     }
 
-    private fun sanitizeUuid(uuid: String) : String {
-        val sanitizedUuid = uuid.replace("-", "")
-        return sanitizedUuid
+    private fun sanitizeUuid(uuid: String): String {
+        return uuid.replace("-", "")
     }
 }

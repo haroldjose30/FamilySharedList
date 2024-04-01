@@ -9,7 +9,6 @@ import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.DeleteFam
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.GetAllFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.UpdateFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.product.GetProductByCodeUseCase
-import dev.haroldjose.familysharedlist.presentationLayer.pages.settings.ISettingsSharedViewModel
 import org.koin.core.Koin
 
 
@@ -40,9 +39,3 @@ val Koin.setSharedAccountByCodeUseCase: SetSharedAccountByCodeUseCase
 //Product
 val Koin.getProductByCodeUseCase: GetProductByCodeUseCase
     get() = get()
-
-//PRESENTATION
-val Koin.iSettingsSharedViewModel: ISettingsSharedViewModel
-    get() = get()
-
-

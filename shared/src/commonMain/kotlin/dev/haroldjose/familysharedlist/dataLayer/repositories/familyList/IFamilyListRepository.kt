@@ -7,5 +7,4 @@ interface IFamilyListRepository{
     suspend fun findAll(): List<FamilyListDto>
     suspend fun update(item: FamilyListDto)
     suspend fun delete(uuid: String)
-    fun setDataBase(databaseName: String)
 }
