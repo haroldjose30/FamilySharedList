@@ -18,13 +18,17 @@ class QuickInsertListViewModel(
 
         if (text.isEmpty()) return
 
-        val listOfItem = text.lines().map { item ->
+        val listOfItem = text.lines().mapNotNull { item ->
 
             //extrai os numeros
             val quantityStr = item.filter { it.isDigit() }.toIntOrNull()
             //extrai o nome
             val name = item.filter { !it.isDigit() }
-            return@map FamilyListModel(
+
+            if (name.isEmpty())
+                return@mapNotNull null
+
+            return@mapNotNull FamilyListModel(
                 name = name.ifEmpty { item },
                 isPrioritized = true,
                 quantity = quantityStr ?: 1
