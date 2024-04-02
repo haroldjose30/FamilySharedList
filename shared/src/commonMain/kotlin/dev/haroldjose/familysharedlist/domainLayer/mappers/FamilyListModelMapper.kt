@@ -8,7 +8,7 @@ internal fun FamilyListDto.toModel(): FamilyListModel {
         uuid = this.uuid,
         name = this.name,
         isCompleted = this.isCompleted,
-        isPrioritized = this.isPriorized,
+        isPrioritized = this.isPrioritized,
         quantity = this.quantity
     )
 }
@@ -18,7 +18,7 @@ internal fun FamilyListModel.toDto(): FamilyListDto {
         uuid = this.uuid,
         name = this.name,
         isCompleted = this.isCompleted,
-        isPriorized = this.isPrioritized,
+        isPrioritized = this.isPrioritized,
         quantity = this.quantity
     )
 }

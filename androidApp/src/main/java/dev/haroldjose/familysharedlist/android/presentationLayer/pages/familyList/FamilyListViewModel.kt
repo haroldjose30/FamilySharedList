@@ -31,7 +31,7 @@ class FamilyListViewModel(
     private lateinit var accountModel: AccountModel
 
     override var goToSetting: () -> Unit = {}
-    override var goToEditItem: (FamilyListModel) -> Unit = {}
+    override var goToQuickInsert: () -> Unit = {}
 
     override suspend fun loadData(tabIndex: FamilyListPageTabEnum, fromNetwork: Boolean) {
         this.tabIndex = tabIndex
@@ -72,7 +72,7 @@ class FamilyListViewModel(
         val item = FamilyListModel(
             name = newItemName,
             quantity = quantity,
-            isPrioritized = this.tabIndex.isPriorized(),
+            isPrioritized = this.tabIndex.isPrioritized(),
             isCompleted = false
         )
         newItemName = ""
@@ -99,7 +99,7 @@ class FamilyListViewModel(
                 //se o item estiver concluido, altera para pendente e muda a tab
                 if (itemFounded.isCompleted) {
                     itemFounded.isCompleted = false
-                    itemFounded.isPrioritized = this.tabIndex.isPriorized()
+                    itemFounded.isPrioritized = this.tabIndex.isPrioritized()
                     update(item = itemFounded)
                     if (this.tabIndex.isCompleted())
                         this.tabIndex = FamilyListPageTabEnum.PENDING
@@ -108,7 +108,7 @@ class FamilyListViewModel(
                     return
                 } else {
                     //se nao estiver concluido aumenta a quantidade do mesmo em 1
-                    itemFounded.isPrioritized = this.tabIndex.isPriorized()
+                    itemFounded.isPrioritized = this.tabIndex.isPrioritized()
                     itemFounded.quantity += 1
                     update(item = itemFounded)
                     loadData(this.tabIndex, fromNetwork = true)

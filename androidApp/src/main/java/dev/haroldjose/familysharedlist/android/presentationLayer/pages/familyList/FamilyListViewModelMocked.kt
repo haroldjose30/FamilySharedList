@@ -31,7 +31,7 @@ class FamilyListViewModelMocked : IFamilyListViewModel {
     override var tabIndex: FamilyListPageTabEnum = FamilyListPageTabEnum.PRIORIZED
 
     override var goToSetting: () -> Unit = {}
-    override var goToEditItem: (FamilyListModel) -> Unit = {}
+    override var goToQuickInsert: () -> Unit = {}
 
     override suspend fun loadData(tabIndex: FamilyListPageTabEnum, fromNetwork: Boolean) {}
     override suspend fun add() {}

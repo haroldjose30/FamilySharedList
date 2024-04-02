@@ -11,6 +11,6 @@ data class FamilyListModel(
     var quantity: Int = 1
 ) {
     init {
-        this.uuid = if (uuid.isEmpty()) getPlatform().generateUUID() else uuid
+        this.uuid = uuid.ifEmpty { getPlatform().generateUUID() }
     }
 }

@@ -9,6 +9,8 @@ interface ISettingsViewModel {
     var accountsSharedWithMeTitle: String
     var accountsSharedWithMeSubtitle: String
 
+    var goBack: () -> Unit
+
     suspend fun getAccount()
     suspend fun accessSharedAccountWithCode(code: String)
     suspend fun shareMyCode()

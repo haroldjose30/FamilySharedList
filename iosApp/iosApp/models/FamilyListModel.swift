@@ -14,7 +14,7 @@ extension FamilyListModel: Identifiable {
             uuid: "",
             name: name,
             isCompleted: false, 
-            isPriorized: false,
+            isPrioritized: false,
             quantity: 1
         )
     }

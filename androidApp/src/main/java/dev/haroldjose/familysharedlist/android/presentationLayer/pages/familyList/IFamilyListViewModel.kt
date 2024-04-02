@@ -4,22 +4,22 @@ import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
 
 enum class FamilyListPageTabEnum(val value: Int) {
     PRIORIZED(0) {
-        override fun isPriorized() = true
+        override fun isPrioritized() = true
         override fun isPending() = false
         override fun isCompleted() = false
      },
     PENDING(1){
-        override fun isPriorized() = false
+        override fun isPrioritized() = false
         override fun isPending() = true
         override fun isCompleted() = false
     },
     COMPLETED(2){
-        override fun isPriorized() = false
+        override fun isPrioritized() = false
         override fun isPending() = false
         override fun isCompleted() = true
     };
 
-    abstract fun isPriorized(): Boolean
+    abstract fun isPrioritized(): Boolean
     abstract fun isPending(): Boolean
     abstract fun isCompleted(): Boolean
 
@@ -36,7 +36,7 @@ interface IFamilyListViewModel {
     var tabIndex: FamilyListPageTabEnum
 
     var goToSetting: () -> Unit
-    var goToEditItem: (FamilyListModel) -> Unit
+    var goToQuickInsert: () -> Unit
 
     suspend fun loadData(tabIndex: FamilyListPageTabEnum, fromNetwork: Boolean)
     suspend fun add()

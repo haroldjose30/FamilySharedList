@@ -45,8 +45,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SettingsPage(
-    viewModel: ISettingsViewModel,
-    goBack: () -> Unit
+    viewModel: ISettingsViewModel
 ) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -67,7 +66,7 @@ internal fun SettingsPage(
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { goBack() }) {
+                    IconButton(onClick = { viewModel.goBack() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back"

@@ -7,11 +7,17 @@ import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
 class CreateFamilyListUseCase(
     private val familyListRepository: IFamilyListRepository
 )  {
-
     suspend fun execute(item: FamilyListModel) {
 
         return familyListRepository.insert(
             item = item.toDto()
+        )
+    }
+
+    suspend fun execute(items: List<FamilyListModel>) {
+
+        return familyListRepository.insert(
+            items = items.map { it.toDto() }
         )
     }
 }
