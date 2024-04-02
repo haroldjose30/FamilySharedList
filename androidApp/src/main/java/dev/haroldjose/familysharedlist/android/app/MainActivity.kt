@@ -8,7 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.*
 import androidx.compose.ui.Modifier
 import dev.haroldjose.familysharedlist.AndroidPlatform
-import dev.haroldjose.familysharedlist.android.presentationLayer.pages.navigator.NavigationView
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.navigator.NavigatorView
+import org.koin.compose.koinInject
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +23,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavigationView()
+                    NavigatorView(viewModel = koinInject())
                 }
             }
         }

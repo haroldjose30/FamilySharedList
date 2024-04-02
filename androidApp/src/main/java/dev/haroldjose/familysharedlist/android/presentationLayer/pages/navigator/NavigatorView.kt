@@ -3,7 +3,6 @@ package dev.haroldjose.familysharedlist.android.presentationLayer.pages.navigato
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
-import androidx.navigation.Navigator
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -17,7 +16,9 @@ import dev.haroldjose.familysharedlist.android.presentationLayer.pages.settings.
 import org.koin.compose.koinInject
 
 @Composable
-fun NavigationView() {
+fun NavigatorView(
+    viewModel: INavigatorViewModel
+) {
     val navController: NavHostController = rememberNavController()
     NavHost(navController = navController, startDestination = ViewRouter.QUICK_INSERT.value) {
         composable(ViewRouter.FAMILY_LIST.value) {
@@ -63,7 +64,7 @@ private enum class ViewRouter(val value: String) {
 @Composable
 fun FamilyListPage_Preview() {
     MyApplicationTheme {
-        NavigationView()
+        NavigatorView(viewModel = NavigatorViewModelMock())
     }
 }
 

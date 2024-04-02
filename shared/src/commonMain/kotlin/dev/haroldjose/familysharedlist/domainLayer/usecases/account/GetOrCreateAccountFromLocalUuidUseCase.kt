@@ -48,14 +48,8 @@ class GetOrCreateAccountFromLocalUuidUseCase(
     private fun getOrCreateUuid(): String {
 
         //try to get local UUID
-        val accountUuid = keyValueStorageRepository.getString(
-            key = KeyValueStorageRepositoryEnum.ACCOUNT_UUID
-        )
-
-        accountUuid?.let {
-            if (it.isNotEmpty()) {
-                return it
-            }
+        keyValueStorageRepository.getString(key = KeyValueStorageRepositoryEnum.ACCOUNT_UUID)?.let {
+            if (it.isNotEmpty()) return it
         }
 
         //Generate new Account UUID for this device
