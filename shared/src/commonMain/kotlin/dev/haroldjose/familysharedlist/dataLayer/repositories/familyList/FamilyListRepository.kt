@@ -23,6 +23,10 @@ internal class FamilyListRepository() : IFamilyListRepository {
         remoteDataSource.insert(item)
     }
 
+    override suspend fun insert(items: List<FamilyListDto>) {
+        remoteDataSource.insert(items)
+    }
+
     override suspend fun findAll(): List<FamilyListDto> {
         return remoteDataSource.findAll()
     }

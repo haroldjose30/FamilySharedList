@@ -23,6 +23,7 @@ class SettingsViewModel(
     override var accountShortCodeForShareTitle: String by mutableStateOf(constLoadingMessage)
     override var accountsSharedWithMeTitle: String by mutableStateOf(constAccountsSharedWithMeTitle)
     override var accountsSharedWithMeSubtitle: String by mutableStateOf(constAccountsSharedWithMeSubtitle)
+    override var goBack: () -> Unit = {}
 
     override suspend fun getAccount() {
         val accountUuid = getLocalAccountUuidUseCase.execute()

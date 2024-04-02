@@ -5,11 +5,13 @@ import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.ajhttpclient.
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.familyList.request.FamilyListDeletePostRequest
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.familyList.request.FamilyListFindAllPostRequest
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.familyList.request.FamilyListFindByPostRequest
+import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.familyList.request.FamilyListInsertManyPostRequest
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.familyList.request.FamilyListInsertPostRequest
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.familyList.request.FamilyListUpdatePostRequest
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.familyList.response.FamilyListDeletePostResponse
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.familyList.response.FamilyListFindAllPostResponse
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.familyList.response.FamilyListFindByPostResponse
+import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.familyList.response.FamilyListInsertManyPostResponse
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.familyList.response.FamilyListInsertPostResponse
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.familyList.response.FamilyListUpdatePostResponse
 import dev.haroldjose.familysharedlist.dataLayer.dto.FamilyListDto
@@ -21,6 +23,14 @@ class FamilyListRemoteDataSource(val database: String): IFamilyListRemoteDataSou
         val request = FamilyListInsertPostRequest(database, item)
         val response = client.send<FamilyListInsertPostResponse>(request)
         Logger.d("FamilyListRemoteDataSource.insert.insertedId",response?.insertedId ?: "")
+    }
+
+    override suspend fun insert(items: List<FamilyListDto>) {
+        val request = FamilyListInsertManyPostRequest(database, items)
+        val response = client.send<FamilyListInsertManyPostResponse>(request)
+        response?.insertedIds?.forEach {
+            Logger.d("FamilyListRemoteDataSource.insert.insertedId",it)
+        }
     }
 
     override suspend fun findAll(): List<FamilyListDto> {

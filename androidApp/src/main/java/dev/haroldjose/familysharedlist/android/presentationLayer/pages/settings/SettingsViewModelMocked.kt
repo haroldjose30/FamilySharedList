@@ -11,6 +11,7 @@ class SettingsViewModelMocked(): ISettingsViewModel {
     override var accountShortCodeForShareTitle: String by mutableStateOf("")
     override var accountsSharedWithMeTitle: String by mutableStateOf("")
     override var accountsSharedWithMeSubtitle: String by mutableStateOf("")
+    override var goBack: () -> Unit = {}
 
     override suspend fun getAccount() {
         myAccount = AccountModel(uuid = "mockedUUid")

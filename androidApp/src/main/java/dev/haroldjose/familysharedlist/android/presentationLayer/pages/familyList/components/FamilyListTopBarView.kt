@@ -10,7 +10,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import dev.haroldjose.familysharedlist.android.R
+import dev.haroldjose.familysharedlist.android.app.MyApplicationTheme
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.FamilyListPage
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.IFamilyListViewModel
+import dev.haroldjose.familysharedlist.presentationLayer.pages.familyList.FamilyListViewModelMocked
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -26,12 +32,20 @@ fun FamilyListTopBarView(
             Text("Lista de Compras")
         },
         actions = {
+            IconButton(onClick = { viewModel.goToQuickInsert() }) {
+                Icon(painter = painterResource(R.drawable.list_alt_add),"Configurações")
+            }
             IconButton(onClick = { viewModel.goToSetting() }) {
-                Icon(
-                    imageVector = Icons.Rounded.Settings,
-                    contentDescription = "Configurações"
-                )
+                Icon(Icons.Rounded.Settings,"Configurações")
             }
         },
     )
+}
+
+@Preview
+@Composable
+fun FamilyListTopBarView_Preview() {
+    MyApplicationTheme {
+        FamilyListPage( viewModel = FamilyListViewModelMocked())
+    }
 }
