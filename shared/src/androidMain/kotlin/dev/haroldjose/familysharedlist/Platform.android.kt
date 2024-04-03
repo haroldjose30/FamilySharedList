@@ -10,8 +10,7 @@ import java.util.UUID
 class AndroidPlatform : IPlatform {
     override val name: String = "Android ${android.os.Build.VERSION.SDK_INT}"
 
-    //FIXME: harold
-    override val isDebug: Boolean = false//BuildConfig.DEBUG
+    override val isDebug: Boolean = AndroidPlatform.isDebuggable
     override fun generateUUID() = UUID.randomUUID().toString()
     override fun getKeyValueStorageDataSource(): IKeyValueStorageDataSource = AndroidKeyValueStorageDataSource()
     override fun openUrlOnDefaultBrowser(url: String) {
@@ -23,6 +22,9 @@ class AndroidPlatform : IPlatform {
         androidContextForKmm?.startActivity(browserIntent)
     }
     override fun openShareOptionsWithText(text: String) {
+
+
+
         val intent = Intent()
         intent.action = Intent.ACTION_SEND
         intent.type = "text/plain"
@@ -32,6 +34,7 @@ class AndroidPlatform : IPlatform {
 
     companion object {
         var androidContextForKmm: Context? = null
+        var isDebuggable: Boolean = false
     }
 }
 

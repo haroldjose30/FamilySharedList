@@ -1,4 +1,3 @@
-import androidx.compose.ui.text.toUpperCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.Constants
 
 private fun randomString(

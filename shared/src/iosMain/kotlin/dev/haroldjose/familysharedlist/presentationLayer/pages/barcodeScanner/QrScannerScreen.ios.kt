@@ -1,3 +1,4 @@
+/*
 package dev.haroldjose.familysharedlist.presentationLayer.pages.barcodeScanner
 
 import androidx.compose.foundation.background
@@ -242,3 +243,4 @@ private fun RealDeviceCamera(
         },
     )
 }
+*/
