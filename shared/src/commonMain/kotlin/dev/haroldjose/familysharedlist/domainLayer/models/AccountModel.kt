@@ -21,4 +21,22 @@ data class AccountModel(
         this.platform = getPlatform().name
         this.accountShortCodeForShare = accountShortCodeForShare.ifEmpty { generateShortCodeByUuid(uuid = this.uuid) }
     }
+
+    constructor(uuid: String): this(
+        uuid = uuid,
+        createdDate = Clock.System.now(),
+        updatedDate = Clock.System.now(),
+        name = "",
+        email = "",
+        myAccountIsSharedWith = arrayListOf(),
+        accountsSharedWithMe = arrayListOf(),
+        platform = getPlatform().name,
+        accountShortCodeForShare = ""
+    )
+
+    companion object {
+        fun getCurrentDateTime(): Instant = Clock.System.now()
+    }
 }
+
+

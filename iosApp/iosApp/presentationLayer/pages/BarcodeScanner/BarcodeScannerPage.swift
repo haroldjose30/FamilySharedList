@@ -1,11 +1,3 @@
-//
-//  BarcodeScannerPage.swift
-//  iosApp
-//
-//  Created by Harold José on 19/09/2023.
-//  Copyright © 2023 orgName. All rights reserved.
-//
-
 import SwiftUI
 import AVFoundation
 

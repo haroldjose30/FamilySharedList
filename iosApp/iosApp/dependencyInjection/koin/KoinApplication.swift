@@ -29,9 +29,6 @@ extension KoinApplication {
 
         //Product
         \.getProductByCodeUseCase,
-
-         //PRESENTATION
-         \.iSettingsSharedViewModel
     ]
     
     static func inject<T>() -> T {

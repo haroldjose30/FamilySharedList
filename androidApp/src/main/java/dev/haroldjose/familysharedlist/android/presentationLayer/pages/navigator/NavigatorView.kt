@@ -1,6 +1,7 @@
 package dev.haroldjose.familysharedlist.android.presentationLayer.pages.navigator
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -12,7 +13,7 @@ import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyLis
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.quickInsertList.IQuickInsertListViewModel
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.quickInsertList.QuickInsertListPage
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.settings.ISettingsViewModel
-import dev.haroldjose.familysharedlist.android.presentationLayer.pages.settings.SettingsPage
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.settings.components.SettingsPage
 import org.koin.compose.koinInject
 
 @Composable
@@ -20,6 +21,11 @@ fun NavigatorView(
     viewModel: INavigatorViewModel
 ) {
     val navController: NavHostController = rememberNavController()
+
+    LaunchedEffect(key1 = "NavigatorView") {
+        viewModel.checkIfNeedToCreateNewAccount()
+    }
+
     NavHost(navController = navController, startDestination = ViewRouter.QUICK_INSERT.value) {
         composable(ViewRouter.FAMILY_LIST.value) {
             FamilyListPage(navController)

@@ -1,5 +1,6 @@
 package dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.components
 
+import android.annotation.SuppressLint
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -18,9 +19,10 @@ import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyLis
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.IFamilyListViewModel
 import dev.haroldjose.familysharedlist.presentationLayer.pages.familyList.FamilyListViewModelMocked
 
+@SuppressLint("ComposableNaming")
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun FamilyListTopBarView(
+fun FamilyListTopAppBarView(
     viewModel: IFamilyListViewModel
 ) = @Composable {
     TopAppBar(

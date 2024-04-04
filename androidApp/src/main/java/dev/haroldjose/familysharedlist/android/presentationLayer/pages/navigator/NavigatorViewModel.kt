@@ -9,7 +9,3 @@ class NavigatorViewModel(
         getOrCreateAccountFromLocalUuidUseCase.execute()
     }
 }
-
-class NavigatorViewModelMock(): INavigatorViewModel {
-    override suspend fun checkIfNeedToCreateNewAccount() {}
-}
