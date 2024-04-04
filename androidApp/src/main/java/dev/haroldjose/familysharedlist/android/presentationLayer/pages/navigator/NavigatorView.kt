@@ -13,7 +13,7 @@ import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyLis
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.quickInsertList.IQuickInsertListViewModel
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.quickInsertList.QuickInsertListPage
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.settings.ISettingsViewModel
-import dev.haroldjose.familysharedlist.android.presentationLayer.pages.settings.components.SettingsPage
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.settings.SettingsPage
 import org.koin.compose.koinInject
 
 @Composable
@@ -49,7 +49,7 @@ private fun QuickInsertListPage(navController: NavHostController) {
 private fun SettingsPage(navController: NavHostController) {
     val viewModel: ISettingsViewModel = koinInject()
     viewModel.goBack = { navController.navigate(ViewRouter.FAMILY_LIST.value) }
-    SettingsPage(viewModel)
+    SettingsPage(viewModel = viewModel)
 }
 
 @Composable
