@@ -10,6 +10,7 @@ class SettingsViewModel: SettingsViewModelProtocol {
     @Published var accountShortCodeForShareTitle: String = "carregando..."
     @Published var accountsSharedWithMeTitle: String = "Acessar conta compartilhada"
     @Published var accountsSharedWithMeSubtitle: String = "Obs: atualmente limitada apenas a 1 conta"
+    @Published var isLoading: Bool = true
 
     var goBack: () -> Void = {}
 
@@ -24,11 +25,14 @@ class SettingsViewModel: SettingsViewModelProtocol {
     @MainActor
     func getAccount() async {
 
+        isLoading = true
+
         guard let accountUuid = try? await getLocalAccountUuidUseCase.execute() else {
             //TODO: handle error
             return
         }
 
+        //TODO: handle error
         myAccount = try? await getAccountUseCase.execute(accountUuid: accountUuid)
 
         self.accountShortCodeForShareTitle = self.myAccount?.accountShortCodeForShare ?? "carregando..."
@@ -37,10 +41,13 @@ class SettingsViewModel: SettingsViewModelProtocol {
             self.accountsSharedWithMeTitle = "Acessando a conta:"
             self.accountsSharedWithMeSubtitle = sharedAccount
         }
+
+        isLoading = false
     }
 
     @MainActor
     func accessSharedAccountWithCode(code: String) async {
+        isLoading = true
         guard let accountUuid = try? await getLocalAccountUuidUseCase.execute() else  {
             //TODO: handle error
             return
@@ -50,6 +57,8 @@ class SettingsViewModel: SettingsViewModelProtocol {
         if let _ = try? await setSharedAccountByCodeUseCase.execute(accountUuid: accountUuid, code: code) {
             await getAccount()
         }
+
+        isLoading = false
     }
 
     func shareMyCode() {
@@ -62,4 +71,3 @@ class SettingsViewModel: SettingsViewModelProtocol {
         // TODO: mplement opening app home page functionality
     }
 }
-

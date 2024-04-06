@@ -29,4 +29,5 @@ enum SystemName: String {
     case zzz = "zzz"
     case arrowTriangle2CirclepathIcloud = "arrow.triangle.2.circlepath.icloud"
     case listBullet = "list.bullet"
+    case qrcodeViewfinder = "qrcode.viewfinder"
 }

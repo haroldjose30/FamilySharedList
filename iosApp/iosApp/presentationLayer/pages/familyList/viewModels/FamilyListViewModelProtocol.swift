@@ -10,6 +10,7 @@ protocol FamilyListViewModelProtocol: ObservableObject {
 
     var goToSetting: () -> Void { get set }
     var goToQuickInsert: () -> Void { get set }
+    var goToBarcodeScanner: () -> Void { get set }
 
     func loadData(fromNetwork: Bool, showLoading: Bool) async
     func add() async

@@ -15,6 +15,7 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
 
     var goToSetting: () -> Void = {}
     var goToQuickInsert: () -> Void = {}
+    var goToBarcodeScanner: () -> Void = {}
 
     private var accountModel: AccountModel?
 

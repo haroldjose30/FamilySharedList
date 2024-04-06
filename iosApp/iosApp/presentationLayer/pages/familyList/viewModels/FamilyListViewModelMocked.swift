@@ -18,12 +18,13 @@ class FamilyListViewModelMocked: FamilyListViewModelProtocol {
     ]
 
     var isLoading: Bool = false
-    var newItemName: String = "newItem"
+    var newItemName: String = ""
     var quantity: Int = 1
     var tabIndex: FamilyListPageTabEnum = .prioritized
 
     var goToSetting: () -> Void = {}
     var goToQuickInsert: () -> Void = {}
+    var goToBarcodeScanner: () -> Void = {}
 
     func loadData(fromNetwork: Bool, showLoading: Bool) {}
     func add() {}

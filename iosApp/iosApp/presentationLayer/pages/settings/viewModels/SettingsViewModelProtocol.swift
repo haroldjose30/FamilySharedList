@@ -6,6 +6,7 @@ protocol SettingsViewModelProtocol: ObservableObject {
     var accountShortCodeForShareTitle: String { get }
     var accountsSharedWithMeTitle: String { get }
     var accountsSharedWithMeSubtitle: String { get }
+    var isLoading: Bool { get }
 
     var goBack: () -> Void { get set }
 

@@ -7,6 +7,9 @@ struct SettingsPage<ViewModel>: View where ViewModel: SettingsViewModelProtocol 
 
     var body: some View {
         VStack(spacing: 16) {
+            if viewModel.isLoading {
+                ProgressView()
+            }
             SettingsItemWithTitleAndSubtitleView(
                 title: "Meu código de compartilhamento",
                 subtitle: viewModel.accountShortCodeForShareTitle

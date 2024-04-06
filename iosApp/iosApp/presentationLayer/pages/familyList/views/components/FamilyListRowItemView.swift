@@ -42,7 +42,6 @@ struct FamilyListRowItemView<ViewModel>: View where ViewModel: FamilyListViewMod
                             .frame(width: 20, height: 20)
                     } else {
                         Image(systemName: SystemName.pencil.rawValue)
-                            .resizable()
                             .frame(width: 20, height: 20)
                             .foregroundColor(.blue)
                             .onTapGesture {
@@ -58,7 +57,6 @@ struct FamilyListRowItemView<ViewModel>: View where ViewModel: FamilyListViewMod
                     Spacer()
 
                     Image(systemName: SystemName.checkmark.rawValue)
-                        .resizable()
                         .frame(width: 20, height: 20)
                         .foregroundColor(.blue)
                         .onTapGesture {
@@ -70,7 +68,6 @@ struct FamilyListRowItemView<ViewModel>: View where ViewModel: FamilyListViewMod
                     Spacer().frame(width: 20)
 
                     Image(systemName: SystemName.xmark.rawValue)
-                        .resizable()
                         .frame(width: 20, height: 20)
                         .foregroundColor(.blue)
                         .onTapGesture {
@@ -86,7 +83,6 @@ struct FamilyListRowItemView<ViewModel>: View where ViewModel: FamilyListViewMod
                         }
                         Spacer()
                         Image(systemName: item.isPrioritized ? SystemName.cartFill.rawValue : SystemName.cart.rawValue)
-                            .resizable()
                             .frame(width: 24, height: 24)
                             .foregroundColor(.blue)
                             .onTapGesture {
@@ -95,8 +91,7 @@ struct FamilyListRowItemView<ViewModel>: View where ViewModel: FamilyListViewMod
                             }
                     }
                     Spacer()
-                    Image(systemName: item.isCompleted ? SystemName.checkmarkCircleFill.rawValue : SystemName.checkmarkCircle.rawValue)
-                        .resizable()
+                    Image(systemName: item.isCompleted ? SystemName.listBullet.rawValue : SystemName.checkmarkCircle.rawValue)
                         .frame(width: 24, height: 24)
                         .foregroundColor(.blue)
                         .onTapGesture {

@@ -7,6 +7,7 @@ class SettingsViewModelMocked: SettingsViewModelProtocol {
     @Published var accountShortCodeForShareTitle: String = "A34TG"
     @Published var accountsSharedWithMeTitle: String = "Acessar conta compartilhada"
     @Published var accountsSharedWithMeSubtitle: String = "Obs: atualmente limitada apenas a 1 conta"
+    @Published var isLoading: Bool = true
     var goBack: () -> Void = {}
 
     func getAccount() {

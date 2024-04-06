@@ -13,6 +13,8 @@
 		52385F2F2BC1B2BD009E46F4 /* ListBackgroundClearModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52385F2E2BC1B2BD009E46F4 /* ListBackgroundClearModifier.swift */; };
 		52385F322BC1B428009E46F4 /* ViewHideRowSeparatorModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52385F312BC1B428009E46F4 /* ViewHideRowSeparatorModifier.swift */; };
 		52385F372BC1C7E4009E46F4 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52385F362BC1C7E4009E46F4 /* AppConstants.swift */; };
+		524EADD92BC1FCDA00CE1725 /* FamilyListEmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524EADD82BC1FCDA00CE1725 /* FamilyListEmptyState.swift */; };
+		524EADDB2BC1FE9300CE1725 /* FamilyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524EADDA2BC1FE9300CE1725 /* FamilyListView.swift */; };
 		52BD908C2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD908B2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift */; };
 		52BD908E2BC0B72000C88B84 /* FamilyListViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD908D2BC0B72000C88B84 /* FamilyListViewModelProtocol.swift */; };
 		52BD90902BC0B80600C88B84 /* FamilyListViewModelMocked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD908F2BC0B80600C88B84 /* FamilyListViewModelMocked.swift */; };
@@ -70,6 +72,8 @@
 		52385F2E2BC1B2BD009E46F4 /* ListBackgroundClearModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListBackgroundClearModifier.swift; sourceTree = "<group>"; };
 		52385F312BC1B428009E46F4 /* ViewHideRowSeparatorModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewHideRowSeparatorModifier.swift; sourceTree = "<group>"; };
 		52385F362BC1C7E4009E46F4 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
+		524EADD82BC1FCDA00CE1725 /* FamilyListEmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListEmptyState.swift; sourceTree = "<group>"; };
+		524EADDA2BC1FE9300CE1725 /* FamilyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListView.swift; sourceTree = "<group>"; };
 		52BD908B2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListPageTabEnum.swift; sourceTree = "<group>"; };
 		52BD908D2BC0B72000C88B84 /* FamilyListViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListViewModelProtocol.swift; sourceTree = "<group>"; };
 		52BD908F2BC0B80600C88B84 /* FamilyListViewModelMocked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListViewModelMocked.swift; sourceTree = "<group>"; };
@@ -132,6 +136,8 @@
 			isa = PBXGroup;
 			children = (
 				52385CF52BC1ABC2009E46F4 /* FamilyListRowItemView.swift */,
+				524EADD82BC1FCDA00CE1725 /* FamilyListEmptyState.swift */,
+				524EADDA2BC1FE9300CE1725 /* FamilyListView.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -277,10 +283,10 @@
 		52FD818D2BBDD72500D6FEE3 /* pages */ = {
 			isa = PBXGroup;
 			children = (
-				52FD81912BBDD72500D6FEE3 /* BarcodeScanner */,
+				52FD81912BBDD72500D6FEE3 /* barcodeScanner */,
 				52FD81932BBDD72500D6FEE3 /* familyList */,
-				52FD81BF2BBDF43600D6FEE3 /* Navigator */,
-				52FD81B62BBDE19900D6FEE3 /* QuickInsertList */,
+				52FD81BF2BBDF43600D6FEE3 /* navigator */,
+				52FD81B62BBDE19900D6FEE3 /* quickInsertList */,
 				52FD818E2BBDD72500D6FEE3 /* settings */,
 			);
 			path = pages;
@@ -295,12 +301,12 @@
 			path = settings;
 			sourceTree = "<group>";
 		};
-		52FD81912BBDD72500D6FEE3 /* BarcodeScanner */ = {
+		52FD81912BBDD72500D6FEE3 /* barcodeScanner */ = {
 			isa = PBXGroup;
 			children = (
 				52FD81922BBDD72500D6FEE3 /* BarcodeScannerPage.swift */,
 			);
-			path = BarcodeScanner;
+			path = barcodeScanner;
 			sourceTree = "<group>";
 		};
 		52FD81932BBDD72500D6FEE3 /* familyList */ = {
@@ -385,22 +391,22 @@
 			path = components;
 			sourceTree = "<group>";
 		};
-		52FD81B62BBDE19900D6FEE3 /* QuickInsertList */ = {
+		52FD81B62BBDE19900D6FEE3 /* quickInsertList */ = {
 			isa = PBXGroup;
 			children = (
 				52BD90952BC0B90900C88B84 /* view */,
 				52BD90942BC0B8FA00C88B84 /* viewModels */,
 			);
-			path = QuickInsertList;
+			path = quickInsertList;
 			sourceTree = "<group>";
 		};
-		52FD81BF2BBDF43600D6FEE3 /* Navigator */ = {
+		52FD81BF2BBDF43600D6FEE3 /* navigator */ = {
 			isa = PBXGroup;
 			children = (
 				52BD90982BC0B93700C88B84 /* views */,
 				52BD90972BC0B92C00C88B84 /* viewModels */,
 			);
-			path = Navigator;
+			path = navigator;
 			sourceTree = "<group>";
 		};
 		7555FF72242A565900829871 = {
@@ -538,6 +544,7 @@
 				52FD81AF2BBDD72600D6FEE3 /* iOSApp.swift in Sources */,
 				52BD908C2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift in Sources */,
 				52FD81B02BBDD72600D6FEE3 /* iOSApp+configureIsRunningUITests.swift in Sources */,
+				524EADDB2BC1FE9300CE1725 /* FamilyListView.swift in Sources */,
 				52FD81BC2BBDE28200D6FEE3 /* QuickInsertListViewModelMocked.swift in Sources */,
 				52FD81A92BBDD72600D6FEE3 /* BarcodeScannerPage.swift in Sources */,
 				52DE60A02BBF51C900C12669 /* SettingsItemWithTitleAndSubtitleView.swift in Sources */,
@@ -560,6 +567,7 @@
 				52DE60952BBF1EEB00C12669 /* NavigatorViewModelMock.swift in Sources */,
 				52DE609B2BBF249A00C12669 /* AccountModel.swift in Sources */,
 				52BD90902BC0B80600C88B84 /* FamilyListViewModelMocked.swift in Sources */,
+				524EADD92BC1FCDA00CE1725 /* FamilyListEmptyState.swift in Sources */,
 				52FD81A22BBDD72500D6FEE3 /* ResolverApp.swift in Sources */,
 				52BD908E2BC0B72000C88B84 /* FamilyListViewModelProtocol.swift in Sources */,
 				52DE60912BBF1DC800C12669 /* NavigatorViewModel.swift in Sources */,
