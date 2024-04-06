@@ -29,12 +29,13 @@ struct SettingsPage<ViewModel>: View where ViewModel: SettingsViewModelProtocol 
         }
         .padding()
         .navigationTitle("Settings")
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar(content: {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
                     self.viewModel.goBack()
                 } label: {
-                    Image(systemName: "chevron.left")
+                    Image(systemName: SystemName.chevronLeft.rawValue)
                 }
             }
         })

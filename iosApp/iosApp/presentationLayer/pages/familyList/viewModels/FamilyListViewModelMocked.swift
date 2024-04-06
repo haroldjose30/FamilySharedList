@@ -17,7 +17,7 @@ class FamilyListViewModelMocked: FamilyListViewModelProtocol {
         FamilyListModel(uuid: "", name: "Item 12", isCompleted: false, isPrioritized: false, quantity: 12),
     ]
 
-    var loading: Bool = false
+    var isLoading: Bool = false
     var newItemName: String = "newItem"
     var quantity: Int = 1
     var tabIndex: FamilyListPageTabEnum = .prioritized
@@ -25,7 +25,7 @@ class FamilyListViewModelMocked: FamilyListViewModelProtocol {
     var goToSetting: () -> Void = {}
     var goToQuickInsert: () -> Void = {}
 
-    func loadData(fromNetwork: Bool) {}
+    func loadData(fromNetwork: Bool, showLoading: Bool) {}
     func add() {}
     func addBy(barcode: String) {}
     func showError(e: Error) {}

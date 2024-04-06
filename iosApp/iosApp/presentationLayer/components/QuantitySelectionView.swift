@@ -3,10 +3,10 @@ import SwiftUI
 
 struct QuantitySelectionView: View {
     @State private var quantity: Int
-    let minValue: Int
-    let maxValue: Int
-    let incValue: Int
-    let onValueChanged: (Int) -> Void
+    private let minValue: Int
+    private let maxValue: Int
+    private let incValue: Int
+    private let onValueChanged: (Int) -> Void
 
     init(value: Int, minValue: Int = 1, maxValue: Int = 50, incValue: Int = 1, onValueChanged: @escaping (Int) -> Void) {
         self._quantity = State(initialValue: value)
@@ -19,14 +19,18 @@ struct QuantitySelectionView: View {
     var body: some View {
         HStack {
 
-            Image(systemName: "chevron.left")
+            Image(systemName: SystemName.chevronLeft.rawValue)
+                .resizable()
+                .frame(width: 12, height: 20)
                 .foregroundColor(quantity <= minValue ? .gray : .blue)
                 .onTapGesture { internalOnMinusClicked() }
 
             Text("\(quantity)")
                 .font(.system(size: 16, weight: .bold))
             
-            Image(systemName: "chevron.right")
+            Image(systemName: SystemName.chevronRight.rawValue)
+                .resizable()
+                .frame(width: 12, height: 20)
                 .foregroundColor(quantity >= maxValue ? .gray : .blue)
                 .onTapGesture { internalOnMoreClicked() }
         }

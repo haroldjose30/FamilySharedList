@@ -39,11 +39,11 @@ struct FamilyListRowItemView<ViewModel>: View where ViewModel: FamilyListViewMod
 
                     if isBusy {
                         ProgressView()
-                            .frame(width: 16, height: 16)
+                            .frame(width: 20, height: 20)
                     } else {
-                        Image(systemName: "pencil")
+                        Image(systemName: SystemName.pencil.rawValue)
                             .resizable()
-                            .frame(width: 16, height: 16)
+                            .frame(width: 20, height: 20)
                             .foregroundColor(.blue)
                             .onTapGesture {
                                 nameTextFieldValue = item.name
@@ -57,9 +57,9 @@ struct FamilyListRowItemView<ViewModel>: View where ViewModel: FamilyListViewMod
                 HStack {
                     Spacer()
 
-                    Image(systemName: "checkmark")
+                    Image(systemName: SystemName.checkmark.rawValue)
                         .resizable()
-                        .frame(width: 16, height: 16)
+                        .frame(width: 20, height: 20)
                         .foregroundColor(.blue)
                         .onTapGesture {
                             item.name = nameTextFieldValue
@@ -67,9 +67,11 @@ struct FamilyListRowItemView<ViewModel>: View where ViewModel: FamilyListViewMod
                             processUpdate { await viewModel.updateName(uuid: item.uuid, name: nameTextFieldValue)}
                         }
 
-                    Image(systemName: "xmark")
+                    Spacer().frame(width: 20)
+
+                    Image(systemName: SystemName.xmark.rawValue)
                         .resizable()
-                        .frame(width: 16, height: 16)
+                        .frame(width: 20, height: 20)
                         .foregroundColor(.blue)
                         .onTapGesture {
                             nameInEditMode = false
@@ -83,9 +85,9 @@ struct FamilyListRowItemView<ViewModel>: View where ViewModel: FamilyListViewMod
                             processUpdate { await viewModel.updateQuantity(uuid: item.uuid, quantity: newValue) }
                         }
                         Spacer()
-                        Image(systemName: item.isPrioritized ? "cart.fill" : "cart")
+                        Image(systemName: item.isPrioritized ? SystemName.cartFill.rawValue : SystemName.cart.rawValue)
                             .resizable()
-                            .frame(width: 20, height: 20)
+                            .frame(width: 24, height: 24)
                             .foregroundColor(.blue)
                             .onTapGesture {
                                 item.isPrioritized = !item.isPrioritized
@@ -93,9 +95,9 @@ struct FamilyListRowItemView<ViewModel>: View where ViewModel: FamilyListViewMod
                             }
                     }
                     Spacer()
-                    Image(systemName: item.isCompleted ? "checkmark.circle.fill" : "checkmark.circle")
+                    Image(systemName: item.isCompleted ? SystemName.checkmarkCircleFill.rawValue : SystemName.checkmarkCircle.rawValue)
                         .resizable()
-                        .frame(width: 20, height: 20)
+                        .frame(width: 24, height: 24)
                         .foregroundColor(.blue)
                         .onTapGesture {
                             item.isCompleted = !item.isCompleted
@@ -105,9 +107,6 @@ struct FamilyListRowItemView<ViewModel>: View where ViewModel: FamilyListViewMod
             }
         }
         .padding(10)
-        .background(Color.white)
-        .cornerRadius(10)
-        .shadow(radius: 5)
     }
 
     func processUpdate(block: @escaping () async -> Void ) {
@@ -118,3 +117,10 @@ struct FamilyListRowItemView<ViewModel>: View where ViewModel: FamilyListViewMod
         }
     }
 }
+
+#Preview {
+    NavigationView {
+        FamilyListPage(viewModel: FamilyListViewModelMocked())
+    }
+}
+

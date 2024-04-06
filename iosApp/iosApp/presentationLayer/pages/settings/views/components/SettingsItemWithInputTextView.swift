@@ -47,7 +47,7 @@ struct SettingsItemWithInputTextView: View {
             Button(action: {
                 onClick(textFieldText)
             }) {
-                Image(systemName: "chevron.right")
+                Image(systemName: SystemName.chevronRight.rawValue)
             }
             .padding(.trailing, 16)
             .foregroundColor(.black)

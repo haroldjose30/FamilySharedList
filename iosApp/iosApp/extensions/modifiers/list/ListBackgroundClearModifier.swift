@@ -3,7 +3,7 @@ import SwiftUI
 import UIKit
 
 ///Modifier to clear Background color for SwiftUI.List for IOS14 and IOS16+
-public extension List {
+public extension View {
     func backgroundClear() -> some View {
         modifier(ListBackgroundClearModifier())
     }

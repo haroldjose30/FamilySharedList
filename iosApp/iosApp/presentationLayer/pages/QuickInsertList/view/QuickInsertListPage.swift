@@ -26,7 +26,7 @@ struct QuickInsertListPage<ViewModel>: View where ViewModel: QuickInsertListView
                 Button {
                     viewModel.goToFamilyListPage()
                 } label: {
-                    Image(systemName: "chevron.left")
+                    Image(systemName: SystemName.chevronLeft.rawValue)
                 }
             }
 
@@ -34,7 +34,7 @@ struct QuickInsertListPage<ViewModel>: View where ViewModel: QuickInsertListView
                 Button {
                     Task { await viewModel.quickInsertItem() }
                 } label: {
-                    Image(systemName: "plus.circle")
+                    Image(systemName: SystemName.plusCircle.rawValue)
                 }
             }
         }

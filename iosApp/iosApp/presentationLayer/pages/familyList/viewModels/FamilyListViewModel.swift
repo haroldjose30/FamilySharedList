@@ -4,12 +4,12 @@ import shared
 class FamilyListViewModel: FamilyListViewModelProtocol {
     
     @Published var familyListModels: [FamilyListModel] = []
-    @Published var loading: Bool = false
+    @Published var isLoading: Bool = false
     @Published var newItemName: String = ""
     @Published var quantity: Int = 1
     @Published var tabIndex: FamilyListPageTabEnum = .pending {
         didSet {
-            Task { await loadData(fromNetwork: false) }
+            Task { await loadData(fromNetwork: false, showLoading: false) }
         }
     }
 
@@ -42,8 +42,8 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
     }
 
     @MainActor
-    func loadData(fromNetwork: Bool) async {
-        loading = true
+    func loadData(fromNetwork: Bool, showLoading: Bool) async {
+        if (showLoading) { isLoading = true }
 
         //TODO: handle error
         accountModel = try? await getOrCreateAccountFromLocalUuidUseCase.execute()
@@ -55,7 +55,7 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
             }
         }
 
-        loading = false
+        if (showLoading) { isLoading = false }
     }
 
     @MainActor
@@ -78,10 +78,10 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
             quantity: quantity.toInt32()
         )
         newItemName = ""
-        loading = true
+        isLoading = true
         //TODO: handle error
         try? await createFamilyListUseCase.execute(item: item)
-        await loadData(fromNetwork: true)
+        await loadData(fromNetwork: true, showLoading: true)
     }
 
     @MainActor
@@ -90,10 +90,10 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
             return
         }
 
-        loading = true
+        isLoading = true
         //TODO: handle error
         guard let productModelFounded = try? await getProductByCodeUseCase.execute(code: barcode) else {
-            loading = false
+            isLoading = false
             return
         }
 
@@ -105,12 +105,12 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
                 if tabIndex == .completed {
                     tabIndex = .pending
                 }
-                await loadData(fromNetwork: true)
+                await loadData(fromNetwork: true, showLoading: true)
             } else {
                 itemFounded.isPrioritized = tabIndex.isPrioritized()
                 itemFounded.quantity += 1
                 await update(item: itemFounded)
-                await loadData(fromNetwork: true)
+                await loadData(fromNetwork: true, showLoading: true)
             }
         } else {
             let item = FamilyListModel(
@@ -121,19 +121,19 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
             )
             //TODO: handle error
             try? await createFamilyListUseCase.execute(item: item)
-            await loadData(fromNetwork: true)
+            await loadData(fromNetwork: true, showLoading: true)
         }
     }
 
     @MainActor
     func remove(uuid: String) async {
         if let index = familyListModels.firstIndex(where: { $0.uuid == uuid }) {
-            loading = true
+            isLoading = true
             //TODO: handle error
             try? await deleteFamilyListUseCase.execute(uuid: uuid)
             familyListModels.remove(at: index)
-            await loadData(fromNetwork: false)
-            loading = false
+            await loadData(fromNetwork: false, showLoading: false)
+            isLoading = false
         }
     }
 
@@ -145,7 +145,7 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
                 familyListModels[index].isPrioritized = false
             }
             await update(item: familyListModels[index])
-            await loadData(fromNetwork: false)
+            await loadData(fromNetwork: false, showLoading: true)
         }
     }
 
@@ -154,7 +154,7 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
         if let index = familyListModels.firstIndex(where: { $0.uuid == uuid }) {
             familyListModels[index].isPrioritized = isPrioritized
             await update(item: familyListModels[index])
-            await loadData(fromNetwork: false)
+            await loadData(fromNetwork: false, showLoading: true)
         }
     }
 

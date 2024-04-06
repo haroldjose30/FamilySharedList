@@ -30,7 +30,7 @@ struct NavigatorView<ViewModel>: View where ViewModel: NavigatorViewModelProtoco
             createFamilyListUseCase: KoinApplication.shared.inject()
         )
         viewModel.goToFamilyListPage = { self.router = .familyList }
-        return iosApp.QuickInsertListPage(viewModel: viewModel)
+        return Family_List.QuickInsertListPage(viewModel: viewModel)
     }
 
     private func SettingsPage(router: ViewRouter) -> some View {
@@ -41,7 +41,7 @@ struct NavigatorView<ViewModel>: View where ViewModel: NavigatorViewModelProtoco
             setSharedAccountByCodeUseCase: KoinApplication.shared.inject()
         )
         viewModel.goBack = { self.router = .familyList }
-        return iosApp.SettingsPage(viewModel: viewModel)
+        return Family_List.SettingsPage(viewModel: viewModel)
     }
 
     private func FamilyListPage(router: ViewRouter) -> some View {
@@ -56,7 +56,7 @@ struct NavigatorView<ViewModel>: View where ViewModel: NavigatorViewModelProtoco
         )
         viewModel.goToSetting = { self.router = .settings }
         viewModel.goToQuickInsert = { self.router = .quickInsert }
-        return iosApp.FamilyListPage(viewModel: viewModel)
+        return Family_List.FamilyListPage(viewModel: viewModel)
     }
 
 
