@@ -24,7 +24,7 @@ class QuickInsertListViewModel: QuickInsertListViewModelProtocol {
         self.createFamilyListUseCase = createFamilyListUseCase
     }
 
-    //@MainActor
+    @MainActor
     func quickInsertItem() async {
         guard !text.isEmpty else { return }
 

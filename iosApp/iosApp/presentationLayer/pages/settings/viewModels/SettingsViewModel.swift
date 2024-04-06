@@ -21,7 +21,7 @@ class SettingsViewModel: SettingsViewModelProtocol {
         self.setSharedAccountByCodeUseCase = setSharedAccountByCodeUseCase
     }
 
-    //@MainActor
+    @MainActor
     func getAccount() async {
 
         guard let accountUuid = try? await getLocalAccountUuidUseCase.execute() else {
@@ -30,15 +30,16 @@ class SettingsViewModel: SettingsViewModelProtocol {
         }
 
         myAccount = try? await getAccountUseCase.execute(accountUuid: accountUuid)
-        accountShortCodeForShareTitle = myAccount?.accountShortCodeForShare ?? "carregando..."
 
-        if let sharedAccount = myAccount?.accountsSharedWithMe.first {
-            accountsSharedWithMeTitle = "Acessando a conta:"
-            accountsSharedWithMeSubtitle = sharedAccount
+        self.accountShortCodeForShareTitle = self.myAccount?.accountShortCodeForShare ?? "carregando..."
+
+        if let sharedAccount = self.myAccount?.accountsSharedWithMe.first {
+            self.accountsSharedWithMeTitle = "Acessando a conta:"
+            self.accountsSharedWithMeSubtitle = sharedAccount
         }
     }
 
-    //@MainActor
+    @MainActor
     func accessSharedAccountWithCode(code: String) async {
         guard let accountUuid = try? await getLocalAccountUuidUseCase.execute() else  {
             //TODO: handle error

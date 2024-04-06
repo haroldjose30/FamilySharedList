@@ -13,7 +13,6 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
@@ -21,12 +20,9 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.haroldjose.familysharedlist.android.app.MyApplicationTheme
-import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.FamilyListPage
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.FamilyListPageTabEnum
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.IFamilyListViewModel
-import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
 import dev.haroldjose.familysharedlist.presentationLayer.pages.familyList.FamilyListViewModelMocked
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,7 +61,7 @@ fun FamilyListTabItemView(
         ) {
             if (!state.isRefreshing) {
                 items(
-                    items = viewModel.familyListModels,
+                    items = viewModel.familyListModelsFiltered,
                     key = { item -> item.uuid },
                     itemContent = { item ->
                         FamilyListRowSwipeToDismiss(

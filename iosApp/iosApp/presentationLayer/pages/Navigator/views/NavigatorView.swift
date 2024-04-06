@@ -7,15 +7,13 @@ struct NavigatorView<ViewModel>: View where ViewModel: NavigatorViewModelProtoco
 
 //    private let resolverApp = ResolverApp()
 
-    @State private var router: ViewRouter = ViewRouter.quickInsert
+    @State private var router: ViewRouter = ViewRouter.familyList
 
     var body: some View {
         NavigationView {
             switch router {
             case .familyList:
-                Button("goToSetting") {
-                    self.router = .settings
-                }
+                FamilyListPage(router: router)
             case .settings:
                 SettingsPage(router: router)
             case .quickInsert:
@@ -45,6 +43,23 @@ struct NavigatorView<ViewModel>: View where ViewModel: NavigatorViewModelProtoco
         viewModel.goBack = { self.router = .familyList }
         return iosApp.SettingsPage(viewModel: viewModel)
     }
+
+    private func FamilyListPage(router: ViewRouter) -> some View {
+        //TODO: add viewModel to DI
+        let viewModel = FamilyListViewModel(
+            getAllFamilyListUseCase: KoinApplication.shared.inject(),
+            createFamilyListUseCase: KoinApplication.shared.inject(),
+            updateFamilyListUseCase: KoinApplication.shared.inject(),
+            deleteFamilyListUseCase: KoinApplication.shared.inject(),
+            getOrCreateAccountFromLocalUuidUseCase: KoinApplication.shared.inject(),
+            getProductByCodeUseCase: KoinApplication.shared.inject()
+        )
+        viewModel.goToSetting = { self.router = .settings }
+        viewModel.goToQuickInsert = { self.router = .quickInsert }
+        return iosApp.FamilyListPage(viewModel: viewModel)
+    }
+
+
 }
 
 enum ViewRouter {

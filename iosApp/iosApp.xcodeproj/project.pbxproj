@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
+		52BD908A2BC0B5F200C88B84 /* FamilyListRowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD90892BC0B5F200C88B84 /* FamilyListRowItem.swift */; };
+		52BD908C2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD908B2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift */; };
+		52BD908E2BC0B72000C88B84 /* FamilyListViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD908D2BC0B72000C88B84 /* FamilyListViewModelProtocol.swift */; };
+		52BD90902BC0B80600C88B84 /* FamilyListViewModelMocked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD908F2BC0B80600C88B84 /* FamilyListViewModelMocked.swift */; };
+		52BD90932BC0B8BD00C88B84 /* FamilyListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD90922BC0B8BD00C88B84 /* FamilyListViewModel.swift */; };
+		52BD909D2BC0D73600C88B84 /* FamilyListTabItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD909C2BC0D73600C88B84 /* FamilyListTabItemView.swift */; };
 		52DE60912BBF1DC800C12669 /* NavigatorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DE60902BBF1DC800C12669 /* NavigatorViewModel.swift */; };
 		52DE60932BBF1EB700C12669 /* NavigatorViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DE60922BBF1EB700C12669 /* NavigatorViewModelProtocol.swift */; };
 		52DE60952BBF1EEB00C12669 /* NavigatorViewModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DE60942BBF1EEB00C12669 /* NavigatorViewModelMock.swift */; };
@@ -58,6 +64,12 @@
 /* Begin PBXFileReference section */
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		52BD90892BC0B5F200C88B84 /* FamilyListRowItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListRowItem.swift; sourceTree = "<group>"; };
+		52BD908B2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListPageTabEnum.swift; sourceTree = "<group>"; };
+		52BD908D2BC0B72000C88B84 /* FamilyListViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListViewModelProtocol.swift; sourceTree = "<group>"; };
+		52BD908F2BC0B80600C88B84 /* FamilyListViewModelMocked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListViewModelMocked.swift; sourceTree = "<group>"; };
+		52BD90922BC0B8BD00C88B84 /* FamilyListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListViewModel.swift; sourceTree = "<group>"; };
+		52BD909C2BC0D73600C88B84 /* FamilyListTabItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListTabItemView.swift; sourceTree = "<group>"; };
 		52DE60902BBF1DC800C12669 /* NavigatorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorViewModel.swift; sourceTree = "<group>"; };
 		52DE60922BBF1EB700C12669 /* NavigatorViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorViewModelProtocol.swift; sourceTree = "<group>"; };
 		52DE60942BBF1EEB00C12669 /* NavigatorViewModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorViewModelMock.swift; sourceTree = "<group>"; };
@@ -110,6 +122,90 @@
 				058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		52BD90882BC0B5CC00C88B84 /* components */ = {
+			isa = PBXGroup;
+			children = (
+				52BD90892BC0B5F200C88B84 /* FamilyListRowItem.swift */,
+				52BD909C2BC0D73600C88B84 /* FamilyListTabItemView.swift */,
+			);
+			path = components;
+			sourceTree = "<group>";
+		};
+		52BD90912BC0B8AB00C88B84 /* viewModels */ = {
+			isa = PBXGroup;
+			children = (
+				52BD90922BC0B8BD00C88B84 /* FamilyListViewModel.swift */,
+				52BD908D2BC0B72000C88B84 /* FamilyListViewModelProtocol.swift */,
+				52BD908F2BC0B80600C88B84 /* FamilyListViewModelMocked.swift */,
+			);
+			path = viewModels;
+			sourceTree = "<group>";
+		};
+		52BD90942BC0B8FA00C88B84 /* viewModels */ = {
+			isa = PBXGroup;
+			children = (
+				52FD81B92BBDE23F00D6FEE3 /* QuickInsertListViewModelProtocol.swift */,
+				52FD81BB2BBDE28200D6FEE3 /* QuickInsertListViewModelMocked.swift */,
+				52FD81BD2BBDE5D100D6FEE3 /* QuickInsertListViewModel.swift */,
+			);
+			path = viewModels;
+			sourceTree = "<group>";
+		};
+		52BD90952BC0B90900C88B84 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				52FD81B72BBDE1B100D6FEE3 /* QuickInsertListPage.swift */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		52BD90972BC0B92C00C88B84 /* viewModels */ = {
+			isa = PBXGroup;
+			children = (
+				52DE60902BBF1DC800C12669 /* NavigatorViewModel.swift */,
+				52DE60942BBF1EEB00C12669 /* NavigatorViewModelMock.swift */,
+				52DE60922BBF1EB700C12669 /* NavigatorViewModelProtocol.swift */,
+			);
+			path = viewModels;
+			sourceTree = "<group>";
+		};
+		52BD90982BC0B93700C88B84 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				52FD81A12BBDD72500D6FEE3 /* NavigatorView.swift */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
+		52BD90992BC0B94B00C88B84 /* viewModels */ = {
+			isa = PBXGroup;
+			children = (
+				52DE60962BBF231000C12669 /* SettingsViewModelProtocol.swift */,
+				52DE60982BBF242400C12669 /* SettingsViewModelMocked.swift */,
+				52DE60A42BBF553600C12669 /* SettingsViewModel.swift */,
+			);
+			path = viewModels;
+			sourceTree = "<group>";
+		};
+		52BD909A2BC0B95500C88B84 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				52DE609C2BBF516200C12669 /* components */,
+				52FD818F2BBDD72500D6FEE3 /* SettingsPage.swift */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
+		52BD909B2BC0B95F00C88B84 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				52BD90882BC0B5CC00C88B84 /* components */,
+				52FD81942BBDD72500D6FEE3 /* FamilyListPage.swift */,
+				52BD908B2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift */,
+			);
+			path = views;
 			sourceTree = "<group>";
 		};
 		52DE609C2BBF516200C12669 /* components */ = {
@@ -165,11 +261,8 @@
 		52FD818E2BBDD72500D6FEE3 /* settings */ = {
 			isa = PBXGroup;
 			children = (
-				52DE609C2BBF516200C12669 /* components */,
-				52FD818F2BBDD72500D6FEE3 /* SettingsPage.swift */,
-				52DE60962BBF231000C12669 /* SettingsViewModelProtocol.swift */,
-				52DE60982BBF242400C12669 /* SettingsViewModelMocked.swift */,
-				52DE60A42BBF553600C12669 /* SettingsViewModel.swift */,
+				52BD909A2BC0B95500C88B84 /* views */,
+				52BD90992BC0B94B00C88B84 /* viewModels */,
 			);
 			path = settings;
 			sourceTree = "<group>";
@@ -185,7 +278,8 @@
 		52FD81932BBDD72500D6FEE3 /* familyList */ = {
 			isa = PBXGroup;
 			children = (
-				52FD81942BBDD72500D6FEE3 /* FamilyListPage.swift */,
+				52BD909B2BC0B95F00C88B84 /* views */,
+				52BD90912BC0B8AB00C88B84 /* viewModels */,
 			);
 			path = familyList;
 			sourceTree = "<group>";
@@ -264,10 +358,8 @@
 		52FD81B62BBDE19900D6FEE3 /* QuickInsertList */ = {
 			isa = PBXGroup;
 			children = (
-				52FD81B72BBDE1B100D6FEE3 /* QuickInsertListPage.swift */,
-				52FD81B92BBDE23F00D6FEE3 /* QuickInsertListViewModelProtocol.swift */,
-				52FD81BB2BBDE28200D6FEE3 /* QuickInsertListViewModelMocked.swift */,
-				52FD81BD2BBDE5D100D6FEE3 /* QuickInsertListViewModel.swift */,
+				52BD90952BC0B90900C88B84 /* view */,
+				52BD90942BC0B8FA00C88B84 /* viewModels */,
 			);
 			path = QuickInsertList;
 			sourceTree = "<group>";
@@ -275,10 +367,8 @@
 		52FD81BF2BBDF43600D6FEE3 /* Navigator */ = {
 			isa = PBXGroup;
 			children = (
-				52FD81A12BBDD72500D6FEE3 /* NavigatorView.swift */,
-				52DE60902BBF1DC800C12669 /* NavigatorViewModel.swift */,
-				52DE60942BBF1EEB00C12669 /* NavigatorViewModelMock.swift */,
-				52DE60922BBF1EB700C12669 /* NavigatorViewModelProtocol.swift */,
+				52BD90982BC0B93700C88B84 /* views */,
+				52BD90972BC0B92C00C88B84 /* viewModels */,
 			);
 			path = Navigator;
 			sourceTree = "<group>";
@@ -414,8 +504,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				52FD81A42BBDD72500D6FEE3 /* ResolverPreview.swift in Sources */,
+				52BD909D2BC0D73600C88B84 /* FamilyListTabItemView.swift in Sources */,
 				52FD81AA2BBDD72600D6FEE3 /* FamilyListPage.swift in Sources */,
 				52FD81AF2BBDD72600D6FEE3 /* iOSApp.swift in Sources */,
+				52BD908C2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift in Sources */,
 				52FD81B02BBDD72600D6FEE3 /* iOSApp+configureIsRunningUITests.swift in Sources */,
 				52FD81BC2BBDE28200D6FEE3 /* QuickInsertListViewModelMocked.swift in Sources */,
 				52FD81A92BBDD72600D6FEE3 /* BarcodeScannerPage.swift in Sources */,
@@ -436,9 +528,13 @@
 				52FD81A32BBDD72500D6FEE3 /* ResolverProtocol.swift in Sources */,
 				52DE60952BBF1EEB00C12669 /* NavigatorViewModelMock.swift in Sources */,
 				52DE609B2BBF249A00C12669 /* AccountModel.swift in Sources */,
+				52BD90902BC0B80600C88B84 /* FamilyListViewModelMocked.swift in Sources */,
+				52BD908A2BC0B5F200C88B84 /* FamilyListRowItem.swift in Sources */,
 				52FD81A22BBDD72500D6FEE3 /* ResolverApp.swift in Sources */,
+				52BD908E2BC0B72000C88B84 /* FamilyListViewModelProtocol.swift in Sources */,
 				52DE60912BBF1DC800C12669 /* NavigatorViewModel.swift in Sources */,
 				52FD81BE2BBDE5D100D6FEE3 /* QuickInsertListViewModel.swift in Sources */,
+				52BD90932BC0B8BD00C88B84 /* FamilyListViewModel.swift in Sources */,
 				52FD81AD2BBDD72600D6FEE3 /* StringConstants.swift in Sources */,
 				52DE60A32BBF522000C12669 /* SettingsItemWithInputTextView.swift in Sources */,
 				52FD81BA2BBDE23F00D6FEE3 /* QuickInsertListViewModelProtocol.swift in Sources */,

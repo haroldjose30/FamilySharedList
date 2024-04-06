@@ -5,7 +5,7 @@ import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyLis
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
 
 class FamilyListViewModelMocked : IFamilyListViewModel {
-    override var familyListModels: List<FamilyListModel> = arrayListOf(
+    override var familyListModelsFiltered: List<FamilyListModel> = arrayListOf(
         FamilyListModel(
             uuid = "sample1",
             name = "Mock Item 01",

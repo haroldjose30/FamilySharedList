@@ -22,7 +22,7 @@ struct QuantitySelectionView: View {
                 internalOnMinusClicked()
             }) {
                 Image(systemName: "chevron.left")
-                    .foregroundColor(quantity <= minValue ? .gray : .black)
+                    .foregroundColor(quantity <= minValue ? .gray : .blue)
             }
             Text("\(quantity)")
                 .font(.system(size: 16, weight: .bold))
@@ -30,7 +30,7 @@ struct QuantitySelectionView: View {
                 internalOnMoreClicked()
             }) {
                 Image(systemName: "chevron.right")
-                    .foregroundColor(quantity >= maxValue ? .gray : .black)
+                    .foregroundColor(quantity >= maxValue ? .gray : .blue)
             }
         }
     }

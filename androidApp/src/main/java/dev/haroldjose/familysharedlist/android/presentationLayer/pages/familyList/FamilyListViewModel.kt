@@ -22,8 +22,8 @@ class FamilyListViewModel(
     private val getOrCreateAccountFromLocalUuidUseCase: GetOrCreateAccountFromLocalUuidUseCase,
     private val getProductByCodeUseCase: GetProductByCodeUseCase
 ): IFamilyListViewModel {
-    private var familyListModelsCompleted: List<FamilyListModel> by mutableStateOf(arrayListOf())
-    override var familyListModels: List<FamilyListModel> by mutableStateOf(arrayListOf())
+    private var familyListModelsFull: List<FamilyListModel> by mutableStateOf(arrayListOf())
+    override var familyListModelsFiltered: List<FamilyListModel> by mutableStateOf(arrayListOf())
     override var loading:Boolean by mutableStateOf(false)
     override var newItemName: String by mutableStateOf("")
     override var quantity: Int by mutableStateOf(1)
@@ -40,17 +40,17 @@ class FamilyListViewModel(
         accountModel = getOrCreateAccountFromLocalUuidUseCase.execute()
 
         if (fromNetwork) {
-            familyListModelsCompleted = getAllFamilyListUseCase.execute().sortedBy { it.name.lowercase() }
+            familyListModelsFull = getAllFamilyListUseCase.execute().sortedBy { it.name.lowercase() }
         }
 
-        familyListModels = when (tabIndex) {
-            FamilyListPageTabEnum.PRIORIZED -> familyListModelsCompleted
+        familyListModelsFiltered = when (tabIndex) {
+            FamilyListPageTabEnum.PRIORIZED -> familyListModelsFull
                 .filter { !it.isCompleted && it.isPrioritized }
 
-            FamilyListPageTabEnum.PENDING -> familyListModelsCompleted
+            FamilyListPageTabEnum.PENDING -> familyListModelsFull
                 .filter { !it.isCompleted }
 
-            FamilyListPageTabEnum.COMPLETED -> familyListModelsCompleted
+            FamilyListPageTabEnum.COMPLETED -> familyListModelsFull
                 .filter { it.isCompleted }
         }
 
@@ -92,7 +92,7 @@ class FamilyListViewModel(
         productModelFounded?.let { productModel ->
 
             //verifica se o item ja foi adicionado
-            familyListModelsCompleted.firstOrNull { familyListModel ->
+            familyListModelsFull.firstOrNull { familyListModel ->
                 familyListModel.name.compareTo(productModel.productName, ignoreCase = true) == 0
             }?.let { itemFounded ->
 
@@ -119,7 +119,7 @@ class FamilyListViewModel(
             val item = FamilyListModel(
                 name = productModel.productName,
                 quantity = quantity,
-                isPrioritized = this.tabIndex == FamilyListPageTabEnum.PRIORIZED,
+                isPrioritized = this.tabIndex.isPrioritized(),
                 isCompleted = false
             )
 
@@ -136,17 +136,17 @@ class FamilyListViewModel(
     }
 
     override suspend fun remove(uuid: String){
-        familyListModelsCompleted.firstOrNull { it.uuid ==  uuid}?.let { item ->
+        familyListModelsFull.firstOrNull { it.uuid ==  uuid}?.let { item ->
             loading = true
             deleteFamilyListUseCase.execute(uuid = item.uuid)
-            familyListModelsCompleted = familyListModelsCompleted.filter { it.uuid != uuid }
+            familyListModelsFull = familyListModelsFull.filter { it.uuid != uuid }
             loadData(this.tabIndex, fromNetwork = false)
             loading = false
         }
     }
 
     override suspend fun updateIsCompleted(uuid: String, isCompleted: Boolean) {
-        familyListModelsCompleted.firstOrNull { it.uuid ==  uuid}?.let { item ->
+        familyListModelsFull.firstOrNull { it.uuid ==  uuid}?.let { item ->
             item.isCompleted = isCompleted
             if (item.isCompleted) {
                 item.isPrioritized = false
@@ -156,21 +156,21 @@ class FamilyListViewModel(
     }
 
     override suspend fun updateIsPrioritized(uuid: String, isPrioritized: Boolean) {
-        familyListModelsCompleted.firstOrNull { it.uuid ==  uuid}?.let { item ->
+        familyListModelsFull.firstOrNull { it.uuid ==  uuid}?.let { item ->
             item.isPrioritized = isPrioritized
             update(item)
         }
     }
 
     override suspend fun updateName(uuid: String, name: String) {
-        familyListModelsCompleted.firstOrNull { it.uuid ==  uuid}?.let { item ->
+        familyListModelsFull.firstOrNull { it.uuid ==  uuid}?.let { item ->
             item.name = name
             update(item)
         }
     }
 
     override suspend fun updateQuantity(uuid: String, quantity: Int) {
-        familyListModelsCompleted.firstOrNull { it.uuid ==  uuid}?.let { item ->
+        familyListModelsFull.firstOrNull { it.uuid ==  uuid}?.let { item ->
             item.quantity = quantity
             update(item)
         }

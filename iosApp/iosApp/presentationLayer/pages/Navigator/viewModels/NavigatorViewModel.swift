@@ -17,7 +17,7 @@ class NavigatorViewModel: NavigatorViewModelProtocol {
         self.getOrCreateAccountFromLocalUuidUseCase = getOrCreateAccountFromLocalUuidUseCase
     }
 
-    //@MainActor
+    @MainActor
     func checkIfNeedToCreateNewAccount() async {
         //TODO: handle error
         _ = try? await getOrCreateAccountFromLocalUuidUseCase.execute()

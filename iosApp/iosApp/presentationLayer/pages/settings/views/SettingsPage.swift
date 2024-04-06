@@ -24,12 +24,24 @@ struct SettingsPage<ViewModel>: View where ViewModel: SettingsViewModelProtocol 
             SettingsItemWithTitleView(title: "Sobre este app") {
                 viewModel.openAppHomePage()
             }
+
+            Spacer()
         }
         .padding()
         .navigationTitle("Settings")
+        .toolbar(content: {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    self.viewModel.goBack()
+                } label: {
+                    Image(systemName: "chevron.left")
+                }
+            }
+        })
         .onAppear {
             Task { await viewModel.getAccount()}
         }
+
     }
 }
 
