@@ -3,12 +3,15 @@ import shared
 
 class FamilyListViewModel: FamilyListViewModelProtocol {
     
-    private var familyListModelsFull: [FamilyListModel] = []
-    @Published var familyListModelsFiltered: [FamilyListModel] = []
+    @Published var familyListModels: [FamilyListModel] = []
     @Published var loading: Bool = false
     @Published var newItemName: String = ""
     @Published var quantity: Int = 1
-    @Published var tabIndex: FamilyListPageTabEnum = .pending
+    @Published var tabIndex: FamilyListPageTabEnum = .pending {
+        didSet {
+            Task { await loadData(fromNetwork: false) }
+        }
+    }
 
     var goToSetting: () -> Void = {}
     var goToQuickInsert: () -> Void = {}
@@ -39,8 +42,7 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
     }
 
     @MainActor
-    func loadData(tabIndex: FamilyListPageTabEnum, fromNetwork: Bool) async {
-        self.tabIndex = tabIndex
+    func loadData(fromNetwork: Bool) async {
         loading = true
 
         //TODO: handle error
@@ -49,17 +51,8 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
         if fromNetwork {
             //TODO: handle error
             if let result = try? await getAllFamilyListUseCase.execute() {
-                familyListModelsFull = result.sorted { $0.name.lowercased() < $1.name.lowercased() }
+                familyListModels = result.sorted { $0.name.lowercased() < $1.name.lowercased() }
             }
-        }
-
-        familyListModelsFiltered = switch (tabIndex) {
-        case .prioritized:
-            familyListModelsFull.filter { !$0.isCompleted && $0.isPrioritized }
-        case .pending:
-            familyListModelsFull.filter { !$0.isCompleted }
-        case .completed:
-            familyListModelsFull.filter { $0.isCompleted }
         }
 
         loading = false
@@ -88,7 +81,7 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
         loading = true
         //TODO: handle error
         try? await createFamilyListUseCase.execute(item: item)
-        await loadData(tabIndex: tabIndex, fromNetwork: true)
+        await loadData(fromNetwork: true)
     }
 
     @MainActor
@@ -104,7 +97,7 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
             return
         }
 
-        if let itemFounded = familyListModelsFull.first(where: { $0.name.caseInsensitiveCompare(productModelFounded.productName) == .orderedSame }) {
+        if let itemFounded = familyListModels.first(where: { $0.name.caseInsensitiveCompare(productModelFounded.productName) == .orderedSame }) {
             if itemFounded.isCompleted {
                 itemFounded.isCompleted = false
                 itemFounded.isPrioritized = tabIndex.isPrioritized()
@@ -112,12 +105,12 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
                 if tabIndex == .completed {
                     tabIndex = .pending
                 }
-                await loadData(tabIndex: tabIndex, fromNetwork: true)
+                await loadData(fromNetwork: true)
             } else {
                 itemFounded.isPrioritized = tabIndex.isPrioritized()
                 itemFounded.quantity += 1
                 await update(item: itemFounded)
-                await loadData(tabIndex: tabIndex, fromNetwork: true)
+                await loadData(fromNetwork: true)
             }
         } else {
             let item = FamilyListModel(
@@ -128,54 +121,56 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
             )
             //TODO: handle error
             try? await createFamilyListUseCase.execute(item: item)
-            await loadData(tabIndex: tabIndex, fromNetwork: true)
+            await loadData(fromNetwork: true)
         }
     }
 
     @MainActor
     func remove(uuid: String) async {
-        if let index = familyListModelsFull.firstIndex(where: { $0.uuid == uuid }) {
+        if let index = familyListModels.firstIndex(where: { $0.uuid == uuid }) {
             loading = true
             //TODO: handle error
             try? await deleteFamilyListUseCase.execute(uuid: uuid)
-            familyListModelsFull.remove(at: index)
-            await loadData(tabIndex: tabIndex, fromNetwork: false)
+            familyListModels.remove(at: index)
+            await loadData(fromNetwork: false)
             loading = false
         }
     }
 
     @MainActor
     func updateIsCompleted(uuid: String, isCompleted: Bool) async {
-        if let index = familyListModelsFull.firstIndex(where: { $0.uuid == uuid }) {
-            familyListModelsFull[index].isCompleted = isCompleted
+        if let index = familyListModels.firstIndex(where: { $0.uuid == uuid }) {
+            familyListModels[index].isCompleted = isCompleted
             if isCompleted {
-                familyListModelsFull[index].isPrioritized = false
+                familyListModels[index].isPrioritized = false
             }
-            await update(item: familyListModelsFull[index])
+            await update(item: familyListModels[index])
+            await loadData(fromNetwork: false)
         }
     }
 
     @MainActor
     func updateIsPrioritized(uuid: String, isPrioritized: Bool) async {
-        if let index = familyListModelsFull.firstIndex(where: { $0.uuid == uuid }) {
-            familyListModelsFull[index].isPrioritized = isPrioritized
-            await update(item: familyListModelsFull[index])
+        if let index = familyListModels.firstIndex(where: { $0.uuid == uuid }) {
+            familyListModels[index].isPrioritized = isPrioritized
+            await update(item: familyListModels[index])
+            await loadData(fromNetwork: false)
         }
     }
 
     @MainActor
     func updateName(uuid: String, name: String) async {
-        if let index = familyListModelsFull.firstIndex(where: { $0.uuid == uuid }) {
-            familyListModelsFull[index].name = name
-            await update(item: familyListModelsFull[index])
+        if let index = familyListModels.firstIndex(where: { $0.uuid == uuid }) {
+            familyListModels[index].name = name
+            await update(item: familyListModels[index])
         }
     }
 
     @MainActor
     func updateQuantity(uuid: String, quantity: Int) async {
-        if let index = familyListModelsFull.firstIndex(where: { $0.uuid == uuid }) {
-            familyListModelsFull[index].quantity = quantity.toInt32()
-            await update(item: familyListModelsFull[index])
+        if let index = familyListModels.firstIndex(where: { $0.uuid == uuid }) {
+            familyListModels[index].quantity = quantity.toInt32()
+            await update(item: familyListModels[index])
         }
     }
 
@@ -185,11 +180,7 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
 
     @MainActor
     private func update(item: FamilyListModel) async {
-        loading = true
-        //TODO: Handle error
         try? await updateFamilyListUseCase.execute(item: item)
-        await loadData(tabIndex: tabIndex, fromNetwork: false)
-        loading = false
     }
 }
 

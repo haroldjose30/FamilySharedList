@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 
 struct QuickInsertListPage<ViewModel>: View where ViewModel: QuickInsertListViewModelProtocol {
-    @ObservedObject var viewModel: ViewModel
+    @StateObject var viewModel: ViewModel
 
     var body: some View {
         ZStack {

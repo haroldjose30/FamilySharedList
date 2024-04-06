@@ -8,7 +8,7 @@ struct QuantitySelectionView: View {
     let incValue: Int
     let onValueChanged: (Int) -> Void
 
-    init(value: Int, minValue: Int = Int.min, maxValue: Int = Int.max, incValue: Int = 1, onValueChanged: @escaping (Int) -> Void) {
+    init(value: Int, minValue: Int = 1, maxValue: Int = 50, incValue: Int = 1, onValueChanged: @escaping (Int) -> Void) {
         self._quantity = State(initialValue: value)
         self.minValue = minValue
         self.maxValue = maxValue
@@ -18,20 +18,17 @@ struct QuantitySelectionView: View {
 
     var body: some View {
         HStack {
-            Button(action: {
-                internalOnMinusClicked()
-            }) {
-                Image(systemName: "chevron.left")
-                    .foregroundColor(quantity <= minValue ? .gray : .blue)
-            }
+
+            Image(systemName: "chevron.left")
+                .foregroundColor(quantity <= minValue ? .gray : .blue)
+                .onTapGesture { internalOnMinusClicked() }
+
             Text("\(quantity)")
                 .font(.system(size: 16, weight: .bold))
-            Button(action: {
-                internalOnMoreClicked()
-            }) {
-                Image(systemName: "chevron.right")
-                    .foregroundColor(quantity >= maxValue ? .gray : .blue)
-            }
+            
+            Image(systemName: "chevron.right")
+                .foregroundColor(quantity >= maxValue ? .gray : .blue)
+                .onTapGesture { internalOnMoreClicked() }
         }
     }
 
@@ -49,7 +46,6 @@ struct QuantitySelectionView: View {
         }
     }
 }
-
 
 #Preview {
     QuantitySelectionView(

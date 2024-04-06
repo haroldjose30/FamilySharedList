@@ -3,7 +3,7 @@ import SwiftUI
 
 
 struct NavigatorView<ViewModel>: View where ViewModel: NavigatorViewModelProtocol {
-    @ObservedObject var viewModel: ViewModel
+    @StateObject var viewModel: ViewModel
 
 //    private let resolverApp = ResolverApp()
 

@@ -3,7 +3,7 @@ import SwiftUI
 import shared
 
 struct SettingsPage<ViewModel>: View where ViewModel: SettingsViewModelProtocol {
-    @ObservedObject var viewModel: ViewModel
+    @StateObject var viewModel: ViewModel
 
     var body: some View {
         VStack(spacing: 16) {

@@ -9,12 +9,13 @@
 /* Begin PBXBuildFile section */
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
-		52BD908A2BC0B5F200C88B84 /* FamilyListRowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD90892BC0B5F200C88B84 /* FamilyListRowItem.swift */; };
+		52385CF62BC1ABC2009E46F4 /* FamilyListRowItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52385CF52BC1ABC2009E46F4 /* FamilyListRowItemView.swift */; };
+		52385F2F2BC1B2BD009E46F4 /* ListBackgroundClearModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52385F2E2BC1B2BD009E46F4 /* ListBackgroundClearModifier.swift */; };
+		52385F322BC1B428009E46F4 /* ViewHideRowSeparatorModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52385F312BC1B428009E46F4 /* ViewHideRowSeparatorModifier.swift */; };
 		52BD908C2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD908B2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift */; };
 		52BD908E2BC0B72000C88B84 /* FamilyListViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD908D2BC0B72000C88B84 /* FamilyListViewModelProtocol.swift */; };
 		52BD90902BC0B80600C88B84 /* FamilyListViewModelMocked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD908F2BC0B80600C88B84 /* FamilyListViewModelMocked.swift */; };
 		52BD90932BC0B8BD00C88B84 /* FamilyListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD90922BC0B8BD00C88B84 /* FamilyListViewModel.swift */; };
-		52BD909D2BC0D73600C88B84 /* FamilyListTabItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD909C2BC0D73600C88B84 /* FamilyListTabItemView.swift */; };
 		52DE60912BBF1DC800C12669 /* NavigatorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DE60902BBF1DC800C12669 /* NavigatorViewModel.swift */; };
 		52DE60932BBF1EB700C12669 /* NavigatorViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DE60922BBF1EB700C12669 /* NavigatorViewModelProtocol.swift */; };
 		52DE60952BBF1EEB00C12669 /* NavigatorViewModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DE60942BBF1EEB00C12669 /* NavigatorViewModelMock.swift */; };
@@ -64,12 +65,13 @@
 /* Begin PBXFileReference section */
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		52BD90892BC0B5F200C88B84 /* FamilyListRowItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListRowItem.swift; sourceTree = "<group>"; };
+		52385CF52BC1ABC2009E46F4 /* FamilyListRowItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListRowItemView.swift; sourceTree = "<group>"; };
+		52385F2E2BC1B2BD009E46F4 /* ListBackgroundClearModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListBackgroundClearModifier.swift; sourceTree = "<group>"; };
+		52385F312BC1B428009E46F4 /* ViewHideRowSeparatorModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewHideRowSeparatorModifier.swift; sourceTree = "<group>"; };
 		52BD908B2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListPageTabEnum.swift; sourceTree = "<group>"; };
 		52BD908D2BC0B72000C88B84 /* FamilyListViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListViewModelProtocol.swift; sourceTree = "<group>"; };
 		52BD908F2BC0B80600C88B84 /* FamilyListViewModelMocked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListViewModelMocked.swift; sourceTree = "<group>"; };
 		52BD90922BC0B8BD00C88B84 /* FamilyListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListViewModel.swift; sourceTree = "<group>"; };
-		52BD909C2BC0D73600C88B84 /* FamilyListTabItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListTabItemView.swift; sourceTree = "<group>"; };
 		52DE60902BBF1DC800C12669 /* NavigatorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorViewModel.swift; sourceTree = "<group>"; };
 		52DE60922BBF1EB700C12669 /* NavigatorViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorViewModelProtocol.swift; sourceTree = "<group>"; };
 		52DE60942BBF1EEB00C12669 /* NavigatorViewModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorViewModelMock.swift; sourceTree = "<group>"; };
@@ -124,13 +126,37 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		52BD90882BC0B5CC00C88B84 /* components */ = {
+		52385CF22BC1AB60009E46F4 /* components */ = {
 			isa = PBXGroup;
 			children = (
-				52BD90892BC0B5F200C88B84 /* FamilyListRowItem.swift */,
-				52BD909C2BC0D73600C88B84 /* FamilyListTabItemView.swift */,
+				52385CF52BC1ABC2009E46F4 /* FamilyListRowItemView.swift */,
 			);
 			path = components;
+			sourceTree = "<group>";
+		};
+		52385F2D2BC1B2A6009E46F4 /* modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				52385F332BC1B7C5009E46F4 /* view */,
+				52385F302BC1B416009E46F4 /* list */,
+			);
+			path = modifiers;
+			sourceTree = "<group>";
+		};
+		52385F302BC1B416009E46F4 /* list */ = {
+			isa = PBXGroup;
+			children = (
+				52385F2E2BC1B2BD009E46F4 /* ListBackgroundClearModifier.swift */,
+			);
+			path = list;
+			sourceTree = "<group>";
+		};
+		52385F332BC1B7C5009E46F4 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				52385F312BC1B428009E46F4 /* ViewHideRowSeparatorModifier.swift */,
+			);
+			path = view;
 			sourceTree = "<group>";
 		};
 		52BD90912BC0B8AB00C88B84 /* viewModels */ = {
@@ -201,7 +227,7 @@
 		52BD909B2BC0B95F00C88B84 /* views */ = {
 			isa = PBXGroup;
 			children = (
-				52BD90882BC0B5CC00C88B84 /* components */,
+				52385CF22BC1AB60009E46F4 /* components */,
 				52FD81942BBDD72500D6FEE3 /* FamilyListPage.swift */,
 				52BD908B2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift */,
 			);
@@ -287,6 +313,7 @@
 		52FD81952BBDD72500D6FEE3 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				52385F2D2BC1B2A6009E46F4 /* modifiers */,
 				52FD819C2BBDD72500D6FEE3 /* models */,
 				52FD81962BBDD72500D6FEE3 /* Int32 */,
 				52FD81982BBDD72500D6FEE3 /* Int */,
@@ -504,7 +531,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				52FD81A42BBDD72500D6FEE3 /* ResolverPreview.swift in Sources */,
-				52BD909D2BC0D73600C88B84 /* FamilyListTabItemView.swift in Sources */,
 				52FD81AA2BBDD72600D6FEE3 /* FamilyListPage.swift in Sources */,
 				52FD81AF2BBDD72600D6FEE3 /* iOSApp.swift in Sources */,
 				52BD908C2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift in Sources */,
@@ -512,6 +538,7 @@
 				52FD81BC2BBDE28200D6FEE3 /* QuickInsertListViewModelMocked.swift in Sources */,
 				52FD81A92BBDD72600D6FEE3 /* BarcodeScannerPage.swift in Sources */,
 				52DE60A02BBF51C900C12669 /* SettingsItemWithTitleAndSubtitleView.swift in Sources */,
+				52385CF62BC1ABC2009E46F4 /* FamilyListRowItemView.swift in Sources */,
 				52DE60972BBF231000C12669 /* SettingsViewModelProtocol.swift in Sources */,
 				52FD81C12BBE02A000D6FEE3 /* TextEditorView.swift in Sources */,
 				52DE60932BBF1EB700C12669 /* NavigatorViewModelProtocol.swift in Sources */,
@@ -529,13 +556,14 @@
 				52DE60952BBF1EEB00C12669 /* NavigatorViewModelMock.swift in Sources */,
 				52DE609B2BBF249A00C12669 /* AccountModel.swift in Sources */,
 				52BD90902BC0B80600C88B84 /* FamilyListViewModelMocked.swift in Sources */,
-				52BD908A2BC0B5F200C88B84 /* FamilyListRowItem.swift in Sources */,
 				52FD81A22BBDD72500D6FEE3 /* ResolverApp.swift in Sources */,
 				52BD908E2BC0B72000C88B84 /* FamilyListViewModelProtocol.swift in Sources */,
 				52DE60912BBF1DC800C12669 /* NavigatorViewModel.swift in Sources */,
 				52FD81BE2BBDE5D100D6FEE3 /* QuickInsertListViewModel.swift in Sources */,
 				52BD90932BC0B8BD00C88B84 /* FamilyListViewModel.swift in Sources */,
+				52385F322BC1B428009E46F4 /* ViewHideRowSeparatorModifier.swift in Sources */,
 				52FD81AD2BBDD72600D6FEE3 /* StringConstants.swift in Sources */,
+				52385F2F2BC1B2BD009E46F4 /* ListBackgroundClearModifier.swift in Sources */,
 				52DE60A32BBF522000C12669 /* SettingsItemWithInputTextView.swift in Sources */,
 				52FD81BA2BBDE23F00D6FEE3 /* QuickInsertListViewModelProtocol.swift in Sources */,
 				52FD81AC2BBDD72600D6FEE3 /* toInt32.swift in Sources */,
