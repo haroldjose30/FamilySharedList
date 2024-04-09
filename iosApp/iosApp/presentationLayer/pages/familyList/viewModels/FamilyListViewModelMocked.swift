@@ -18,6 +18,7 @@ class FamilyListViewModelMocked: FamilyListViewModelProtocol {
     ]
 
     var isLoading: Bool = false
+    var isShowingBarcodeBottomSheet: Bool = false
     var newItemName: String = ""
     var quantity: Int = 1
     var tabIndex: FamilyListPageTabEnum = .prioritized

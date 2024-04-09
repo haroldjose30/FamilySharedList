@@ -11,7 +11,7 @@ struct FamilyListPage<ViewModel>: View where ViewModel: FamilyListViewModelProto
             VStack {
                 HStack {
                     Button {
-                        Task { viewModel.goToBarcodeScanner() }
+                        Task { viewModel.isShowingBarcodeBottomSheet = true }
                     } label: {
                         Image(systemName: SystemName.qrcodeViewfinder.rawValue)
                     }
@@ -29,6 +29,16 @@ struct FamilyListPage<ViewModel>: View where ViewModel: FamilyListViewModelProto
                 .shadow(radius: 1)
                 .padding(.horizontal,20)
                 .padding(.top,16)
+                .sheet(isPresented: $viewModel.isShowingBarcodeBottomSheet) {
+                    BarcodeScannerPage { code in
+                        if viewModel.isShowingBarcodeBottomSheet {
+                            viewModel.isShowingBarcodeBottomSheet = false
+                            Task {
+                                await viewModel.addBy(barcode: code)
+                            }
+                        }
+                    }
+                }
 
 
                 TabView(selection: $viewModel.tabIndex) {

@@ -2,9 +2,10 @@ import Foundation
 import shared
 
 class FamilyListViewModel: FamilyListViewModelProtocol {
-    
+
     @Published var familyListModels: [FamilyListModel] = []
     @Published var isLoading: Bool = false
+    @Published var isShowingBarcodeBottomSheet: Bool = false
     @Published var newItemName: String = ""
     @Published var quantity: Int = 1
     @Published var tabIndex: FamilyListPageTabEnum = .pending {
@@ -85,33 +86,38 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
         await loadData(fromNetwork: true, showLoading: true)
     }
 
+    private var isAddByBusy = false
     @MainActor
     func addBy(barcode: String) async {
-        if barcode.isEmpty {
+        if barcode.isEmpty || isAddByBusy {
             return
         }
 
+        isAddByBusy = true
         isLoading = true
+        defer {
+            isAddByBusy = false
+            isLoading = false
+        }
+
         //TODO: handle error
         guard let productModelFounded = try? await getProductByCodeUseCase.execute(code: barcode) else {
-            isLoading = false
             return
         }
 
-        if let itemFounded = familyListModels.first(where: { $0.name.caseInsensitiveCompare(productModelFounded.productName) == .orderedSame }) {
-            if itemFounded.isCompleted {
-                itemFounded.isCompleted = false
-                itemFounded.isPrioritized = tabIndex.isPrioritized()
-                await update(item: itemFounded)
+        if let index = familyListModels.firstIndex(where: { $0.name.caseInsensitiveCompare(productModelFounded.productName) == .orderedSame }) {
+            if familyListModels[index].isCompleted {
+                familyListModels[index].isCompleted = false
+                familyListModels[index].isPrioritized = tabIndex.isPrioritized()
+                await update(item: familyListModels[index])
                 if tabIndex == .completed {
                     tabIndex = .pending
                 }
-                await loadData(fromNetwork: true, showLoading: true)
             } else {
-                itemFounded.isPrioritized = tabIndex.isPrioritized()
-                itemFounded.quantity += 1
-                await update(item: itemFounded)
-                await loadData(fromNetwork: true, showLoading: true)
+                familyListModels[index].isPrioritized = tabIndex.isPrioritized()
+                familyListModels[index].quantity += 1
+                //TODO: fix view not updated when quantity is changed
+                await update(item: familyListModels[index])
             }
         } else {
             let item = FamilyListModel(

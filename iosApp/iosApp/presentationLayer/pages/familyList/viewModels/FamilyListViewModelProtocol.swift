@@ -4,13 +4,13 @@ import shared
 protocol FamilyListViewModelProtocol: ObservableObject {
     var familyListModels: [FamilyListModel] { get set }
     var isLoading: Bool { get set }
+    var isShowingBarcodeBottomSheet: Bool { get set }
     var newItemName: String { get set }
     var quantity: Int { get set }
     var tabIndex: FamilyListPageTabEnum { get set }
 
     var goToSetting: () -> Void { get set }
     var goToQuickInsert: () -> Void { get set }
-    var goToBarcodeScanner: () -> Void { get set }
 
     func loadData(fromNetwork: Bool, showLoading: Bool) async
     func add() async
