@@ -14,9 +14,10 @@ import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.familyList.re
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.familyList.response.FamilyListInsertManyPostResponse
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.familyList.response.FamilyListInsertPostResponse
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.familyList.response.FamilyListUpdatePostResponse
+import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.mongoDb.MongoDbResources
 import dev.haroldjose.familysharedlist.dataLayer.dto.FamilyListDto
 
-class FamilyListRemoteDataSource(val database: String): IFamilyListRemoteDataSource {
+class FamilyListRemoteDataSource(override var database: String = MongoDbResources.Database.DEMO.value): IFamilyListRemoteDataSource {
     //todo: add DI
     private val client: AJHttpClient = AJHttpClient()
     override suspend fun insert(item: FamilyListDto) {

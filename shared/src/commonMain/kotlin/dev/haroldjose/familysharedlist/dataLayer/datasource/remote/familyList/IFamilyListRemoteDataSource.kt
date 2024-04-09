@@ -3,6 +3,8 @@ package dev.haroldjose.familysharedlist.dataLayer.datasource.remote.familyList
 import dev.haroldjose.familysharedlist.dataLayer.dto.FamilyListDto
 
 interface IFamilyListRemoteDataSource {
+
+    var database: String
     suspend fun insert(item: FamilyListDto)
     suspend fun insert(items: List<FamilyListDto>)
     suspend fun findAll(): List<FamilyListDto>

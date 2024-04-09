@@ -6,7 +6,6 @@ struct iOSApp: App {
 
     @Environment(\.scenePhase) private var scenePhase
     
-
     init() {
         configureIsRunningUITests()
         KoinApplication.start()
@@ -15,7 +14,12 @@ struct iOSApp: App {
     var body: some Scene {
 
         WindowGroup {
-            NavigationView()
+            NavigatorView(
+                viewModel:
+                    NavigatorViewModel(
+                        getOrCreateAccountFromLocalUuidUseCase: KoinApplication.shared.inject()
+                    )
+            )
         }.onChange(of: scenePhase) { phase in
 
             switch phase {
