@@ -66,10 +66,10 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
             return
         }
 
-        if newItemName.lowercased().hasPrefix("debug") {
-            newItemName = newItemName.replacingOccurrences(of: "debug", with: "", options: .caseInsensitive)
-            await addBy(barcode: newItemName)
+        if newItemName.isDigitsOnly() {
+            let barcode = newItemName
             newItemName = ""
+            await addBy(barcode: barcode)
             return
         }
 
@@ -105,26 +105,32 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
             return
         }
 
-        if let index = familyListModels.firstIndex(where: { $0.name.caseInsensitiveCompare(productModelFounded.productName) == .orderedSame }) {
+        if let index = familyListModels.firstIndex(where: {
+            $0.product?.code.caseInsensitiveCompare(productModelFounded.code) == .orderedSame ||
+            $0.name.caseInsensitiveCompare(productModelFounded.productName) == .orderedSame
+        }) {
             if familyListModels[index].isCompleted {
                 familyListModels[index].isCompleted = false
-                familyListModels[index].isPrioritized = tabIndex.isPrioritized()
-                await update(item: familyListModels[index])
-                if tabIndex == .completed {
-                    tabIndex = .pending
-                }
             } else {
-                familyListModels[index].isPrioritized = tabIndex.isPrioritized()
-                familyListModels[index].quantity += 1
                 //TODO: fix view not updated when quantity is changed
-                await update(item: familyListModels[index])
+                familyListModels[index].quantity += 1
             }
+
+            familyListModels[index].isPrioritized = tabIndex.isPrioritized()
+            familyListModels[index].product = productModelFounded
+            await update(item: familyListModels[index])
+            if tabIndex.isCompleted() {
+                tabIndex = .pending
+            }
+
         } else {
             let item = FamilyListModel(
                 name: productModelFounded.productName,
                 isCompleted: false, 
                 isPrioritized: tabIndex.isPrioritized(),
-                quantity: quantity.toInt32()
+                quantity: quantity.toInt32(),
+                price: 0,
+                product: productModelFounded
             )
             //TODO: handle error
             try? await createFamilyListUseCase.execute(item: item)

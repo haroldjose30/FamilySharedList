@@ -9,5 +9,7 @@ data class FamilyListDto(
     val name: String = "",
     val isCompleted: Boolean = false,
     var isPrioritized: Boolean = false,
-    var quantity: Int = 1
+    var quantity: Int = 1,
+    var price: Double = 0.0,
+    var product: ProductDto? = null,
 ): IMongoDbBaseDto

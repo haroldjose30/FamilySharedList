@@ -12,12 +12,10 @@ data class OpenFoodFactsGetProductByGetRequest(
 ) : IAJHttpRequest {
     override val urlBase: String
         get() {
-            //TODO - harold - retirar quando estiver estavel
-            return "https://world.openfoodfacts.org/"
-            //return if (getPlatform().isDebug)
-            //    "https://world.openfoodfacts.net/"
-            //else
-            //    "https://world.openfoodfacts.org/"
+            return if (getPlatform().isDebug)
+                "https://world.openfoodfacts.net/"
+            else
+                "https://world.openfoodfacts.org/"
         }
     override val path: String
         get() = "api/v2/product/$code"

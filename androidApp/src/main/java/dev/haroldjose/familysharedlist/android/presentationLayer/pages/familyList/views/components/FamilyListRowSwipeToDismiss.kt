@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels.IFamilyListViewModel
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.views.components.rowItem.FamilyListRowItemWithProduct
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
 import kotlinx.coroutines.launch
 
@@ -65,7 +66,7 @@ fun FamilyListRowSwipeToDismiss(
         enableDismissFromStartToEnd = false,
         enableDismissFromEndToStart = true,
     ) {
-        FamilyListRowItem(
+        FamilyListRowItemWithProduct(
             item = item,
             viewModel = viewModel
         )

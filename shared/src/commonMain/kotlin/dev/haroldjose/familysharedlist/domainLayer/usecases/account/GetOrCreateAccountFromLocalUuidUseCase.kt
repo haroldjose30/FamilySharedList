@@ -25,7 +25,6 @@ class GetOrCreateAccountFromLocalUuidUseCase(
 
         val accountUuid = getOrCreateUuid()
         accountRepository.findBy(uuid = accountUuid)?.toModel()?.let {
-            //configure singleton
             //TODO: verify if accountsSharedWithMe was revoked
             val defaultAccountSharedWithMe = it.accountsSharedWithMe.firstOrNull()
             val selectedDatabaseName: String = defaultAccountSharedWithMe ?: it.uuid
@@ -56,7 +55,12 @@ class GetOrCreateAccountFromLocalUuidUseCase(
 
         //Generate new Account UUID for this device
         val sanitizedUuid = sanitizeUuid(getPlatform().generateUUID())
-        val newAccountUuid = "${Constants.ACCOUNT_PREFIX}_${sanitizedUuid}"
+        var newAccountUuid = "${Constants.ACCOUNT_PREFIX}_${sanitizedUuid}"
+
+        if (getPlatform().isDebug) {
+            newAccountUuid = "${Constants.ACCOUNT_PREFIX}_DEBUG"
+            Logger.d("GetOrCreateAccountFromLocalUuidUseCase","Debug Mode: Account UUID: $newAccountUuid")
+        }
 
         //Save Account UUID on localStorage
         keyValueStorageRepository.put(

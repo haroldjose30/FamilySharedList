@@ -9,7 +9,9 @@ internal fun FamilyListDto.toModel(): FamilyListModel {
         name = this.name,
         isCompleted = this.isCompleted,
         isPrioritized = this.isPrioritized,
-        quantity = this.quantity
+        quantity = this.quantity,
+        price = this.price,
+        product = this.product?.toModel()
     )
 }
 
@@ -19,6 +21,8 @@ internal fun FamilyListModel.toDto(): FamilyListDto {
         name = this.name,
         isCompleted = this.isCompleted,
         isPrioritized = this.isPrioritized,
-        quantity = this.quantity
+        quantity = this.quantity,
+        price = this.price,
+        product = this.product?.toDto()
     )
 }

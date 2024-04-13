@@ -22,4 +22,5 @@ interface IFamilyListViewModel {
     suspend fun updateIsPrioritized(uuid: String, isPrioritized: Boolean)
     suspend fun updateName(uuid: String, name: String)
     suspend fun updateQuantity(uuid: String, quantity: Int)
+    suspend fun updatePrice(uuid: String, price: Double)
 }

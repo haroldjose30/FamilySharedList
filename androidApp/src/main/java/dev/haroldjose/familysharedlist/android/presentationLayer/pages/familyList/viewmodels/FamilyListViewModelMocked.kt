@@ -1,29 +1,11 @@
 package dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels
 
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.views.FamilyListPageTabEnum
+import dev.haroldjose.familysharedlist.domainLayer.extensions.Samples
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
 
 class FamilyListViewModelMocked : IFamilyListViewModel {
-    override var familyListModelsFiltered: List<FamilyListModel> = arrayListOf(
-        FamilyListModel(
-            uuid = "sample1",
-            name = "Mock Item 01",
-            quantity = 1,
-            isCompleted = false
-        ),
-        FamilyListModel(
-            uuid = "sample2",
-            name = "Mock Item 02",
-            quantity = 2,
-            isCompleted = true
-        ),
-        FamilyListModel(
-            uuid = "sample3",
-            name = "Mock Item 03",
-            quantity = 3,
-            isCompleted = false
-        ),
-    )
+    override var familyListModelsFiltered: List<FamilyListModel> = Samples.FamilyList.list1
     override var loading: Boolean = false
     override var newItemName: String = "newItem"
     override var quantity: Int = 1
@@ -46,4 +28,6 @@ class FamilyListViewModelMocked : IFamilyListViewModel {
     override suspend fun updateName(uuid: String, name: String) {}
 
     override suspend fun updateQuantity(uuid: String, quantity: Int) {}
+
+    override suspend fun updatePrice(uuid: String, price: Double) {}
 }

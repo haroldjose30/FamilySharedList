@@ -3,18 +3,18 @@ import shared
 
 class FamilyListViewModelMocked: FamilyListViewModelProtocol {
     var familyListModels: [FamilyListModel] = [
-        FamilyListModel(uuid: "", name: "Item 01", isCompleted: false, isPrioritized: false, quantity: 1),
-        FamilyListModel(uuid: "", name: "Item 02", isCompleted: false, isPrioritized: false, quantity: 2),
-        FamilyListModel(uuid: "", name: "Item 03", isCompleted: false, isPrioritized: true, quantity: 3),
-        FamilyListModel(uuid: "", name: "Item 04", isCompleted: false, isPrioritized: true, quantity: 4),
-        FamilyListModel(uuid: "", name: "Item 05", isCompleted: false, isPrioritized: true, quantity: 5),
-        FamilyListModel(uuid: "", name: "Item 06", isCompleted: true, isPrioritized: true, quantity: 6),
-        FamilyListModel(uuid: "", name: "Item 07", isCompleted: false, isPrioritized: true, quantity: 7),
-        FamilyListModel(uuid: "", name: "Item 08", isCompleted: false, isPrioritized: true, quantity: 8),
-        FamilyListModel(uuid: "", name: "Item 09", isCompleted: true, isPrioritized: false, quantity: 9),
-        FamilyListModel(uuid: "", name: "Item 10", isCompleted: false, isPrioritized: true, quantity: 10),
-        FamilyListModel(uuid: "", name: "Item 11", isCompleted: true, isPrioritized: true, quantity: 11),
-        FamilyListModel(uuid: "", name: "Item 12", isCompleted: false, isPrioritized: false, quantity: 12),
+        FamilyListModel(uuid: "", name: "Item 01", isCompleted: false, isPrioritized: false, quantity: 1, price: 0, product: nil),
+        FamilyListModel(uuid: "", name: "Item 02", isCompleted: false, isPrioritized: false, quantity: 2, price: 0, product: nil),
+        FamilyListModel(uuid: "", name: "Item 03", isCompleted: false, isPrioritized: true, quantity: 3, price: 0, product: nil),
+        FamilyListModel(uuid: "", name: "Item 04", isCompleted: false, isPrioritized: true, quantity: 4, price: 0, product: nil),
+        FamilyListModel(uuid: "", name: "Item 05", isCompleted: false, isPrioritized: true, quantity: 5, price: 0, product: nil),
+        FamilyListModel(uuid: "", name: "Item 06", isCompleted: true, isPrioritized: true, quantity: 6, price: 0, product: nil),
+        FamilyListModel(uuid: "", name: "Item 07", isCompleted: false, isPrioritized: true, quantity: 7, price: 0, product: nil),
+        FamilyListModel(uuid: "", name: "Item 08", isCompleted: false, isPrioritized: true, quantity: 8, price: 0, product: nil),
+        FamilyListModel(uuid: "", name: "Item 09", isCompleted: true, isPrioritized: false, quantity: 9, price: 0, product: nil),
+        FamilyListModel(uuid: "", name: "Item 10", isCompleted: false, isPrioritized: true, quantity: 10, price: 0, product: nil),
+        FamilyListModel(uuid: "", name: "Item 11", isCompleted: true, isPrioritized: true, quantity: 11, price: 0, product: nil),
+        FamilyListModel(uuid: "", name: "Item 12", isCompleted: false, isPrioritized: false, quantity: 12, price: 0, product: nil),
     ]
 
     var isLoading: Bool = false

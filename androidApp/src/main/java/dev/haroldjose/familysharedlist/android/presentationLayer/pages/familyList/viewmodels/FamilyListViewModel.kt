@@ -3,6 +3,7 @@ package dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyLi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.core.text.isDigitsOnly
 import dev.haroldjose.familysharedlist.Logger
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.views.FamilyListPageTabEnum
 import dev.haroldjose.familysharedlist.domainLayer.models.AccountModel
@@ -46,10 +47,10 @@ class FamilyListViewModel(
 
         familyListModelsFiltered = when (tabIndex) {
             FamilyListPageTabEnum.PRIORIZED -> familyListModelsFull
-                .filter { !it.isCompleted && it.isPrioritized }
+                .filter { it.isPrioritized }
 
             FamilyListPageTabEnum.PENDING -> familyListModelsFull
-                .filter { !it.isCompleted }
+                .filter { !it.isCompleted && !it.isPrioritized}
 
             FamilyListPageTabEnum.COMPLETED -> familyListModelsFull
                 .filter { it.isCompleted }
@@ -63,10 +64,10 @@ class FamilyListViewModel(
         if (newItemName.isEmpty())
             return
 
-        if (getPlatform().isDebug && newItemName.startsWith("debug", ignoreCase = true)) {
-            newItemName = newItemName.replace(oldValue = "debug", newValue = "", ignoreCase = true)
-            addBy(barcode = newItemName)
+        if (newItemName.isDigitsOnly()) {
+            val barcode = newItemName
             newItemName = ""
+            addBy(barcode = barcode)
             return
         }
 
@@ -88,40 +89,38 @@ class FamilyListViewModel(
             return
 
         loading = true
-        val productModelFounded = getProductByCodeUseCase.execute(code = barcode)
-
-        productModelFounded?.let { productModel ->
-
-            //verifica se o item ja foi adicionado
-            familyListModelsFull.firstOrNull { familyListModel ->
-                familyListModel.name.compareTo(productModel.productName, ignoreCase = true) == 0
+        getProductByCodeUseCase.execute(code = barcode)?.let { productModel ->
+            familyListModelsFull.firstOrNull {
+                it.product?.code == productModel.code ||
+                it.name.compareTo(
+                    productModel.productName,
+                    ignoreCase = true
+                ) == 0
             }?.let { itemFounded ->
-
-                //se o item estiver concluido, altera para pendente e muda a tab
+                // Check if the item is completed and to pending state
                 if (itemFounded.isCompleted) {
                     itemFounded.isCompleted = false
-                    itemFounded.isPrioritized = this.tabIndex.isPrioritized()
-                    update(item = itemFounded)
-                    if (this.tabIndex.isCompleted())
-                        this.tabIndex = FamilyListPageTabEnum.PENDING
-
-                    loadData(this.tabIndex, fromNetwork = true)
-                    return
                 } else {
-                    //se nao estiver concluido aumenta a quantidade do mesmo em 1
-                    itemFounded.isPrioritized = this.tabIndex.isPrioritized()
+                    // Increase the quantity by 1 if the item is not completed
                     itemFounded.quantity += 1
-                    update(item = itemFounded)
-                    loadData(this.tabIndex, fromNetwork = true)
-                    return
                 }
+
+                itemFounded.isPrioritized = this.tabIndex.isPrioritized()
+                itemFounded.product = productModel
+                update(item = itemFounded)
+                if (this.tabIndex.isCompleted())
+                    this.tabIndex = FamilyListPageTabEnum.PENDING
+                loadData(this.tabIndex, fromNetwork = true)
+                return
             }
 
+            //if the item not found, create a new one
             val item = FamilyListModel(
                 name = productModel.productName,
                 quantity = quantity,
                 isPrioritized = this.tabIndex.isPrioritized(),
-                isCompleted = false
+                isCompleted = false,
+                product = productModel
             )
 
             createFamilyListUseCase.execute(item = item)
@@ -129,6 +128,7 @@ class FamilyListViewModel(
             loadData(this.tabIndex, fromNetwork = true)
             Logger.d("FamilyListSharedViewModel", "loadData executed")
         }
+        loading = false
     }
 
     override fun showError(e: Throwable) {
@@ -173,6 +173,13 @@ class FamilyListViewModel(
     override suspend fun updateQuantity(uuid: String, quantity: Int) {
         familyListModelsFull.firstOrNull { it.uuid ==  uuid}?.let { item ->
             item.quantity = quantity
+            update(item)
+        }
+    }
+
+    override suspend fun updatePrice(uuid: String, price: Double) {
+        familyListModelsFull.firstOrNull { it.uuid ==  uuid}?.let { item ->
+            item.price = price
             update(item)
         }
     }
