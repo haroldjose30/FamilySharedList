@@ -28,6 +28,7 @@ class FamilyListViewModel(
     override var familyListModelsFiltered: List<FamilyListModel> by mutableStateOf(arrayListOf())
     override var loading:Boolean by mutableStateOf(false)
     override var newItemName: String by mutableStateOf("")
+    override var selectedItemUuid: String = ""
     override var quantity: Int by mutableStateOf(1)
     override var tabIndex: FamilyListPageTabEnum by mutableStateOf(FamilyListPageTabEnum.PENDING)
     private lateinit var accountModel: AccountModel
@@ -90,7 +91,14 @@ class FamilyListViewModel(
 
         loading = true
         getProductByCodeUseCase.execute(code = barcode)?.let { productModel ->
+
+            if (productModel.productName.isEmpty()) {
+                loading = false
+                return
+            }
+
             familyListModelsFull.firstOrNull {
+                it.uuid == selectedItemUuid ||
                 it.product?.code == productModel.code ||
                 it.name.compareTo(
                     productModel.productName,
@@ -100,12 +108,12 @@ class FamilyListViewModel(
                 // Check if the item is completed and to pending state
                 if (itemFounded.isCompleted) {
                     itemFounded.isCompleted = false
-                } else {
-                    // Increase the quantity by 1 if the item is not completed
-                    itemFounded.quantity += 1
                 }
 
                 itemFounded.isPrioritized = this.tabIndex.isPrioritized()
+                if (itemFounded.product == null) {
+                    itemFounded.name = productModel.productName
+                }
                 itemFounded.product = productModel
                 update(item = itemFounded)
                 if (this.tabIndex.isCompleted())

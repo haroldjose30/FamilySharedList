@@ -5,47 +5,69 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
+import dev.haroldjose.familysharedlist.android.app.MyApplicationTheme
+import dev.haroldjose.familysharedlist.domainLayer.extensions.Samples
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
-import kotlinx.coroutines.CoroutineScope
 
 @Composable
 fun ColumnLeftDefault(
-    item: FamilyListModel,
-    coroutineScope: CoroutineScope,
+    item: MutableState<FamilyListModel>
 ) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(8.dp)
+        modifier = Modifier.padding(start = 8.dp, end = 0.dp, top = 8.dp, bottom = 8.dp)
     ) {
-        if (item.product?.imageFrontSmallUrl != null) {
+        if (item.value.product?.imageFrontSmallUrl != null) {
             //reference: https://developer.android.com/develop/ui/compose/graphics/images/customize
             SubcomposeAsyncImage(
-                model = item.product?.imageFrontSmallUrl,
+                model = item.value.product?.imageFrontSmallUrl,
                 loading = {
-                    CircularProgressIndicator()
+                    //CircularProgressIndicator()
+                    LinearProgressIndicator(color = Color.LightGray)
                 },
-                contentDescription = item.product?.productName,
-                contentScale = ContentScale.None,
+                contentDescription = item.value.product?.productName,
+                contentScale = ContentScale.Fit,
                 modifier = Modifier
-                    .padding(bottom = 8.dp)
-                    .size(100.dp)
+                    .width(100.dp)
+                    .height(140.dp)
                     .clip(RoundedCornerShape(16.dp))
                     .background(Color.White)
                     .border(BorderStroke(1.dp, Color.Gray), RoundedCornerShape(16.dp))
+                    .padding(4.dp)
             )
         }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview
+@Composable
+fun ColumnLeftDefault_Preview() {
+    val item = remember { mutableStateOf( Samples.FamilyList.nutella) }
+    item.value.isCompleted = false
+    item.value.isPrioritized = false
+    MyApplicationTheme {
+        ColumnLeftDefault(
+            item = item
+        )
     }
 }

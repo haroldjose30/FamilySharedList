@@ -3,7 +3,10 @@ package dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyLi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -18,10 +21,12 @@ import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyLis
 import dev.haroldjose.familysharedlist.domainLayer.extensions.Samples
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FamilyListRowItemWithProduct(
     item: FamilyListModel,
-    viewModel: IFamilyListViewModel
+    viewModel: IFamilyListViewModel,
+    bottomSheetScaffoldState: BottomSheetScaffoldState,
 ) {
     val coroutineScope = rememberCoroutineScope()
     val itemMutable = remember { mutableStateOf(item) }
@@ -54,15 +59,15 @@ fun FamilyListRowItemWithProduct(
 
                 else -> {
                     ColumnLeftDefault(
-                        itemMutable.value,
-                        coroutineScope
+                        itemMutable
                     )
                     ColumnRigthDefault(
                         itemMutable,
                         nameInEditMode,
                         priceInEditMode,
                         coroutineScope,
-                        viewModel
+                        viewModel,
+                        bottomSheetScaffoldState
                     )
                 }
             }
@@ -70,14 +75,17 @@ fun FamilyListRowItemWithProduct(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun FamilyListRowItemWithProduct_Preview() {
+    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
     val item = Samples.FamilyList.nutella
     MyApplicationTheme {
         FamilyListRowItemWithProduct(
             item = item ,
-            viewModel = FamilyListViewModelMocked()
+            viewModel = FamilyListViewModelMocked(),
+            bottomSheetScaffoldState = bottomSheetScaffoldState
         )
     }
 }

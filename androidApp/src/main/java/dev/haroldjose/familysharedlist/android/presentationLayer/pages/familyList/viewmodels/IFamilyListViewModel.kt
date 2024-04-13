@@ -7,6 +7,7 @@ interface IFamilyListViewModel {
     var familyListModelsFiltered: List<FamilyListModel>
     var loading: Boolean
     var newItemName: String
+    var selectedItemUuid: String
     var quantity: Int
     var tabIndex: FamilyListPageTabEnum
 

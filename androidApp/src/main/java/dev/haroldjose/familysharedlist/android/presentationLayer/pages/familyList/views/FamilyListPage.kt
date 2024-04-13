@@ -87,7 +87,8 @@ fun FamilyListPage(
                     }
                     FamilyListTabItemView(
                         viewModel = viewModel,
-                        tabIndex = tabIndex
+                        tabIndex = tabIndex,
+                        bottomSheetScaffoldState = bottomSheetScaffoldState
                     )
                 }
             }

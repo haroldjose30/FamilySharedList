@@ -10,9 +10,13 @@ import androidx.compose.material.icons.automirrored.twotone.List
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material.icons.twotone.CheckCircle
 import androidx.compose.material.icons.twotone.ShoppingCart
+import androidx.compose.material3.BottomSheetScaffoldState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -22,12 +26,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.haroldjose.familysharedlist.android.R
 import dev.haroldjose.familysharedlist.android.app.MyApplicationTheme
 import dev.haroldjose.familysharedlist.android.extensions.ToCurrencyFormat
-import dev.haroldjose.familysharedlist.android.presentationLayer.components.CurrencyAmountInput
 import dev.haroldjose.familysharedlist.android.presentationLayer.components.QuantitySelectionView
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels.FamilyListViewModelMocked
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels.IFamilyListViewModel
@@ -37,15 +42,17 @@ import dev.haroldjose.familysharedlist.domainLayer.models.ProductModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ColumnRigthDefault(
     item: MutableState<FamilyListModel>,
     nameInEditMode: MutableState<Boolean>,
     priceInEditMode: MutableState<Boolean>,
     coroutineScope: CoroutineScope,
-    viewModel: IFamilyListViewModel
+    viewModel: IFamilyListViewModel,
+    bottomSheetScaffoldState: BottomSheetScaffoldState,
 ) {
-    Column(modifier = Modifier.padding(all = 10.dp)) {
+    Column(modifier = Modifier.padding(start = 4.dp, end = 8.dp, top = 8.dp, bottom = 8.dp)) {
         RowItemTopOptions(
             item,
             nameInEditMode
@@ -58,6 +65,7 @@ fun ColumnRigthDefault(
             item,
             coroutineScope,
             viewModel,
+            bottomSheetScaffoldState
         )
     }
 }
@@ -112,11 +120,13 @@ private fun RowItemMiddleOptions(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ItemRowBottomOptions(
     item: MutableState<FamilyListModel>,
     coroutineScope: CoroutineScope,
     viewModel: IFamilyListViewModel,
+    bottomSheetScaffoldState: BottomSheetScaffoldState,
 ) {
     Row(verticalAlignment = Alignment.Bottom) {
         if (!item.value.isCompleted) {
@@ -135,6 +145,25 @@ private fun ItemRowBottomOptions(
         }
 
         Spacer(Modifier.weight(1f))
+
+        IconButton(
+            onClick = {
+                coroutineScope.launch {
+                    viewModel.selectedItemUuid = item.value.uuid
+                    if (bottomSheetScaffoldState.bottomSheetState.currentValue == SheetValue.Expanded) {
+                        bottomSheetScaffoldState.bottomSheetState.partialExpand()
+                    } else {
+                        bottomSheetScaffoldState.bottomSheetState.expand()
+                    }
+                }
+            }
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.qr_code_scanner),
+                contentDescription = "Scanner"
+            )
+        }
+
         if (!item.value.isCompleted) {
             IconButton(
                 onClick = {
@@ -172,16 +201,18 @@ private fun ItemRowBottomOptions(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun ColumnRigthDefault_Preview() {
+    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
     val coroutineScope = rememberCoroutineScope()
     val nameInEditMode = remember { mutableStateOf(false) }
     val priceInEditMode = remember { mutableStateOf(false) }
     val viewModel = FamilyListViewModelMocked()
     val item = remember {mutableStateOf( Samples.FamilyList.nutella) }
-    item.value.isCompleted = true
-    item.value.isPrioritized = true
+    item.value.isCompleted = false
+    item.value.isPrioritized = false
     MyApplicationTheme {
         ColumnRigthDefault(
             item = item,
@@ -189,6 +220,7 @@ fun ColumnRigthDefault_Preview() {
             priceInEditMode = priceInEditMode,
             coroutineScope = coroutineScope,
             viewModel = viewModel,
+            bottomSheetScaffoldState = bottomSheetScaffoldState
         )
     }
 }

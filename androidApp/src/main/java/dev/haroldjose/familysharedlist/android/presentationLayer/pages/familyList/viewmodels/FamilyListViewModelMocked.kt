@@ -5,9 +5,10 @@ import dev.haroldjose.familysharedlist.domainLayer.extensions.Samples
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
 
 class FamilyListViewModelMocked : IFamilyListViewModel {
-    override var familyListModelsFiltered: List<FamilyListModel> = Samples.FamilyList.list1
+    override var familyListModelsFiltered: List<FamilyListModel> = emptyList() //Samples.FamilyList.list1
     override var loading: Boolean = false
     override var newItemName: String = "newItem"
+    override var selectedItemUuid: String = ""
     override var quantity: Int = 1
     override var tabIndex: FamilyListPageTabEnum = FamilyListPageTabEnum.PRIORIZED
 
