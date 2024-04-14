@@ -11,7 +11,7 @@ fun Double.toStringWithOnlyDigits(): String = this.toString().filter { it.isDigi
 /**
  * Returns a string with the currency format
  */
-fun Double.ToCurrencyFormat(fractionDigits: Int = 2): String {
+fun Double.toCurrencyFormat(fractionDigits: Int = 2): String {
     val numberFormat = NumberFormat.getCurrencyInstance()
     numberFormat.setMaximumFractionDigits(fractionDigits);
     return numberFormat.format(this)

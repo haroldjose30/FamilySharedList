@@ -32,13 +32,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.haroldjose.familysharedlist.android.R
 import dev.haroldjose.familysharedlist.android.app.MyApplicationTheme
-import dev.haroldjose.familysharedlist.android.extensions.ToCurrencyFormat
+import dev.haroldjose.familysharedlist.android.extensions.toCurrencyFormat
 import dev.haroldjose.familysharedlist.android.presentationLayer.components.QuantitySelectionView
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels.FamilyListViewModelMocked
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels.IFamilyListViewModel
 import dev.haroldjose.familysharedlist.domainLayer.extensions.Samples
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
-import dev.haroldjose.familysharedlist.domainLayer.models.ProductModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -103,7 +102,7 @@ private fun RowItemMiddleOptions(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            item.value.price.ToCurrencyFormat(),
+            item.value.price.toCurrencyFormat(),
             fontSize = 16.sp,
             modifier = Modifier
                 .padding(10.dp)

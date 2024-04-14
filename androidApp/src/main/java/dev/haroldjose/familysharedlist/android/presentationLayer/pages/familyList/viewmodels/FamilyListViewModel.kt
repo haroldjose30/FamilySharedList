@@ -4,8 +4,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.text.isDigitsOnly
+import androidx.lifecycle.ViewModel
 import dev.haroldjose.familysharedlist.Logger
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.views.FamilyListPageTabEnum
+import dev.haroldjose.familysharedlist.defaultLocalDateTime
 import dev.haroldjose.familysharedlist.domainLayer.models.AccountModel
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.GetOrCreateAccountFromLocalUuidUseCase
@@ -14,7 +16,10 @@ import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.DeleteFam
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.GetAllFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.UpdateFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.product.GetProductByCodeUseCase
-import dev.haroldjose.familysharedlist.getPlatform
+import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 class FamilyListViewModel(
     private val getAllFamilyListUseCase: GetAllFamilyListUseCase,
@@ -23,9 +28,10 @@ class FamilyListViewModel(
     private val deleteFamilyListUseCase: DeleteFamilyListUseCase,
     private val getOrCreateAccountFromLocalUuidUseCase: GetOrCreateAccountFromLocalUuidUseCase,
     private val getProductByCodeUseCase: GetProductByCodeUseCase
-): IFamilyListViewModel {
+): ViewModel(), IFamilyListViewModel {
     private var familyListModelsFull: List<FamilyListModel> by mutableStateOf(arrayListOf())
-    override var familyListModelsFiltered: List<FamilyListModel> by mutableStateOf(arrayListOf())
+    override var familyListModelsGrouped: Map<LocalDate, List<FamilyListModel>> by mutableStateOf(mapOf())
+    override var familyListModels: List<FamilyListModel> by mutableStateOf(arrayListOf())
     override var loading:Boolean by mutableStateOf(false)
     override var newItemName: String by mutableStateOf("")
     override var selectedItemUuid: String = ""
@@ -36,7 +42,11 @@ class FamilyListViewModel(
     override var goToSetting: () -> Unit = {}
     override var goToQuickInsert: () -> Unit = {}
 
-    override suspend fun loadData(tabIndex: FamilyListPageTabEnum, fromNetwork: Boolean) {
+    override var sumOfPrioritized: Double by mutableStateOf(0.0)
+    override var sumOfPending: Double by mutableStateOf(0.0)
+    override var sumOfCompleted: Double by mutableStateOf(0.0)
+
+    override suspend fun loadData(fromNetwork: Boolean) {
         this.tabIndex = tabIndex
         loading = true
 
@@ -45,17 +55,20 @@ class FamilyListViewModel(
         if (fromNetwork) {
             familyListModelsFull = getAllFamilyListUseCase.execute().sortedBy { it.name.lowercase() }
         }
-
-        familyListModelsFiltered = when (tabIndex) {
-            FamilyListPageTabEnum.PRIORIZED -> familyListModelsFull
-                .filter { it.isPrioritized }
-
-            FamilyListPageTabEnum.PENDING -> familyListModelsFull
-                .filter { !it.isCompleted && !it.isPrioritized}
-
-            FamilyListPageTabEnum.COMPLETED -> familyListModelsFull
-                .filter { it.isCompleted }
+        familyListModels = when (tabIndex) {
+            FamilyListPageTabEnum.PRIORIZED -> familyListModelsFull.filter { it.isPrioritized }
+            FamilyListPageTabEnum.PENDING -> familyListModelsFull.filter { !it.isCompleted && !it.isPrioritized}
+            FamilyListPageTabEnum.COMPLETED -> familyListModelsFull.filter { it.isCompleted }
         }
+
+        familyListModelsGrouped = familyListModelsFull
+            .filter { it.isCompleted }
+            .sortedByDescending { it.isCompletedDate?.date ?: defaultLocalDateTime.date}
+            .groupBy { it.isCompletedDate?.date ?: defaultLocalDateTime.date }
+
+        sumOfPrioritized = familyListModelsFull.filter { it.isPrioritized }.sumOf { it.price * it.quantity }
+        sumOfPending = familyListModelsFull.filter { !it.isCompleted && !it.isPrioritized }.sumOf { it.price * it.quantity }
+        sumOfCompleted = familyListModelsGrouped.entries.sortedByDescending { it.key }.firstOrNull()?.value?.sumOf { it.price * it.quantity} ?: 0.0
 
         loading = false
     }
@@ -81,7 +94,7 @@ class FamilyListViewModel(
         newItemName = ""
         loading = true
         createFamilyListUseCase.execute(item = item)
-        loadData(this.tabIndex, fromNetwork = true)
+        loadData(fromNetwork = true)
     }
 
     override suspend fun addBy(barcode: String) {
@@ -118,7 +131,7 @@ class FamilyListViewModel(
                 update(item = itemFounded)
                 if (this.tabIndex.isCompleted())
                     this.tabIndex = FamilyListPageTabEnum.PENDING
-                loadData(this.tabIndex, fromNetwork = true)
+                loadData(fromNetwork = true)
                 return
             }
 
@@ -133,7 +146,7 @@ class FamilyListViewModel(
 
             createFamilyListUseCase.execute(item = item)
             Logger.d("FamilyListSharedViewModel", "createFamilyListUseCase executed")
-            loadData(this.tabIndex, fromNetwork = true)
+            loadData(fromNetwork = true)
             Logger.d("FamilyListSharedViewModel", "loadData executed")
         }
         loading = false
@@ -149,7 +162,7 @@ class FamilyListViewModel(
             loading = true
             deleteFamilyListUseCase.execute(uuid = item.uuid)
             familyListModelsFull = familyListModelsFull.filter { it.uuid != uuid }
-            loadData(this.tabIndex, fromNetwork = false)
+            loadData(fromNetwork = false)
             loading = false
         }
     }
@@ -159,6 +172,7 @@ class FamilyListViewModel(
             item.isCompleted = isCompleted
             if (item.isCompleted) {
                 item.isPrioritized = false
+                item.isCompletedDate = Clock.System.now().toLocalDateTime(TimeZone.UTC)
             }
             update(item)
         }
@@ -195,7 +209,7 @@ class FamilyListViewModel(
     private suspend fun update(item: FamilyListModel){
         loading = true
         updateFamilyListUseCase.execute(item = item)
-        loadData(this.tabIndex, fromNetwork = false)
+        loadData(fromNetwork = false)
         loading = false
     }
 }

@@ -22,6 +22,6 @@ class MainApplication : Application() {
             modules(appModule() + androidModule)
         }
 
-        AndroidKeyValueStorageDataSource.Companion.context = this
+        AndroidKeyValueStorageDataSource.Companion.context = this@MainApplication
     }
 }

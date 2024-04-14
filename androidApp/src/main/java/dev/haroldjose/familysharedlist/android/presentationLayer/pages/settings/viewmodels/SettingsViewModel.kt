@@ -3,6 +3,7 @@ package dev.haroldjose.familysharedlist.android.presentationLayer.pages.settings
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
 import dev.haroldjose.familysharedlist.domainLayer.models.AccountModel
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.GetAccountUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.GetLocalAccountUuidUseCase
@@ -13,7 +14,7 @@ class SettingsViewModel(
     private val getAccountUseCase: GetAccountUseCase,
     private val getLocalAccountUuidUseCase: GetLocalAccountUuidUseCase,
     private val setSharedAccountByCodeUseCase: SetSharedAccountByCodeUseCase
-): ISettingsViewModel {
+): ViewModel(), ISettingsViewModel {
 
     private val constAccountsSharedWithMeTitle = "Acessar conta compartilhada"
     private val constAccountsSharedWithMeSubtitle = "Obs: atualmente limitada apenas a 1 conta"

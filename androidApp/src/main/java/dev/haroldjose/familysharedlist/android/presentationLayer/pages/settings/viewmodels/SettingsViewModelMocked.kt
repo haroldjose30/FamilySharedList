@@ -3,10 +3,11 @@ package dev.haroldjose.familysharedlist.android.presentationLayer.pages.settings
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.settings.viewmodels.ISettingsViewModel
 import dev.haroldjose.familysharedlist.domainLayer.models.AccountModel
 
-class SettingsViewModelMocked(): ISettingsViewModel {
+class SettingsViewModelMocked(): ViewModel(), ISettingsViewModel {
 
     override var myAccount: AccountModel? by mutableStateOf(null)
     override var accountShortCodeForShareTitle: String by mutableStateOf("")

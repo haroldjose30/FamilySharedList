@@ -1,5 +1,7 @@
 package dev.haroldjose.familysharedlist.android.presentationLayer.pages.navigator.viewmodels
 
-class NavigatorViewModelMock(): INavigatorViewModel {
+import androidx.lifecycle.ViewModel
+
+class NavigatorViewModelMock(): ViewModel(), INavigatorViewModel {
     override suspend fun checkIfNeedToCreateNewAccount() {}
 }

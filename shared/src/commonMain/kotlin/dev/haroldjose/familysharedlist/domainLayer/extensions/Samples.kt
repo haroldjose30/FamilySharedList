@@ -2,6 +2,7 @@ package dev.haroldjose.familysharedlist.domainLayer.extensions
 
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
 import dev.haroldjose.familysharedlist.domainLayer.models.ProductModel
+import kotlinx.datetime.LocalDateTime
 
 class Samples private constructor() {
     class FamilyList private constructor() {
@@ -14,9 +15,11 @@ class Samples private constructor() {
         }
     }
 }
+
 private fun nutella(): FamilyListModel = FamilyListModel(
     name = "Nutella",
     isCompleted = true,
+    isCompletedDate = LocalDateTime(2024, 4, 14, 0, 0, 0, 0),
     isPrioritized = true,
     quantity = 2,
     price = 1245.2395,
@@ -32,6 +35,7 @@ private fun nutella(): FamilyListModel = FamilyListModel(
 private fun sample1(): FamilyListModel = FamilyListModel(
     name = "sample1",
     isCompleted = false,
+    isCompletedDate = LocalDateTime(2024, 4, 14, 0, 0, 0, 0),
     isPrioritized = false,
     quantity = 1,
     price = 0.0,
@@ -41,6 +45,7 @@ private fun sample1(): FamilyListModel = FamilyListModel(
 private fun sample2IsComplete() = FamilyListModel(
     name = "sample2",
     isCompleted = true,
+    isCompletedDate = LocalDateTime(2024, 4, 13, 0, 0, 0, 0),
     isPrioritized = false,
     quantity = 2,
     price = 0.0,
@@ -49,7 +54,8 @@ private fun sample2IsComplete() = FamilyListModel(
 
 private fun sample3IsPrioritized() = FamilyListModel(
     name = "sample3",
-    isCompleted = false,
+    isCompleted = true,
+    isCompletedDate = LocalDateTime(2024, 4, 13, 0, 0, 0, 0),
     isPrioritized = true,
     quantity = 3,
     price = 0.0,

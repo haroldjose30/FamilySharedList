@@ -8,58 +8,52 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dev.haroldjose.familysharedlist.android.app.MyApplicationTheme
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels.FamilyListViewModel
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels.FamilyListViewModelMocked
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.views.FamilyListPage
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels.IFamilyListViewModel
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.navigator.viewmodels.INavigatorViewModel
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.navigator.viewmodels.NavigatorViewModel
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.navigator.viewmodels.NavigatorViewModelMock
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.quickInsertList.viewmodesls.IQuickInsertListViewModel
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.quickInsertList.viewmodesls.QuickInsertListViewModel
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.quickInsertList.viewmodesls.QuickInsertListViewModelMocked
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.quickInsertList.views.QuickInsertListPage
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.settings.viewmodels.ISettingsViewModel
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.settings.viewmodels.SettingsViewModel
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.settings.viewmodels.SettingsViewModelMocked
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.settings.views.SettingsPage
-import org.koin.compose.koinInject
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun NavigatorView(
-    viewModel: INavigatorViewModel
+    navigatorViewModel: INavigatorViewModel = koinViewModel<NavigatorViewModel>(),
+    quickInsertListViewModel: IQuickInsertListViewModel = koinViewModel<QuickInsertListViewModel>(),
+    settingsViewModel: ISettingsViewModel = koinViewModel<SettingsViewModel>(),
+    familyListViewModel: IFamilyListViewModel = koinViewModel<FamilyListViewModel>()
 ) {
     val navController: NavHostController = rememberNavController()
 
+    quickInsertListViewModel.goToFamilyListPage = { navController.navigate(ViewRouter.FAMILY_LIST.value) }
+    settingsViewModel.goBack = { navController.navigate(ViewRouter.FAMILY_LIST.value) }
+    familyListViewModel.goToSetting = { navController.navigate(ViewRouter.SETTINGS.value) }
+    familyListViewModel.goToQuickInsert = { navController.navigate(ViewRouter.QUICK_INSERT.value) }
+
     LaunchedEffect(key1 = "NavigatorView") {
-        viewModel.checkIfNeedToCreateNewAccount()
+        navigatorViewModel.checkIfNeedToCreateNewAccount()
     }
 
     NavHost(navController = navController, startDestination = ViewRouter.QUICK_INSERT.value) {
         composable(ViewRouter.FAMILY_LIST.value) {
-            FamilyListPage(navController)
+            FamilyListPage(viewModel = familyListViewModel)
         }
         composable(ViewRouter.SETTINGS.value) {
-            SettingsPage(navController)
+            SettingsPage(viewModel = settingsViewModel)
         }
         composable(ViewRouter.QUICK_INSERT.value) {
-            QuickInsertListPage(navController)
+            QuickInsertListPage(viewModel = quickInsertListViewModel)
         }
     }
-}
-@Composable
-private fun QuickInsertListPage(navController: NavHostController) {
-    val viewModel: IQuickInsertListViewModel = koinInject()
-    viewModel.goToFamilyListPage = { navController.navigate(ViewRouter.FAMILY_LIST.value) }
-    QuickInsertListPage(viewModel)
-}
-
-@Composable
-private fun SettingsPage(navController: NavHostController) {
-    val viewModel: ISettingsViewModel = koinInject()
-    viewModel.goBack = { navController.navigate(ViewRouter.FAMILY_LIST.value) }
-    SettingsPage(viewModel = viewModel)
-}
-
-@Composable
-private fun FamilyListPage(navController: NavHostController) {
-    val viewModel: IFamilyListViewModel = koinInject()
-    viewModel.goToSetting = { navController.navigate(ViewRouter.SETTINGS.value) }
-    viewModel.goToQuickInsert = { navController.navigate(ViewRouter.QUICK_INSERT.value) }
-    FamilyListPage(viewModel)
 }
 
 private enum class ViewRouter(val value: String) {
@@ -72,7 +66,12 @@ private enum class ViewRouter(val value: String) {
 @Composable
 fun FamilyListPage_Preview() {
     MyApplicationTheme {
-        NavigatorView(viewModel = NavigatorViewModelMock())
+        NavigatorView(
+            navigatorViewModel = NavigatorViewModelMock(),
+            quickInsertListViewModel = QuickInsertListViewModelMocked(),
+            settingsViewModel = SettingsViewModelMocked(),
+            familyListViewModel= FamilyListViewModelMocked()
+        )
     }
 }
 

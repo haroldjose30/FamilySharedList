@@ -8,14 +8,14 @@ import dev.haroldjose.familysharedlist.android.presentationLayer.pages.quickInse
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.quickInsertList.viewmodesls.QuickInsertListViewModel
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.settings.viewmodels.ISettingsViewModel
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.settings.viewmodels.SettingsViewModel
-import org.koin.core.module.dsl.factoryOf
+import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val androidModule = module {
     //ViewModels
-    factoryOf(::SettingsViewModel) bind ISettingsViewModel::class
-    factoryOf(::FamilyListViewModel) bind IFamilyListViewModel::class
-    factoryOf(::QuickInsertListViewModel) bind IQuickInsertListViewModel::class
-    factoryOf(::NavigatorViewModel) bind INavigatorViewModel::class
+    viewModelOf(::NavigatorViewModel)
+    viewModelOf(::SettingsViewModel)
+    viewModelOf(::FamilyListViewModel)
+    viewModelOf(::QuickInsertListViewModel)
 }

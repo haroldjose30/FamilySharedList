@@ -44,7 +44,6 @@ fun ColumnRigthEditingName(
     val nameTextFieldValue = remember { mutableStateOf(item.value.name) }
     Column(modifier = Modifier.padding(all = 10.dp)) {
         RowItemTopOptions(
-            item,
             nameTextFieldValue
         )
         ItemRowBottomOptions(
@@ -59,7 +58,6 @@ fun ColumnRigthEditingName(
 
 @Composable
 private fun RowItemTopOptions(
-    item: MutableState<FamilyListModel>,
     nameTextFieldValue: MutableState<String>
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
