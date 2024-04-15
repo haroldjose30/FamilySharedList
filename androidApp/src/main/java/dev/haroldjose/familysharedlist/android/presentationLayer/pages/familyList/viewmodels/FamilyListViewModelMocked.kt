@@ -19,6 +19,7 @@ class FamilyListViewModelMocked: ViewModel(), IFamilyListViewModel {
     override var selectedItemUuid: String = ""
     override var quantity: Int = 1
     override var tabIndex: FamilyListPageTabEnum = FamilyListPageTabEnum.PRIORIZED
+    override var openImageSelectedItem: FamilyListModel? = Samples.FamilyList.nutella
 
     override var goToSetting: () -> Unit = {}
     override var goToQuickInsert: () -> Unit = {}
@@ -43,4 +44,6 @@ class FamilyListViewModelMocked: ViewModel(), IFamilyListViewModel {
     override suspend fun updateQuantity(uuid: String, quantity: Int) {}
 
     override suspend fun updatePrice(uuid: String, price: Double) {}
+
+    override fun openImage(item: FamilyListModel) {}
 }

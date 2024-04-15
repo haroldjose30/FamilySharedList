@@ -29,7 +29,6 @@ class FamilyListViewModel(
     private val getOrCreateAccountFromLocalUuidUseCase: GetOrCreateAccountFromLocalUuidUseCase,
     private val getProductByCodeUseCase: GetProductByCodeUseCase
 ): ViewModel(), IFamilyListViewModel {
-    private var familyListModelsFull: List<FamilyListModel> by mutableStateOf(arrayListOf())
     override var familyListModelsGrouped: Map<LocalDate, List<FamilyListModel>> by mutableStateOf(mapOf())
     override var familyListModels: List<FamilyListModel> by mutableStateOf(arrayListOf())
     override var loading:Boolean by mutableStateOf(false)
@@ -37,7 +36,11 @@ class FamilyListViewModel(
     override var selectedItemUuid: String = ""
     override var quantity: Int by mutableStateOf(1)
     override var tabIndex: FamilyListPageTabEnum by mutableStateOf(FamilyListPageTabEnum.PENDING)
+    override var openImageSelectedItem: FamilyListModel? by mutableStateOf(null)
+
     private lateinit var accountModel: AccountModel
+    private var familyListModelsFull: List<FamilyListModel> by mutableStateOf(arrayListOf())
+
 
     override var goToSetting: () -> Unit = {}
     override var goToQuickInsert: () -> Unit = {}
@@ -204,6 +207,10 @@ class FamilyListViewModel(
             item.price = price
             update(item)
         }
+    }
+
+    override fun openImage(item: FamilyListModel) {
+        openImageSelectedItem = item
     }
 
     private suspend fun update(item: FamilyListModel){

@@ -59,7 +59,8 @@ fun FamilyListRowItemWithProduct(
 
                 else -> {
                     ColumnLeftDefault(
-                        itemMutable
+                        itemMutable,
+                        viewModel
                     )
                     ColumnRigthDefault(
                         itemMutable,

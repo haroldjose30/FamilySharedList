@@ -43,7 +43,7 @@ fun NavigatorView(
         navigatorViewModel.checkIfNeedToCreateNewAccount()
     }
 
-    NavHost(navController = navController, startDestination = ViewRouter.QUICK_INSERT.value) {
+    NavHost(navController = navController, startDestination = ViewRouter.FAMILY_LIST.value) {
         composable(ViewRouter.FAMILY_LIST.value) {
             FamilyListPage(viewModel = familyListViewModel)
         }

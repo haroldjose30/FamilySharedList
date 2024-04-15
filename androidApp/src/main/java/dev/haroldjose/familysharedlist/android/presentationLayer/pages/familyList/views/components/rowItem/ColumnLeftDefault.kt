@@ -3,6 +3,7 @@ package dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyLi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
@@ -24,12 +25,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import dev.haroldjose.familysharedlist.android.app.MyApplicationTheme
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels.FamilyListViewModel
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels.FamilyListViewModelMocked
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels.IFamilyListViewModel
 import dev.haroldjose.familysharedlist.domainLayer.extensions.Samples
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
 
 @Composable
 fun ColumnLeftDefault(
-    item: MutableState<FamilyListModel>
+    item: MutableState<FamilyListModel>,
+    viewModel: IFamilyListViewModel
 ) {
     Column(
         verticalArrangement = Arrangement.Center,
@@ -41,7 +46,6 @@ fun ColumnLeftDefault(
             SubcomposeAsyncImage(
                 model = item.value.product?.imageFrontSmallUrl,
                 loading = {
-                    //CircularProgressIndicator()
                     LinearProgressIndicator(color = Color.LightGray)
                 },
                 contentDescription = item.value.product?.productName,
@@ -53,6 +57,9 @@ fun ColumnLeftDefault(
                     .background(Color.White)
                     .border(BorderStroke(1.dp, Color.Gray), RoundedCornerShape(16.dp))
                     .padding(4.dp)
+                    .clickable {
+                        viewModel.openImage(item.value)
+                    }
             )
         }
     }
@@ -67,7 +74,8 @@ fun ColumnLeftDefault_Preview() {
     item.value.isPrioritized = false
     MyApplicationTheme {
         ColumnLeftDefault(
-            item = item
+            item = item,
+            viewModel = FamilyListViewModelMocked()
         )
     }
 }

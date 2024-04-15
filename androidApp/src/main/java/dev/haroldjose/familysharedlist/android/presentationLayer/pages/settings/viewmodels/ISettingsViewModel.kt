@@ -16,4 +16,6 @@ interface ISettingsViewModel {
     suspend fun shareMyCode()
     suspend fun openAppHomePage()
 
+    fun getVersion(): String
+
 }

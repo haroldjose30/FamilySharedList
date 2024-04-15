@@ -1,14 +1,18 @@
 package dev.haroldjose.familysharedlist.android.presentationLayer.pages.settings.viewmodels
 
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import dev.haroldjose.familysharedlist.android.app.MainApplication
 import dev.haroldjose.familysharedlist.domainLayer.models.AccountModel
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.GetAccountUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.GetLocalAccountUuidUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.SetSharedAccountByCodeUseCase
 import dev.haroldjose.familysharedlist.getPlatform
+
 
 class SettingsViewModel(
     private val getAccountUseCase: GetAccountUseCase,
@@ -61,5 +65,20 @@ class SettingsViewModel(
 
     override suspend fun openAppHomePage() {
         getPlatform().openUrlOnDefaultBrowser(url = "https://github.com/haroldjose30/FamilySharedList")
+    }
+
+
+    override fun getVersion(): String {
+        try {
+            MainApplication.applicationContext().let {
+                val pInfo: PackageInfo = it.packageManager. getPackageInfo(it.getPackageName(), 0)
+                val versionName = pInfo.versionName
+                val longVersionCode = pInfo.longVersionCode
+                return "Alpha $versionName (b$longVersionCode)"
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+            return ""
+        }
     }
 }

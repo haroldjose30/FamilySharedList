@@ -24,4 +24,7 @@ class SettingsViewModelMocked(): ViewModel(), ISettingsViewModel {
     override suspend fun accessSharedAccountWithCode(code: String) {}
     override suspend fun shareMyCode() {}
     override suspend fun openAppHomePage() {}
+    override fun getVersion(): String {
+        return "1.0.0 (123456)"
+    }
 }

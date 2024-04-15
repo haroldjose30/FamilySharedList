@@ -1,6 +1,7 @@
 package dev.haroldjose.familysharedlist.android.app
 
 import android.app.Application
+import android.content.Context
 import dev.haroldjose.familysharedlist.android.dependencyInjection.androidModule
 import dev.haroldjose.familysharedlist.dataLayer.datasource.local.keyValueStorage.AndroidKeyValueStorageDataSource
 import dev.haroldjose.familysharedlist.dependencyInjection.modules.appModule
@@ -9,6 +10,17 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 
 class MainApplication : Application() {
+
+    init {
+        instance = this
+    }
+    companion object {
+        private var instance: MainApplication? = null
+
+        fun applicationContext() : Context {
+            return instance!!.applicationContext
+        }
+    }
 
     override fun onCreate() {
         super.onCreate()

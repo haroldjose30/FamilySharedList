@@ -12,6 +12,7 @@ interface IFamilyListViewModel {
     var selectedItemUuid: String
     var quantity: Int
     var tabIndex: FamilyListPageTabEnum
+    var openImageSelectedItem: FamilyListModel?
 
     var goToSetting: () -> Unit
     var goToQuickInsert: () -> Unit
@@ -30,4 +31,5 @@ interface IFamilyListViewModel {
     suspend fun updateName(uuid: String, name: String)
     suspend fun updateQuantity(uuid: String, quantity: Int)
     suspend fun updatePrice(uuid: String, price: Double)
+    fun openImage(item: FamilyListModel)
 }
