@@ -1,38 +1,34 @@
 package dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.ViewModel
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.views.FamilyListPageTabEnum
+import dev.haroldjose.familysharedlist.defaultLocalDateTime
+import dev.haroldjose.familysharedlist.domainLayer.extensions.Samples
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
+import kotlinx.datetime.LocalDate
 
-class FamilyListViewModelMocked : IFamilyListViewModel {
-    override var familyListModelsFiltered: List<FamilyListModel> = arrayListOf(
-        FamilyListModel(
-            uuid = "sample1",
-            name = "Mock Item 01",
-            quantity = 1,
-            isCompleted = false
-        ),
-        FamilyListModel(
-            uuid = "sample2",
-            name = "Mock Item 02",
-            quantity = 2,
-            isCompleted = true
-        ),
-        FamilyListModel(
-            uuid = "sample3",
-            name = "Mock Item 03",
-            quantity = 3,
-            isCompleted = false
-        ),
+class FamilyListViewModelMocked: ViewModel(), IFamilyListViewModel {
+    override val familyListModelsGrouped: Map<LocalDate, List<FamilyListModel>> by mutableStateOf(
+        Samples.FamilyList.list1.groupBy { it.isCompletedDate?.date ?: defaultLocalDateTime.date }
     )
+    override var familyListModels: List<FamilyListModel> = Samples.FamilyList.list1
     override var loading: Boolean = false
     override var newItemName: String = "newItem"
+    override var selectedItemUuid: String = ""
     override var quantity: Int = 1
     override var tabIndex: FamilyListPageTabEnum = FamilyListPageTabEnum.PRIORIZED
+    override var openImageSelectedItem: FamilyListModel? = Samples.FamilyList.nutella
 
     override var goToSetting: () -> Unit = {}
     override var goToQuickInsert: () -> Unit = {}
 
-    override suspend fun loadData(tabIndex: FamilyListPageTabEnum, fromNetwork: Boolean) {}
+    override var sumOfPrioritized: Double = 0.0
+    override var sumOfPending: Double = 1.23
+    override var sumOfCompleted: Double = 44.92
+
+    override suspend fun loadData(fromNetwork: Boolean) {}
     override suspend fun add() {}
     override suspend fun addBy(barcode: String) {}
 
@@ -46,4 +42,8 @@ class FamilyListViewModelMocked : IFamilyListViewModel {
     override suspend fun updateName(uuid: String, name: String) {}
 
     override suspend fun updateQuantity(uuid: String, quantity: Int) {}
+
+    override suspend fun updatePrice(uuid: String, price: Double) {}
+
+    override fun openImage(item: FamilyListModel) {}
 }

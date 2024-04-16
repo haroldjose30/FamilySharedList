@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -20,28 +21,37 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.haroldjose.familysharedlist.Logger
-import dev.haroldjose.familysharedlist.android.presentationLayer.components.QrCodeScannerIconView
+import dev.haroldjose.familysharedlist.android.R
+import dev.haroldjose.familysharedlist.android.app.MyApplicationTheme
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.barcodeScanner.QrScannerScreen
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels.FamilyListViewModelMocked
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels.IFamilyListViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun FamilyListBottomSheetContent(
+fun FamilyListBottomSheetQrcode(
     bottomSheetScaffoldState: BottomSheetScaffoldState,
     viewModel: IFamilyListViewModel
 ): @Composable() (ColumnScope.() -> Unit) {
     val coroutineScope = rememberCoroutineScope()
     return {
+        LaunchedEffect(key1 = "FamilyListBottomSheetOpenImage") {
+            bottomSheetScaffoldState.bottomSheetState.partialExpand()
+        }
         Box(
             Modifier
                 .fillMaxWidth()
@@ -57,6 +67,7 @@ fun FamilyListBottomSheetContent(
                     IconButton(
                         onClick = {
                             coroutineScope.launch {
+                                viewModel.selectedItemUuid = ""
                                 if (bottomSheetScaffoldState.bottomSheetState.currentValue == SheetValue.Expanded) {
                                     bottomSheetScaffoldState.bottomSheetState.partialExpand()
                                 } else {
@@ -66,7 +77,7 @@ fun FamilyListBottomSheetContent(
                         }
                     ) {
                         Icon(
-                            QrCodeScannerIconView(),
+                            painter = painterResource(R.drawable.qr_code_scanner),
                             contentDescription = "Scanner"
                         )
                     }
@@ -119,5 +130,23 @@ fun FamilyListBottomSheetContent(
                 )
             }
         }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview
+@Composable
+fun FamilyListBottomSheetQrcode_Preview() {
+    val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
+    val viewModel = FamilyListViewModelMocked()
+    MyApplicationTheme {
+        BottomSheetScaffold(
+            scaffoldState = bottomSheetScaffoldState,
+            sheetPeekHeight = 128.dp,
+            sheetContent = FamilyListBottomSheetQrcode(bottomSheetScaffoldState, viewModel),
+            content =  {
+                Text("FamilyListBottomSheetQrcode_Preview")
+            }
+        )
     }
 }

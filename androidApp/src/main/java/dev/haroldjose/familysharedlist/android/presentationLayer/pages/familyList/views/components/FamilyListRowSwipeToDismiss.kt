@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SwipeToDismissBox
@@ -25,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels.IFamilyListViewModel
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.views.components.rowItem.FamilyListRowItemWithProduct
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
 import kotlinx.coroutines.launch
 
@@ -32,7 +34,8 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 fun FamilyListRowSwipeToDismiss(
     item: FamilyListModel,
-    viewModel: IFamilyListViewModel
+    viewModel: IFamilyListViewModel,
+    bottomSheetScaffoldState: BottomSheetScaffoldState
 ) {
     val coroutineScope = rememberCoroutineScope()
     val dismissState = rememberSwipeToDismissBoxState(
@@ -65,9 +68,10 @@ fun FamilyListRowSwipeToDismiss(
         enableDismissFromStartToEnd = false,
         enableDismissFromEndToStart = true,
     ) {
-        FamilyListRowItem(
+        FamilyListRowItemWithProduct(
             item = item,
-            viewModel = viewModel
+            viewModel = viewModel,
+            bottomSheetScaffoldState = bottomSheetScaffoldState
         )
     }
 }

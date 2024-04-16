@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.navigation.compose)
     debugImplementation(libs.compose.ui.tooling)
+    implementation(libs.coil.compose)
 
     implementation(libs.camera.camera2)
     implementation(libs.camera.core)
@@ -63,12 +64,5 @@ dependencies {
 
     implementation(libs.kotlinx.datetime)
 
-    //implementation(libs.kotlinx.coroutines.core)
-    //implementation(libs.kotlinx.serialization.core)
-    //implementation(libs.kotlinx.serialization.json)
-    //implementation(libs.ktor.client.core)
-    //implementation(libs.ktor.client.serialization)
-    //implementation(libs.ktor.serialization.kotlinx.json)
-    //implementation(libs.ktor.client.content.negotiation)
-    //implementation(libs.ktor.client.okhttp)
+
 }

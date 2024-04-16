@@ -12,3 +12,13 @@ internal fun ProductDto.toModel(): ProductModel {
         productName =  this.productName
     )
 }
+
+internal fun ProductModel.toDto(): ProductDto {
+    return ProductDto(
+        code = this.code,
+        imageFrontSmallUrl = this.imageFrontSmallUrl,
+        imageFrontUrl = this.imageFrontUrl,
+        imageUrl = this.imageUrl,
+        productName =  this.productName
+    )
+}

@@ -1,6 +1,8 @@
 package dev.haroldjose.familysharedlist.android.presentationLayer.pages.quickInsertList.viewmodesls
 
-class QuickInsertListViewModelMocked: IQuickInsertListViewModel {
+import androidx.lifecycle.ViewModel
+
+class QuickInsertListViewModelMocked: ViewModel(), IQuickInsertListViewModel {
     override var loading: Boolean = false
     override var text: String = ""
     override var goToFamilyListPage: () -> Unit = {}

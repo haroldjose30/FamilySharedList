@@ -3,12 +3,13 @@ package dev.haroldjose.familysharedlist.android.presentationLayer.pages.quickIns
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.CreateFamilyListUseCase
 
 class QuickInsertListViewModel(
     private val createFamilyListUseCase: CreateFamilyListUseCase
-): IQuickInsertListViewModel {
+): ViewModel(), IQuickInsertListViewModel {
     override var loading:Boolean by mutableStateOf(false)
     override var text:String by mutableStateOf("")
     override var goToFamilyListPage: () -> Unit = {}
