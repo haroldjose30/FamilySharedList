@@ -1,5 +1,6 @@
 import Foundation
 import shared
+import KMPNativeCoroutinesAsync
 
 class SettingsViewModel: SettingsViewModelProtocol {
     private let getAccountUseCase: GetAccountUseCase
@@ -27,13 +28,13 @@ class SettingsViewModel: SettingsViewModelProtocol {
 
         isLoading = true
 
-        guard let accountUuid = try? await getLocalAccountUuidUseCase.execute() else {
-            //TODO: handle error
+        do {
+            let accountUuid = try await asyncFunction(for: getLocalAccountUuidUseCase.execute())
+            myAccount = try await asyncFunction(for: getAccountUseCase.execute(accountUuid: accountUuid))
+        } catch {
+            showError(e: error)
             return
         }
-
-        //TODO: handle error
-        myAccount = try? await getAccountUseCase.execute(accountUuid: accountUuid)
 
         self.accountShortCodeForShareTitle = self.myAccount?.accountShortCodeForShare ?? "carregando..."
 
@@ -48,14 +49,14 @@ class SettingsViewModel: SettingsViewModelProtocol {
     @MainActor
     func accessSharedAccountWithCode(code: String) async {
         isLoading = true
-        guard let accountUuid = try? await getLocalAccountUuidUseCase.execute() else  {
-            //TODO: handle error
-            return
-        }
 
-        //TODO: handle error
-        if let _ = try? await setSharedAccountByCodeUseCase.execute(accountUuid: accountUuid, code: code) {
+        do {
+            let accountUuid = try await asyncFunction(for: getLocalAccountUuidUseCase.execute())
+            _ = try await asyncFunction(for: setSharedAccountByCodeUseCase.execute(accountUuid: accountUuid, code: code))
             await getAccount()
+        } catch {
+            showError(e: error)
+            return
         }
 
         isLoading = false
@@ -69,5 +70,10 @@ class SettingsViewModel: SettingsViewModelProtocol {
 
     func openAppHomePage() {
         // TODO: mplement opening app home page functionality
+    }
+
+    func showError(e: Error) {
+        //TODO: Handle error
+        print("ERROR:",e)
     }
 }

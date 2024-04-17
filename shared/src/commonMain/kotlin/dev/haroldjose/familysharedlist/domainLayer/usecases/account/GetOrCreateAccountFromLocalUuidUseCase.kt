@@ -1,5 +1,6 @@
 package dev.haroldjose.familysharedlist.domainLayer.usecases.account
 
+import com.rickclephas.kmp.nativecoroutines.NativeCoroutines
 import dev.haroldjose.familysharedlist.Logger
 import dev.haroldjose.familysharedlist.dataLayer.repositories.account.IAccountRepository
 import dev.haroldjose.familysharedlist.dataLayer.repositories.familyList.IFamilyListRepository
@@ -21,8 +22,8 @@ class GetOrCreateAccountFromLocalUuidUseCase(
     private val accountRepository: IAccountRepository,
 )  {
 
+    @NativeCoroutines
     suspend fun execute(): AccountModel {
-
         val accountUuid = getOrCreateUuid()
         accountRepository.findBy(uuid = accountUuid)?.toModel()?.let {
             //TODO: verify if accountsSharedWithMe was revoked

@@ -6,13 +6,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import dev.haroldjose.familysharedlist.Logger
 import dev.haroldjose.familysharedlist.android.app.MainApplication
 import dev.haroldjose.familysharedlist.domainLayer.models.AccountModel
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.GetAccountUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.GetLocalAccountUuidUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.SetSharedAccountByCodeUseCase
 import dev.haroldjose.familysharedlist.getPlatform
-
 
 class SettingsViewModel(
     private val getAccountUseCase: GetAccountUseCase,
@@ -31,29 +31,46 @@ class SettingsViewModel(
     override var goBack: () -> Unit = {}
 
     override suspend fun getAccount() {
-        val accountUuid = getLocalAccountUuidUseCase.execute()
-        myAccount = getAccountUseCase.execute(accountUuid = accountUuid)
-        accountShortCodeForShareTitle = myAccount?.accountShortCodeForShare ?: constLoadingMessage
-
-        accountsSharedWithMeTitle = constAccountsSharedWithMeTitle
-        accountsSharedWithMeSubtitle = constAccountsSharedWithMeSubtitle
-        myAccount?.accountsSharedWithMe?.let {
-            if (it.isNotEmpty()) {
-                accountsSharedWithMeTitle = "Acessando a conta:"
-                accountsSharedWithMeSubtitle = it.first()
+        try {
+            val accountUuid = getLocalAccountUuidUseCase.execute()
+            val myAccount = getAccountUseCase.execute(accountUuid = accountUuid)
+            this.myAccount = myAccount
+            accountShortCodeForShareTitle = myAccount?.accountShortCodeForShare ?: constLoadingMessage
+            accountsSharedWithMeTitle = constAccountsSharedWithMeTitle
+            accountsSharedWithMeSubtitle = constAccountsSharedWithMeSubtitle
+            myAccount?.accountsSharedWithMe?.let {
+                if (it.isNotEmpty()) {
+                    accountsSharedWithMeTitle = "Acessando a conta:"
+                    accountsSharedWithMeSubtitle = it.first()
+                }
             }
+
+        } catch (e: Throwable) {
+            showError(e)
+            return
         }
+    }
+
+    private fun showError(e: Throwable) {
+        //TODO: implement log in shared module
+        e.message?.let { Logger.d("showError", it) }
     }
 
     override suspend fun accessSharedAccountWithCode(code: String) {
         //TODO: implement loading
-        val accountUuid = getLocalAccountUuidUseCase.execute()
-        val result = setSharedAccountByCodeUseCase.execute(
-            accountUuid = accountUuid,
-            code = code
-        )
-        if (result) {
-            getAccount()
+        try {
+            val accountUuid = getLocalAccountUuidUseCase.execute()
+            val result = setSharedAccountByCodeUseCase
+                .execute(
+                    accountUuid = accountUuid,
+                    code = code
+                )
+            if (result) {
+                getAccount()
+            }
+        } catch (e: Throwable) {
+            showError(e)
+            return
         }
     }
 

@@ -22,7 +22,8 @@ kotlinx-coroutines="1.8.0"
 ktor="2.3.4"
 koin="3.5.0"
 kotlinx-datetime="0.5.0"
-
+googleDevtools="1.9.23-1.0.20"
+nativecoroutines="1.0.0-ALPHA-28"
 
 ################################################################################################
 ################################################################################################
@@ -87,3 +88,7 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 #kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 buildkonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildkonfig" }
+googleDevtools = { id = "com.google.devtools.ksp", version.ref = "googleDevtools" }
+nativecoroutines = { id = "com.rickclephas.kmp.nativecoroutines", version.ref = "nativecoroutines" }
+
+

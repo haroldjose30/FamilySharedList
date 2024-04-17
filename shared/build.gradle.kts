@@ -6,6 +6,8 @@ plugins {
 
     alias(libs.plugins.serialization)
     alias(libs.plugins.buildkonfig)
+    alias(libs.plugins.googleDevtools)
+    alias(libs.plugins.nativecoroutines)
 }
 
 kotlin {
@@ -29,6 +31,10 @@ kotlin {
             baseName = "shared"
             isStatic = true
         }
+    }
+
+    kotlin.sourceSets.all {
+        languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
     }
 
     sourceSets {

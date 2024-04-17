@@ -1,5 +1,6 @@
 package dev.haroldjose.familysharedlist.domainLayer.usecases.familyList
 
+import com.rickclephas.kmp.nativecoroutines.NativeCoroutines
 import dev.haroldjose.familysharedlist.dataLayer.repositories.familyList.IFamilyListRepository
 import dev.haroldjose.familysharedlist.domainLayer.mappers.toDto
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
@@ -7,11 +8,12 @@ import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
 class UpdateFamilyListUseCase(
     private val familyListRepository: IFamilyListRepository
 )  {
-
-    suspend fun execute(item: FamilyListModel) {
-
-        return familyListRepository.update(
+    @NativeCoroutines
+    suspend fun execute(item: FamilyListModel): Boolean {
+        familyListRepository.update(
             item = item.toDto()
         )
+
+        return true
     }
 }

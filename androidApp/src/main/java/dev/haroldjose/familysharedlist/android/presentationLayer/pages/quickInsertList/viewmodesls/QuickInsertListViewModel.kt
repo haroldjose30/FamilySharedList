@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import dev.haroldjose.familysharedlist.Logger
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.CreateFamilyListUseCase
 
@@ -35,8 +36,18 @@ class QuickInsertListViewModel(
         }
         text = ""
         loading = true
-        createFamilyListUseCase.execute(items = listOfItem)
-        loading = false
-        goToFamilyListPage()
+        try {
+            createFamilyListUseCase.execute(items = listOfItem)
+            goToFamilyListPage()
+            loading = false
+        } catch (e: Throwable) {
+            showError(e)
+            return
+        }
+    }
+
+    private fun showError(e: Throwable) {
+        //TODO: implement log in shared module
+        e.message?.let { Logger.d("showError", it) }
     }
 }
