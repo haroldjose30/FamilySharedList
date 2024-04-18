@@ -3,22 +3,21 @@ package dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyLi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.views.FamilyListPageTabEnum
 import dev.haroldjose.familysharedlist.defaultLocalDateTime
 import dev.haroldjose.familysharedlist.domainLayer.extensions.Samples
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
 import kotlinx.datetime.LocalDate
 
 class FamilyListViewModelMocked: ViewModel(), IFamilyListViewModel {
+    override val viewState: FamilyListViewState by mutableStateOf(FamilyListViewState.Initial)
     override val familyListModelsGrouped: Map<LocalDate, List<FamilyListModel>> by mutableStateOf(
         Samples.FamilyList.list1.groupBy { it.isCompletedDate?.date ?: defaultLocalDateTime.date }
     )
     override var familyListModels: List<FamilyListModel> = Samples.FamilyList.list1
-    override var loading: Boolean = false
     override var newItemName: String = "newItem"
     override var selectedItemUuid: String = ""
     override var quantity: Int = 1
-    override var tabIndex: FamilyListPageTabEnum = FamilyListPageTabEnum.PRIORIZED
+    override var tabIndex: FamilyListTabType = FamilyListTabType.PRIORIZED
     override var openImageSelectedItem: FamilyListModel? = Samples.FamilyList.nutella
 
     override var goToSetting: () -> Unit = {}

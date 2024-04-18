@@ -1,17 +1,16 @@
 package dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels
 
-import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.views.FamilyListPageTabEnum
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
 import kotlinx.datetime.LocalDate
 
 interface IFamilyListViewModel {
+    val viewState: FamilyListViewState
     val familyListModelsGrouped: Map<LocalDate, List<FamilyListModel>>
     var familyListModels: List<FamilyListModel>
-    var loading: Boolean
     var newItemName: String
     var selectedItemUuid: String
     var quantity: Int
-    var tabIndex: FamilyListPageTabEnum
+    var tabIndex: FamilyListTabType
     var openImageSelectedItem: FamilyListModel?
 
     var goToSetting: () -> Unit

@@ -5,10 +5,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
-import androidx.compose.material.icons.outlined.ShoppingCart
-import androidx.compose.material.icons.twotone.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -28,7 +24,7 @@ import dev.haroldjose.familysharedlist.android.app.MyApplicationTheme
 @Composable
 fun ErrorPage(
     message: String,
-    tryAgainAction: () -> Unit
+    retryAction: (() -> Unit)? = null
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -54,8 +50,10 @@ fun ErrorPage(
             color = Color.Gray
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = tryAgainAction) {
-            Text(text = "Tente novamente")
+        retryAction?.let {
+            Button(onClick = it) {
+                Text(text = "Tente novamente")
+            }
         }
         Spacer(modifier = Modifier.weight(1.0f))
     }
@@ -67,7 +65,7 @@ fun ErrorPage_Preview() {
     MyApplicationTheme {
         ErrorPage(
             message = "Message de Erro - Preview",
-            tryAgainAction = {}
+            retryAction = {}
         )
     }
 }

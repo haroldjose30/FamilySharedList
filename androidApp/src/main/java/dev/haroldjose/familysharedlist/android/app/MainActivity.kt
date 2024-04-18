@@ -9,7 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import dev.haroldjose.familysharedlist.AndroidPlatform
-import dev.haroldjose.familysharedlist.android.presentationLayer.pages.navigator.views.NavigatorView
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.navigator.views.NavigatorPage
 import org.koin.androidx.compose.KoinAndroidContext
 import org.koin.core.annotation.KoinExperimentalAPI
 
@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     KoinAndroidContext() {
-                        NavigatorView()
+                        NavigatorPage()
                     }
                 }
             }

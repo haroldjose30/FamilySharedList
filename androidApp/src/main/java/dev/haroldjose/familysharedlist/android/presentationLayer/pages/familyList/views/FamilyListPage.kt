@@ -1,16 +1,15 @@
 package dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.views
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.twotone.List
 import androidx.compose.material.icons.twotone.CheckCircle
 import androidx.compose.material.icons.twotone.ShoppingCart
-import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.SheetValue
@@ -29,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.haroldjose.familysharedlist.android.app.MyApplicationTheme
 import dev.haroldjose.familysharedlist.android.extensions.toCurrencyFormat
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels.FamilyListTabType
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels.FamilyListViewModelMocked
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels.IFamilyListViewModel
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.views.components.FamilyListBottomSheetOpenImage
@@ -56,6 +56,10 @@ fun FamilyListPage(
             },
         )
     )
+
+    BackHandler {
+        print("do nothing when click in back button")
+    }
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -92,7 +96,7 @@ fun FamilyListPage(
                                 },
                                 selected = viewModel.tabIndex.value == index,
                                 onClick = {
-                                    viewModel.tabIndex = FamilyListPageTabEnum.getBy(index)
+                                    viewModel.tabIndex = FamilyListTabType.getBy(index)
                                     coroutineScope.launch {
                                         viewModel.loadData(fromNetwork = false)
                                     }

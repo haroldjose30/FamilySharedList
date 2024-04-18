@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dev.haroldjose.familysharedlist.Logger
 import dev.haroldjose.familysharedlist.android.app.MainApplication
 import dev.haroldjose.familysharedlist.domainLayer.models.AccountModel
@@ -13,6 +14,7 @@ import dev.haroldjose.familysharedlist.domainLayer.usecases.account.GetAccountUs
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.GetLocalAccountUuidUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.SetSharedAccountByCodeUseCase
 import dev.haroldjose.familysharedlist.getPlatform
+import kotlinx.coroutines.launch
 
 class SettingsViewModel(
     private val getAccountUseCase: GetAccountUseCase,
@@ -24,27 +26,37 @@ class SettingsViewModel(
     private val constAccountsSharedWithMeSubtitle = "Obs: atualmente limitada apenas a 1 conta"
     private val constLoadingMessage = "carregando..."
 
-    override var myAccount: AccountModel? by mutableStateOf(null)
-    override var accountShortCodeForShareTitle: String by mutableStateOf(constLoadingMessage)
-    override var accountsSharedWithMeTitle: String by mutableStateOf(constAccountsSharedWithMeTitle)
-    override var accountsSharedWithMeSubtitle: String by mutableStateOf(constAccountsSharedWithMeSubtitle)
+    override var viewState: SettingsViewState by mutableStateOf(
+        SettingsViewState.Initial(
+            accountShortCodeForShareTitle = constLoadingMessage,
+            accountsSharedWithMeTitle = constAccountsSharedWithMeTitle,
+            accountsSharedWithMeSubtitle = constAccountsSharedWithMeSubtitle
+        )
+    )
+    override var myAccount: AccountModel? = null
+
     override var goBack: () -> Unit = {}
 
     override suspend fun getAccount() {
+        viewState = SettingsViewState.Loading
         try {
             val accountUuid = getLocalAccountUuidUseCase.execute()
-            val myAccount = getAccountUseCase.execute(accountUuid = accountUuid)
-            this.myAccount = myAccount
-            accountShortCodeForShareTitle = myAccount?.accountShortCodeForShare ?: constLoadingMessage
-            accountsSharedWithMeTitle = constAccountsSharedWithMeTitle
-            accountsSharedWithMeSubtitle = constAccountsSharedWithMeSubtitle
+            myAccount = getAccountUseCase.execute(accountUuid = accountUuid)
+
+            var accountShortCodeForShareTitle = myAccount?.accountShortCodeForShare ?: constLoadingMessage
+            var accountsSharedWithMeTitle = constAccountsSharedWithMeTitle
+            var accountsSharedWithMeSubtitle = constAccountsSharedWithMeSubtitle
             myAccount?.accountsSharedWithMe?.let {
                 if (it.isNotEmpty()) {
                     accountsSharedWithMeTitle = "Acessando a conta:"
                     accountsSharedWithMeSubtitle = it.first()
                 }
             }
-
+            viewState = SettingsViewState.Success(
+                accountShortCodeForShareTitle = accountShortCodeForShareTitle,
+                accountsSharedWithMeTitle = accountsSharedWithMeTitle,
+                accountsSharedWithMeSubtitle = accountsSharedWithMeSubtitle
+            )
         } catch (e: Throwable) {
             showError(e)
             return
@@ -52,22 +64,25 @@ class SettingsViewModel(
     }
 
     private fun showError(e: Throwable) {
-        //TODO: implement log in shared module
         e.message?.let { Logger.d("showError", it) }
+        viewState = SettingsViewState.Error(
+            message = "Erro ao acessar a conta",
+            retryAction = {
+                this.viewModelScope.launch { getAccount() }
+            }
+        )
     }
 
     override suspend fun accessSharedAccountWithCode(code: String) {
-        //TODO: implement loading
+        viewState = SettingsViewState.Loading
         try {
             val accountUuid = getLocalAccountUuidUseCase.execute()
-            val result = setSharedAccountByCodeUseCase
+            setSharedAccountByCodeUseCase
                 .execute(
                     accountUuid = accountUuid,
                     code = code
                 )
-            if (result) {
-                getAccount()
-            }
+            getAccount()
         } catch (e: Throwable) {
             showError(e)
             return
@@ -83,8 +98,7 @@ class SettingsViewModel(
     override suspend fun openAppHomePage() {
         getPlatform().openUrlOnDefaultBrowser(url = "https://github.com/haroldjose30/FamilySharedList")
     }
-
-
+    
     override fun getVersion(): String {
         try {
             MainApplication.applicationContext().let {

@@ -19,9 +19,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.haroldjose.familysharedlist.android.app.MyApplicationTheme
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.ErrorPage
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.quickInsertList.viewmodesls.IQuickInsertListViewModel
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.quickInsertList.viewmodesls.QuickInsertListViewModelMocked
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.quickInsertList.viewmodesls.QuickInsertListViewState
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.quickInsertList.views.components.QuickInsertListTopBarView
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.settings.viewmodels.SettingsViewState
 
 @Composable
 fun QuickInsertListPage(
@@ -31,34 +34,46 @@ fun QuickInsertListPage(
     Scaffold(
         topBar = QuickInsertListTopBarView(viewModel)
     ) { innerPadding ->
-        Column(modifier = Modifier.padding(innerPadding).padding(16.dp)) {
+        Column(modifier = Modifier
+            .padding(innerPadding)
+            .padding(16.dp)) {
 
-            if (viewModel.loading) {
-                LinearProgressIndicator(
-                    modifier = Modifier.fillMaxWidth(),
-                    color = MaterialTheme.colorScheme.secondary,
-                    trackColor = MaterialTheme.colorScheme.surfaceVariant,
-                )
+            when (viewModel.viewState) {
+                is QuickInsertListViewState.Error -> {
+                    val errorData = (viewModel.viewState as QuickInsertListViewState.Error)
+                    ErrorPage(
+                        errorData.message,
+                        errorData.retryAction
+                    )
+                }
+                QuickInsertListViewState.Loading -> {
+                    LinearProgressIndicator(
+                        modifier = Modifier.fillMaxWidth(),
+                        color = MaterialTheme.colorScheme.secondary,
+                        trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                    )
+                }
+                else -> {
+                    OutlinedTextField(
+                        value = viewModel.text,
+                        onValueChange = {
+                            viewModel.text = it
+                            val count = it.lines().count()
+                            val itemText = if (count==1) "item" else "itens"
+                            labelText.value = "$count $itemText"
+                        },
+                        modifier = Modifier.fillMaxSize(),
+                        label = { Text(labelText.value) },
+                        placeholder = { Text("Ex: 1 refrigerante \nnutela 5\n") },
+                        singleLine = false,
+                        keyboardOptions = KeyboardOptions(
+                            capitalization = KeyboardCapitalization.None,
+                            autoCorrect = true,
+                            keyboardType = KeyboardType.Text
+                        ),
+                    )
+                }
             }
-
-            OutlinedTextField(
-                value = viewModel.text,
-                onValueChange = {
-                    viewModel.text = it
-                    val count = it.lines().count()
-                    val itemText = if (count==1) "item" else "itens"
-                    labelText.value = "$count $itemText"
-                },
-                modifier = Modifier.fillMaxSize(),
-                label = { Text(labelText.value) },
-                placeholder = { Text("Ex: 1 refrigerante \nnutela 5\n") },
-                singleLine = false,
-                keyboardOptions = KeyboardOptions(
-                    capitalization = KeyboardCapitalization.None,
-                    autoCorrect = true,
-                    keyboardType = KeyboardType.Text
-                ),
-            )
         }
     }
 }

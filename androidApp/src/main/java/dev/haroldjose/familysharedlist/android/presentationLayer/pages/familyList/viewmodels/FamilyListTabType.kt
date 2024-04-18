@@ -1,6 +1,6 @@
-package dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.views
+package dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels
 
-enum class FamilyListPageTabEnum(val value: Int) {
+enum class FamilyListTabType(val value: Int) {
     PRIORIZED(0) {
         override fun isPrioritized() = true
         override fun isPending() = false
@@ -22,6 +22,6 @@ enum class FamilyListPageTabEnum(val value: Int) {
     abstract fun isCompleted(): Boolean
 
     companion object {
-        fun getBy(value: Int): FamilyListPageTabEnum = entries.firstOrNull { it.value == value } ?: PENDING
+        fun getBy(value: Int): FamilyListTabType = entries.firstOrNull { it.value == value } ?: PENDING
     }
 }

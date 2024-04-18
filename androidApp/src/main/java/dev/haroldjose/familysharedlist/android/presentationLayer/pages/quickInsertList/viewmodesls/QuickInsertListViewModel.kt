@@ -11,7 +11,7 @@ import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.CreateFam
 class QuickInsertListViewModel(
     private val createFamilyListUseCase: CreateFamilyListUseCase
 ): ViewModel(), IQuickInsertListViewModel {
-    override var loading:Boolean by mutableStateOf(false)
+    override var viewState: QuickInsertListViewState = QuickInsertListViewState.Initial
     override var text:String by mutableStateOf("")
     override var goToFamilyListPage: () -> Unit = {}
     override suspend fun quickInsertItem() {
@@ -35,11 +35,11 @@ class QuickInsertListViewModel(
             )
         }
         text = ""
-        loading = true
+        viewState = QuickInsertListViewState.Loading
         try {
             createFamilyListUseCase.execute(items = listOfItem)
             goToFamilyListPage()
-            loading = false
+            QuickInsertListViewState.Success
         } catch (e: Throwable) {
             showError(e)
             return
@@ -47,7 +47,10 @@ class QuickInsertListViewModel(
     }
 
     private fun showError(e: Throwable) {
-        //TODO: implement log in shared module
         e.message?.let { Logger.d("showError", it) }
+        viewState = QuickInsertListViewState.Error(
+            message = e.message ?: "Erro inesperado",
+            retryAction = { viewState = QuickInsertListViewState.Initial }
+        )
     }
 }
