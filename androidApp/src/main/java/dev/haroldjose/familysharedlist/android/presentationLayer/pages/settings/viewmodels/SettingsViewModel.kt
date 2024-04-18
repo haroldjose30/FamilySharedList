@@ -2,6 +2,7 @@ package dev.haroldjose.familysharedlist.android.presentationLayer.pages.settings
 
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.os.Build
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -104,7 +105,11 @@ class SettingsViewModel(
             MainApplication.applicationContext().let {
                 val pInfo: PackageInfo = it.packageManager. getPackageInfo(it.getPackageName(), 0)
                 val versionName = pInfo.versionName
-                val longVersionCode = pInfo.longVersionCode
+                val longVersionCode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    pInfo.longVersionCode
+                } else {
+                    "0p"
+                }
                 return "Alpha $versionName (b$longVersionCode)"
             }
         } catch (e: PackageManager.NameNotFoundException) {

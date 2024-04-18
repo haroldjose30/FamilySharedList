@@ -4,7 +4,7 @@ kotlin = "1.9.23"
 
 #ANDROID
 android-compileSdk = "34"
-android-minSdk = "29"
+android-minSdk = "26" #original 29
 android-targetSdk = "34"
 compose = "1.6.4"
 compose-compiler = "1.5.11" #depends on kotlin
