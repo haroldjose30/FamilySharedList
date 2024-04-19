@@ -241,6 +241,7 @@ class FamilyListViewModel(
 
     override fun openImage(item: FamilyListModel) {
         openImageSelectedItem = item
+        throw RuntimeException("Test Crash") // Force a crash
     }
 
     private suspend fun update(item: FamilyListModel){

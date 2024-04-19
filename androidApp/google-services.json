@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1041423189160",
+    "project_id": "familysharedlist-61bdb",
+    "storage_bucket": "familysharedlist-61bdb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1041423189160:android:352b0c30a27a5dbc99ae9d",
+        "android_client_info": {
+          "package_name": "dev.haroldjose.familysharedlist.android"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6i5ntwHO8LZ5tINPtqMe6Xn2grg5S7Jc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

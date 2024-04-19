@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
 
     alias(libs.plugins.serialization)
+    alias(libs.plugins.gms.googleServices)
+    alias(libs.plugins.firebase.crashlitycs)
 }
 
 android {
@@ -63,4 +65,8 @@ dependencies {
     implementation(libs.koin.androidx.compose)
 
     implementation(libs.kotlinx.datetime)
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.analytics)
 }
