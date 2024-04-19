@@ -12,4 +12,4 @@ iosApp/iosApp.xcworkspace/*
 iosApp/iosApp.xcodeproj/*
 !iosApp/iosApp.xcodeproj/project.pbxproj
 google-services.json
-GoogleService-info
+GoogleService-Info.plist

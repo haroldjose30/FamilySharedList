@@ -1,7 +1,7 @@
 import shared
 
-extension iOSApp {
-    
+extension AppDelegate {
+
     func configureIsRunningUITests() {
         
 #if DEBUG
