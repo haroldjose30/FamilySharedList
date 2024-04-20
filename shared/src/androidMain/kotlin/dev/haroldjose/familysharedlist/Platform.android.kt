@@ -3,6 +3,7 @@ package dev.haroldjose.familysharedlist
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import co.touchlab.crashkios.crashlytics.enableCrashlytics
 import dev.haroldjose.familysharedlist.dataLayer.datasource.local.keyValueStorage.AndroidKeyValueStorageDataSource
 import dev.haroldjose.familysharedlist.dataLayer.datasource.local.keyValueStorage.IKeyValueStorageDataSource
 import java.util.UUID
@@ -22,14 +23,15 @@ class AndroidPlatform : IPlatform {
         androidContextForKmm?.startActivity(browserIntent)
     }
     override fun openShareOptionsWithText(text: String) {
-
-
-
         val intent = Intent()
         intent.action = Intent.ACTION_SEND
         intent.type = "text/plain"
         intent.putExtra(Intent.EXTRA_TEXT, text)
         androidContextForKmm?.startActivity(Intent.createChooser(intent, "Compartilhar com:"))
+    }
+
+    override fun setupCrashlytics() {
+        enableCrashlytics()
     }
 
     companion object {

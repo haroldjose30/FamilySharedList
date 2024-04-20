@@ -9,6 +9,7 @@ interface IPlatform {
     fun getKeyValueStorageDataSource(): IKeyValueStorageDataSource
     fun openUrlOnDefaultBrowser(url: String)
     fun openShareOptionsWithText(text: String)
+    fun setupCrashlytics()
 }
 
 expect fun getPlatform(): IPlatform
