@@ -1,5 +1,7 @@
 package dev.haroldjose.familysharedlist
 
+import co.touchlab.crashkios.crashlytics.CrashlyticsKotlin
+
 expect class PlatformLogger() {
     var enabled: Boolean
 
@@ -18,11 +20,14 @@ object Logger {
         }
 
     fun d(tag: String, message: String){
+        CrashlyticsKotlin.logMessage("$tag: $message")
         platformLogger.logDebug(tag, message)
     }
 
     fun e(tag: String, message: String, exception: Throwable? = null){
+        CrashlyticsKotlin.logMessage("$tag: $message")
         exception?.let {
+            CrashlyticsKotlin.sendHandledException(it)
             platformLogger.logError(tag, message, exception)
         } ?: run {
             platformLogger.logError(tag, message)

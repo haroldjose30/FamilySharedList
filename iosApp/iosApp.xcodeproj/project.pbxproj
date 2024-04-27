@@ -24,6 +24,8 @@
 		52385F372BC1C7E4009E46F4 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52385F362BC1C7E4009E46F4 /* AppConstants.swift */; };
 		524EADD92BC1FCDA00CE1725 /* FamilyListEmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524EADD82BC1FCDA00CE1725 /* FamilyListEmptyState.swift */; };
 		524EADDB2BC1FE9300CE1725 /* FamilyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524EADDA2BC1FE9300CE1725 /* FamilyListView.swift */; };
+		52B326972BDD689A00D12B05 /* FirebaseAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B326962BDD689A00D12B05 /* FirebaseAnalytics.swift */; };
+		52B326992BDD736A00D12B05 /* nativeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B326982BDD736A00D12B05 /* nativeModule.swift */; };
 		52BD908C2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD908B2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift */; };
 		52BD908E2BC0B72000C88B84 /* FamilyListViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD908D2BC0B72000C88B84 /* FamilyListViewModelProtocol.swift */; };
 		52BD90902BC0B80600C88B84 /* FamilyListViewModelMocked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD908F2BC0B80600C88B84 /* FamilyListViewModelMocked.swift */; };
@@ -86,6 +88,8 @@
 		52385F362BC1C7E4009E46F4 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		524EADD82BC1FCDA00CE1725 /* FamilyListEmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListEmptyState.swift; sourceTree = "<group>"; };
 		524EADDA2BC1FE9300CE1725 /* FamilyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListView.swift; sourceTree = "<group>"; };
+		52B326962BDD689A00D12B05 /* FirebaseAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalytics.swift; sourceTree = "<group>"; };
+		52B326982BDD736A00D12B05 /* nativeModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nativeModule.swift; sourceTree = "<group>"; };
 		52BD908B2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListPageTabEnum.swift; sourceTree = "<group>"; };
 		52BD908D2BC0B72000C88B84 /* FamilyListViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListViewModelProtocol.swift; sourceTree = "<group>"; };
 		52BD908F2BC0B80600C88B84 /* FamilyListViewModelMocked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListViewModelMocked.swift; sourceTree = "<group>"; };
@@ -185,6 +189,14 @@
 				52385F312BC1B428009E46F4 /* ViewHideRowSeparatorModifier.swift */,
 			);
 			path = view;
+			sourceTree = "<group>";
+		};
+		52B326952BDD688900D12B05 /* services */ = {
+			isa = PBXGroup;
+			children = (
+				52B326962BDD689A00D12B05 /* FirebaseAnalytics.swift */,
+			);
+			path = services;
 			sourceTree = "<group>";
 		};
 		52BD90912BC0B8AB00C88B84 /* viewModels */ = {
@@ -296,6 +308,7 @@
 			children = (
 				52FD818C2BBDD72500D6FEE3 /* KoinApplication.swift */,
 				52FD818B2BBDD72500D6FEE3 /* LazyKoin.swift */,
+				52B326982BDD736A00D12B05 /* nativeModule.swift */,
 			);
 			path = koin;
 			sourceTree = "<group>";
@@ -451,14 +464,15 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
-				523509ED2BD3250D00BC2F51 /* GoogleService-Info.plist */,
 				52FD819E2BBDD72500D6FEE3 /* app */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 				52FD81852BBDD72500D6FEE3 /* dependencyInjection */,
 				52FD81952BBDD72500D6FEE3 /* extensions */,
+				523509ED2BD3250D00BC2F51 /* GoogleService-Info.plist */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				52FD81B22BBDD87300D6FEE3 /* presentationLayer */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
+				52B326952BDD688900D12B05 /* services */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -613,6 +627,7 @@
 				52FD81C12BBE02A000D6FEE3 /* TextEditorView.swift in Sources */,
 				52DE60932BBF1EB700C12669 /* NavigatorViewModelProtocol.swift in Sources */,
 				52FD81AB2BBDD72600D6FEE3 /* toInt.swift in Sources */,
+				52B326992BDD736A00D12B05 /* nativeModule.swift in Sources */,
 				52FD81AE2BBDD72600D6FEE3 /* FamilyListModel.swift in Sources */,
 				52DE609E2BBF517700C12669 /* SettingsItemWithTitleView.swift in Sources */,
 				52FD81A52BBDD72500D6FEE3 /* LazyKoin.swift in Sources */,
@@ -622,6 +637,7 @@
 				52385F372BC1C7E4009E46F4 /* AppConstants.swift in Sources */,
 				52FD81A72BBDD72500D6FEE3 /* SettingsPage.swift in Sources */,
 				52FD81B12BBDD72600D6FEE3 /* NavigatorView.swift in Sources */,
+				52B326972BDD689A00D12B05 /* FirebaseAnalytics.swift in Sources */,
 				52DE60A52BBF553600C12669 /* SettingsViewModel.swift in Sources */,
 				52DE60992BBF242400C12669 /* SettingsViewModelMocked.swift in Sources */,
 				52FD81A32BBDD72500D6FEE3 /* ResolverProtocol.swift in Sources */,

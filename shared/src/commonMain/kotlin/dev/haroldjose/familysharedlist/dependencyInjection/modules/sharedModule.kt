@@ -22,7 +22,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-val commonModule = module {
+val sharedModule = module {
 
     singleOf(::FamilyListRepository) bind IFamilyListRepository::class
     singleOf(::KeyValueStorageRepository) bind IKeyValueStorageRepository::class

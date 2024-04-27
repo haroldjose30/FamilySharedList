@@ -1,3 +1,3 @@
-import Foundation
-
-protocol ResolverProtocol {}
+//import Foundation
+//
+//protocol ResolverProtocol {}

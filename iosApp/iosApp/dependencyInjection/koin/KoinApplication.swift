@@ -4,8 +4,12 @@ typealias KoinApplication = Koin_coreKoinApplication
 typealias Koin = Koin_coreKoin
 
 extension KoinApplication {
-    static let shared = companion.start()
-    
+    static let shared = companion.start(
+        nativeModules: [
+            nativeModule
+        ]
+    )
+
     @discardableResult
     static func start() -> KoinApplication {
         shared
@@ -32,7 +36,6 @@ extension KoinApplication {
     ]
     
     static func inject<T>() -> T {
-        
         shared.inject()
     }
     
