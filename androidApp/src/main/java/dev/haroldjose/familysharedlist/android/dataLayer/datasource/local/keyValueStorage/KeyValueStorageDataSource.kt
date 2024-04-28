@@ -1,14 +1,18 @@
-package dev.haroldjose.familysharedlist.dataLayer.datasource.local.keyValueStorage
+package dev.haroldjose.familysharedlist.android.dataLayer.datasource.local.keyValueStorage
 
-import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import dev.haroldjose.familysharedlist.android.app.MainApplication
+import dev.haroldjose.familysharedlist.dataLayer.datasource.local.keyValueStorage.IKeyValueStorageDataSource
 
 
-class AndroidKeyValueStorageDataSource(): IKeyValueStorageDataSource {
+class KeyValueStorageDataSource(): IKeyValueStorageDataSource {
 
+    private var sharedPreference: SharedPreferences? = null
     private fun getSharedPreferences(): SharedPreferences? {
-        val sharedPreference = context?.getSharedPreferences(Companion.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE)
+        if (sharedPreference == null) {
+            sharedPreference = MainApplication.applicationContext().getSharedPreferences(SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE)
+        }
         return sharedPreference
     }
 
@@ -41,6 +45,5 @@ class AndroidKeyValueStorageDataSource(): IKeyValueStorageDataSource {
 
     companion object {
         private val SHARED_PREFERENCE_NAME = "FamilyListApp"
-        var context: Application? = null
     }
 }

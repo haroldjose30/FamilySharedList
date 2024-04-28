@@ -1,23 +1,15 @@
 package dev.haroldjose.familysharedlist.dataLayer.repositories.familyList
 
-import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.familyList.FamilyListRemoteDataSource
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.familyList.IFamilyListRemoteDataSource
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.mongoDb.MongoDbResources
 import dev.haroldjose.familysharedlist.dataLayer.dto.FamilyListDto
 import dev.haroldjose.familysharedlist.dataLayer.repositories.keyValueStorage.IKeyValueStorageRepository
-import dev.haroldjose.familysharedlist.dataLayer.repositories.keyValueStorage.KeyValueStorageRepository
 import dev.haroldjose.familysharedlist.dataLayer.repositories.keyValueStorage.KeyValueStorageRepositoryEnum
 
-internal class FamilyListRepository() : IFamilyListRepository {
-
-    //TODO: add to DI
-    private val remoteDataSource: IFamilyListRemoteDataSource
-    private val keyValueStorageRepository: IKeyValueStorageRepository
-
-    init {
-        keyValueStorageRepository = KeyValueStorageRepository()
-        remoteDataSource = FamilyListRemoteDataSource()
-    }
+internal class FamilyListRepository(
+    val remoteDataSource: IFamilyListRemoteDataSource,
+    val keyValueStorageRepository: IKeyValueStorageRepository
+) : IFamilyListRepository {
 
     override suspend fun insert(item: FamilyListDto) {
         remoteDataSource.database = getSelectedDataBase()

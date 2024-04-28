@@ -4,9 +4,9 @@ import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.ajhttpclient.
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.openfoodfacts.request.OpenFoodFactsGetProductByGetRequest
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.openfoodfacts.response.OpenFoodFactsGetProductByGetResponse
 
-class OpenFoodFactsDataSource: IOpenFoodFactsDataSource {
-    //todo: add DI
-    private val client: AJHttpClient = AJHttpClient()
+class OpenFoodFactsRemoteDataSource(
+    val client: AJHttpClient
+): IOpenFoodFactsRemoteDataSource {
     override suspend fun getProductBy(code: String): OpenFoodFactsGetProductByGetResponse? {
        
         val request = OpenFoodFactsGetProductByGetRequest(

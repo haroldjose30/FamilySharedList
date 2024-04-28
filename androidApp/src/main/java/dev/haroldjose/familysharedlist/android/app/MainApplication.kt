@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import dev.haroldjose.familysharedlist.android.dependencyInjection.androidModule
 import dev.haroldjose.familysharedlist.android.dependencyInjection.nativeModule
-import dev.haroldjose.familysharedlist.dataLayer.datasource.local.keyValueStorage.AndroidKeyValueStorageDataSource
 import dev.haroldjose.familysharedlist.dependencyInjection.startDI
 import dev.haroldjose.familysharedlist.getPlatform
 import org.koin.android.ext.koin.androidContext
@@ -33,7 +32,5 @@ class MainApplication : Application() {
             // Reference Android context
             androidContext(this@MainApplication)
         }
-
-        AndroidKeyValueStorageDataSource.Companion.context = this@MainApplication
     }
 }

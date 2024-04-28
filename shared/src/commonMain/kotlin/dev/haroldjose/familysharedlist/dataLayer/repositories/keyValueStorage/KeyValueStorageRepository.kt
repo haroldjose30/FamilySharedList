@@ -1,10 +1,10 @@
 package dev.haroldjose.familysharedlist.dataLayer.repositories.keyValueStorage
 
-import dev.haroldjose.familysharedlist.getPlatform
+import dev.haroldjose.familysharedlist.dataLayer.datasource.local.keyValueStorage.IKeyValueStorageDataSource
 
-class KeyValueStorageRepository(): IKeyValueStorageRepository {
-
-    val keyValueStorageDataSource = getPlatform().getKeyValueStorageDataSource()
+class KeyValueStorageRepository(
+    val keyValueStorageDataSource: IKeyValueStorageDataSource
+): IKeyValueStorageRepository {
 
     override fun put(key: KeyValueStorageRepositoryEnum, value: Int) {
         keyValueStorageDataSource.put(key.value, value)

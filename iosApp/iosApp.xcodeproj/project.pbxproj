@@ -12,6 +12,7 @@
 		5205DF8E2BD05CDC001FE2B9 /* KMPNativeCoroutinesAsync in Frameworks */ = {isa = PBXBuildFile; productRef = 5205DF8D2BD05CDC001FE2B9 /* KMPNativeCoroutinesAsync */; };
 		5205DF902BD05CDC001FE2B9 /* KMPNativeCoroutinesCombine in Frameworks */ = {isa = PBXBuildFile; productRef = 5205DF8F2BD05CDC001FE2B9 /* KMPNativeCoroutinesCombine */; };
 		5205DF922BD05CDC001FE2B9 /* KMPNativeCoroutinesCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5205DF912BD05CDC001FE2B9 /* KMPNativeCoroutinesCore */; };
+		5210C0BA2BDEEEC50089B31E /* KeyValueStorageDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5210C0B92BDEEEC50089B31E /* KeyValueStorageDataSource.swift */; };
 		523509EE2BD3250D00BC2F51 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 523509ED2BD3250D00BC2F51 /* GoogleService-Info.plist */; };
 		523509F12BD3267600BC2F51 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 523509F02BD3267600BC2F51 /* FirebaseAnalytics */; };
 		523509F32BD3267700BC2F51 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 523509F22BD3267600BC2F51 /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -80,6 +81,7 @@
 /* Begin PBXFileReference section */
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		5210C0B92BDEEEC50089B31E /* KeyValueStorageDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueStorageDataSource.swift; sourceTree = "<group>"; };
 		523509ED2BD3250D00BC2F51 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		523509F82BD3273100BC2F51 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52385CF52BC1ABC2009E46F4 /* FamilyListRowItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListRowItemView.swift; sourceTree = "<group>"; };
@@ -154,6 +156,38 @@
 				058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		5210C0B52BDEEE900089B31E /* dataLayer */ = {
+			isa = PBXGroup;
+			children = (
+				5210C0B62BDEEE9F0089B31E /* datasource */,
+			);
+			path = dataLayer;
+			sourceTree = "<group>";
+		};
+		5210C0B62BDEEE9F0089B31E /* datasource */ = {
+			isa = PBXGroup;
+			children = (
+				5210C0B72BDEEEA90089B31E /* local */,
+			);
+			path = datasource;
+			sourceTree = "<group>";
+		};
+		5210C0B72BDEEEA90089B31E /* local */ = {
+			isa = PBXGroup;
+			children = (
+				5210C0B82BDEEEB00089B31E /* keyValueStorage */,
+			);
+			path = local;
+			sourceTree = "<group>";
+		};
+		5210C0B82BDEEEB00089B31E /* keyValueStorage */ = {
+			isa = PBXGroup;
+			children = (
+				5210C0B92BDEEEC50089B31E /* KeyValueStorageDataSource.swift */,
+			);
+			path = keyValueStorage;
 			sourceTree = "<group>";
 		};
 		52385CF22BC1AB60009E46F4 /* components */ = {
@@ -464,6 +498,7 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				5210C0B52BDEEE900089B31E /* dataLayer */,
 				52FD819E2BBDD72500D6FEE3 /* app */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 				52FD81852BBDD72500D6FEE3 /* dependencyInjection */,
@@ -629,6 +664,7 @@
 				52FD81AB2BBDD72600D6FEE3 /* toInt.swift in Sources */,
 				52B326992BDD736A00D12B05 /* nativeModule.swift in Sources */,
 				52FD81AE2BBDD72600D6FEE3 /* FamilyListModel.swift in Sources */,
+				5210C0BA2BDEEEC50089B31E /* KeyValueStorageDataSource.swift in Sources */,
 				52DE609E2BBF517700C12669 /* SettingsItemWithTitleView.swift in Sources */,
 				52FD81A52BBDD72500D6FEE3 /* LazyKoin.swift in Sources */,
 				52FD81B52BBDDA9E00D6FEE3 /* QuantitySelectionView.swift in Sources */,

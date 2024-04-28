@@ -1,27 +1,20 @@
 package dev.haroldjose.familysharedlist.dataLayer.datasource.remote.ajhttpclient
 
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.ajhttpclient.request.IAJHttpRequest
-import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.ajhttpclient.response.AJHttpClientResponseGenericException
-import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.ajhttpclient.response.AJHttpClientResponseUnknownException
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.ajhttpclient.response.IAJHttpResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.plugins.ClientRequestException
-import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.prepareRequest
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpStatement
-import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.HttpMethod
-import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
-//TODO: implement DI
 class AJHttpClient {
 
     val client = HttpClient() {

@@ -1,12 +1,12 @@
 package dev.haroldjose.familysharedlist.dataLayer.repositories.account
 
-import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.account.AccountRemoteDataSource
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.account.IAccountRemoteDataSource
 import dev.haroldjose.familysharedlist.dataLayer.dto.AccountDto
 
-internal class AccountRepository() : IAccountRepository {
-    //TODO: add to DI
-    private val accountRemoteDataSource: IAccountRemoteDataSource = AccountRemoteDataSource()
+internal class AccountRepository(
+    val accountRemoteDataSource: IAccountRemoteDataSource
+) : IAccountRepository {
+
     override suspend fun insert(item: AccountDto) {
         accountRemoteDataSource.insert(item)
     }

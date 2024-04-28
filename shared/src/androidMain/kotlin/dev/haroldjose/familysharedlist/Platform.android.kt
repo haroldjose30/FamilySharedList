@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import co.touchlab.crashkios.crashlytics.enableCrashlytics
-import dev.haroldjose.familysharedlist.dataLayer.datasource.local.keyValueStorage.AndroidKeyValueStorageDataSource
-import dev.haroldjose.familysharedlist.dataLayer.datasource.local.keyValueStorage.IKeyValueStorageDataSource
 import java.util.UUID
 
 class AndroidPlatform : IPlatform {
@@ -13,7 +11,7 @@ class AndroidPlatform : IPlatform {
 
     override val isDebug: Boolean = AndroidPlatform.isDebuggable
     override fun generateUUID() = UUID.randomUUID().toString()
-    override fun getKeyValueStorageDataSource(): IKeyValueStorageDataSource = AndroidKeyValueStorageDataSource()
+
     override fun openUrlOnDefaultBrowser(url: String) {
         var urlString = url
         if (!(urlString.startsWith("http://") || urlString.startsWith("https://"))) {

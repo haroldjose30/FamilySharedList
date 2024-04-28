@@ -1,5 +1,12 @@
 package dev.haroldjose.familysharedlist.dependencyInjection.modules
 
+import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.account.AccountRemoteDataSource
+import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.account.IAccountRemoteDataSource
+import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.ajhttpclient.AJHttpClient
+import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.familyList.FamilyListRemoteDataSource
+import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.familyList.IFamilyListRemoteDataSource
+import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.openfoodfacts.IOpenFoodFactsRemoteDataSource
+import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.openfoodfacts.OpenFoodFactsRemoteDataSource
 import dev.haroldjose.familysharedlist.dataLayer.repositories.account.AccountRepository
 import dev.haroldjose.familysharedlist.dataLayer.repositories.account.IAccountRepository
 import dev.haroldjose.familysharedlist.dataLayer.repositories.familyList.FamilyListRepository
@@ -24,24 +31,33 @@ import org.koin.dsl.module
 
 val sharedModule = module {
 
+    //HttpClient
+    singleOf(::AJHttpClient)
+
+    //DataSources
+    singleOf(::AccountRemoteDataSource) bind IAccountRemoteDataSource::class
+    singleOf(::FamilyListRemoteDataSource) bind IFamilyListRemoteDataSource::class
+    singleOf(::OpenFoodFactsRemoteDataSource) bind IOpenFoodFactsRemoteDataSource::class
+
+    //Repositories
     singleOf(::FamilyListRepository) bind IFamilyListRepository::class
     singleOf(::KeyValueStorageRepository) bind IKeyValueStorageRepository::class
     singleOf(::AccountRepository) bind IAccountRepository::class
     singleOf(::OpenFoodFactsRepository) bind IOpenFoodFactsRepository::class
 
-    //FamilyList
+    //FamilyList UseCases
     factoryOf(::CreateFamilyListUseCase)
     factoryOf(::GetAllFamilyListUseCase)
     factoryOf(::UpdateFamilyListUseCase)
     factoryOf(::DeleteFamilyListUseCase)
 
-    //account
+    //Account UseCases
     factoryOf(::GetAccountUseCase)
     factoryOf(::GetLocalAccountUuidUseCase)
     factoryOf(::GetOrCreateAccountFromLocalUuidUseCase)
     factoryOf(::SetSharedAccountByCodeUseCase)
 
-    //product
+    //product UseCases
     factoryOf(::GetProductByCodeUseCase)
 }
 
