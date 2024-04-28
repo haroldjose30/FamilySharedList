@@ -6,6 +6,8 @@ import org.koin.core.module.Module
 import org.koin.core.scope.Scope
 import org.koin.dsl.module
 
+//reference: https://medium.com/@0x6368656174/kotlin-multiplatform-dependency-injection-with-pure-native-services-6897d9c3bcaa
+
 typealias NativeInjectionFactory<T> = Scope.() -> T
 
 fun makeNativeModule(
