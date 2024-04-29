@@ -15,7 +15,7 @@ struct iOSApp: App {
             NavigatorView(
                 viewModel:
                     NavigatorViewModel(
-                        getOrCreateAccountFromLocalUuidUseCase: KoinApplication.shared.inject()
+                        getOrCreateAccountFromLocalUuidUseCase: koinInject()
                     )
             )
         }.onChange(of: scenePhase) { phase in

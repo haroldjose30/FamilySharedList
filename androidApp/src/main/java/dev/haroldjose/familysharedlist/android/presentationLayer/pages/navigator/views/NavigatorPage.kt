@@ -17,8 +17,8 @@ import dev.haroldjose.familysharedlist.android.app.MyApplicationTheme
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.ErrorPage
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels.FamilyListViewModel
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels.FamilyListViewModelMocked
-import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.views.FamilyListPage
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels.IFamilyListViewModel
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.views.FamilyListPage
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.navigator.viewmodels.INavigatorViewModel
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.navigator.viewmodels.NavigatorViewModel
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.navigator.viewmodels.NavigatorViewModelMock

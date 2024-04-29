@@ -25,6 +25,7 @@
 		52385F372BC1C7E4009E46F4 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52385F362BC1C7E4009E46F4 /* AppConstants.swift */; };
 		524EADD92BC1FCDA00CE1725 /* FamilyListEmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524EADD82BC1FCDA00CE1725 /* FamilyListEmptyState.swift */; };
 		524EADDB2BC1FE9300CE1725 /* FamilyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524EADDA2BC1FE9300CE1725 /* FamilyListView.swift */; };
+		527225992BE024D800762C21 /* KoinHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527225982BE024D800762C21 /* KoinHelpers.swift */; };
 		52B326972BDD689A00D12B05 /* FirebaseAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B326962BDD689A00D12B05 /* FirebaseAnalytics.swift */; };
 		52B326992BDD736A00D12B05 /* nativeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B326982BDD736A00D12B05 /* nativeModule.swift */; };
 		52BD908C2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD908B2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift */; };
@@ -46,7 +47,6 @@
 		52FD81A32BBDD72500D6FEE3 /* ResolverProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD81882BBDD72500D6FEE3 /* ResolverProtocol.swift */; };
 		52FD81A42BBDD72500D6FEE3 /* ResolverPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD81892BBDD72500D6FEE3 /* ResolverPreview.swift */; };
 		52FD81A52BBDD72500D6FEE3 /* LazyKoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD818B2BBDD72500D6FEE3 /* LazyKoin.swift */; };
-		52FD81A62BBDD72500D6FEE3 /* KoinApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD818C2BBDD72500D6FEE3 /* KoinApplication.swift */; };
 		52FD81A72BBDD72500D6FEE3 /* SettingsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD818F2BBDD72500D6FEE3 /* SettingsPage.swift */; };
 		52FD81A92BBDD72600D6FEE3 /* BarcodeScannerPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD81922BBDD72500D6FEE3 /* BarcodeScannerPage.swift */; };
 		52FD81AA2BBDD72600D6FEE3 /* FamilyListPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD81942BBDD72500D6FEE3 /* FamilyListPage.swift */; };
@@ -90,6 +90,7 @@
 		52385F362BC1C7E4009E46F4 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		524EADD82BC1FCDA00CE1725 /* FamilyListEmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListEmptyState.swift; sourceTree = "<group>"; };
 		524EADDA2BC1FE9300CE1725 /* FamilyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListView.swift; sourceTree = "<group>"; };
+		527225982BE024D800762C21 /* KoinHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KoinHelpers.swift; sourceTree = "<group>"; };
 		52B326962BDD689A00D12B05 /* FirebaseAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalytics.swift; sourceTree = "<group>"; };
 		52B326982BDD736A00D12B05 /* nativeModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nativeModule.swift; sourceTree = "<group>"; };
 		52BD908B2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListPageTabEnum.swift; sourceTree = "<group>"; };
@@ -111,7 +112,6 @@
 		52FD81882BBDD72500D6FEE3 /* ResolverProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolverProtocol.swift; sourceTree = "<group>"; };
 		52FD81892BBDD72500D6FEE3 /* ResolverPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolverPreview.swift; sourceTree = "<group>"; };
 		52FD818B2BBDD72500D6FEE3 /* LazyKoin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LazyKoin.swift; sourceTree = "<group>"; };
-		52FD818C2BBDD72500D6FEE3 /* KoinApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KoinApplication.swift; sourceTree = "<group>"; };
 		52FD818F2BBDD72500D6FEE3 /* SettingsPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPage.swift; sourceTree = "<group>"; };
 		52FD81922BBDD72500D6FEE3 /* BarcodeScannerPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeScannerPage.swift; sourceTree = "<group>"; };
 		52FD81942BBDD72500D6FEE3 /* FamilyListPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamilyListPage.swift; sourceTree = "<group>"; };
@@ -340,9 +340,9 @@
 		52FD818A2BBDD72500D6FEE3 /* koin */ = {
 			isa = PBXGroup;
 			children = (
-				52FD818C2BBDD72500D6FEE3 /* KoinApplication.swift */,
 				52FD818B2BBDD72500D6FEE3 /* LazyKoin.swift */,
 				52B326982BDD736A00D12B05 /* nativeModule.swift */,
+				527225982BE024D800762C21 /* KoinHelpers.swift */,
 			);
 			path = koin;
 			sourceTree = "<group>";
@@ -672,6 +672,7 @@
 				52D7B6D12BC7433E00037A17 /* isDigitsOnly.swift in Sources */,
 				52385F372BC1C7E4009E46F4 /* AppConstants.swift in Sources */,
 				52FD81A72BBDD72500D6FEE3 /* SettingsPage.swift in Sources */,
+				527225992BE024D800762C21 /* KoinHelpers.swift in Sources */,
 				52FD81B12BBDD72600D6FEE3 /* NavigatorView.swift in Sources */,
 				52B326972BDD689A00D12B05 /* FirebaseAnalytics.swift in Sources */,
 				52DE60A52BBF553600C12669 /* SettingsViewModel.swift in Sources */,
@@ -693,7 +694,6 @@
 				52DE60A32BBF522000C12669 /* SettingsItemWithInputTextView.swift in Sources */,
 				52FD81BA2BBDE23F00D6FEE3 /* QuickInsertListViewModelProtocol.swift in Sources */,
 				52FD81AC2BBDD72600D6FEE3 /* toInt32.swift in Sources */,
-				52FD81A62BBDD72500D6FEE3 /* KoinApplication.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

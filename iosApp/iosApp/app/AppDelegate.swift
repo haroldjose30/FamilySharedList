@@ -10,7 +10,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         FirebaseApp.configure()
         Platform_iosKt.getPlatform().setupCrashlytics()
         configureIsRunningUITests()
-        KoinApplication.start()
+        KoinKt.startDI(
+            nativeModules: [nativeModule],
+            appDeclaration: { _ in }
+        )
         return true
     }
 }

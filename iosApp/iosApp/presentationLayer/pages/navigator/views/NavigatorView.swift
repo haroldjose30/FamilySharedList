@@ -30,7 +30,7 @@ struct NavigatorView<ViewModel>: View where ViewModel: NavigatorViewModelProtoco
     private func QuickInsertListPage(router: ViewRouter) -> some View {
         //TODO: add viewModel to DI
         let viewModel = QuickInsertListViewModel(
-            createFamilyListUseCase: KoinApplication.shared.inject()
+            createFamilyListUseCase: koinInject()
         )
         viewModel.goToFamilyListPage = { self.router = .familyList }
         return Family_List.QuickInsertListPage(viewModel: viewModel)
@@ -39,9 +39,9 @@ struct NavigatorView<ViewModel>: View where ViewModel: NavigatorViewModelProtoco
     private func SettingsPage(router: ViewRouter) -> some View {
         //TODO: add viewModel to DI
         let viewModel = SettingsViewModel(
-            getAccountUseCase: KoinApplication.shared.inject(),
-            getLocalAccountUuidUseCase: KoinApplication.shared.inject(),
-            setSharedAccountByCodeUseCase: KoinApplication.shared.inject()
+            getAccountUseCase: koinInject(),
+            getLocalAccountUuidUseCase: koinInject(),
+            setSharedAccountByCodeUseCase: koinInject()
         )
         viewModel.goBack = { self.router = .familyList }
         return Family_List.SettingsPage(viewModel: viewModel)
@@ -50,12 +50,12 @@ struct NavigatorView<ViewModel>: View where ViewModel: NavigatorViewModelProtoco
     private func FamilyListPage(router: ViewRouter) -> some View {
         //TODO: add viewModel to DI
         let viewModel = FamilyListViewModel(
-            getAllFamilyListUseCase: KoinApplication.shared.inject(),
-            createFamilyListUseCase: KoinApplication.shared.inject(),
-            updateFamilyListUseCase: KoinApplication.shared.inject(),
-            deleteFamilyListUseCase: KoinApplication.shared.inject(),
-            getOrCreateAccountFromLocalUuidUseCase: KoinApplication.shared.inject(),
-            getProductByCodeUseCase: KoinApplication.shared.inject()
+            getAllFamilyListUseCase: koinInject(),
+            createFamilyListUseCase: koinInject(),
+            updateFamilyListUseCase: koinInject(),
+            deleteFamilyListUseCase: koinInject(),
+            getOrCreateAccountFromLocalUuidUseCase: koinInject(),
+            getProductByCodeUseCase: koinInject()
         )
         viewModel.goToSetting = { self.router = .settings }
         viewModel.goToQuickInsert = { self.router = .quickInsert }

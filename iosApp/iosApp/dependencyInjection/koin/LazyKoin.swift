@@ -1,10 +1,9 @@
 
-//@propertyWrapper
-//struct LazyKoin<T> {
-//    lazy var wrappedValue: T = {
-//        
-//        KoinApplication.shared.inject()
-//    }()
-//    
-//    init() { }
-//}
+@propertyWrapper
+struct LazyKoin<T> {
+    lazy var wrappedValue: T = {
+        koinInject()
+    }()
+    
+    init() { }
+}
