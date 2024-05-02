@@ -19,6 +19,16 @@ public interface IFirebaseAnalytics {
 
     fun setUserProperty(name: String, value: String)
 
+    object Event {
+        const val GET_ALL_FAMILY_LIST: String = "get_all_family_list"
+        const val UPDATE_FAMILY_LIST: String = "update_family_list"
+        const val GET_PRODUCT_BY_CODE: String = "get_product_by_code"
+        const val DELETE_FAMILY_LIST: String = "delete_family_list"
+        const val CREATE_FAMILY_LIST: String = "create_family_list"
+        const val SET_SHARED_ACCOUNT_BY_CODE: String = "set_shared_account_by_code"
+        const val GET_OR_CREATE_ACCOUNT: String = "get_or_create_account"
+    }
+
 //    object Event {
 //        var AD_IMPRESSION: String = ""
 //        var ADD_PAYMENT_INFO: String = ""
@@ -61,7 +71,13 @@ public interface IFirebaseAnalytics {
 //        var VIEW_CART: String = ""
 //        var VIEW_PROMOTION: String = ""
 //    }
-//
+
+
+    object Param {
+        const val BARCODE: String = "barcode"
+        const val ACCOUNT_UUID: String = "account_uuid"
+    }
+
 //    object Param {
 //        var ACHIEVEMENT_ID: String = ""
 //        var AD_FORMAT: String = ""

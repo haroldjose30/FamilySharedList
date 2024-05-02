@@ -44,7 +44,6 @@
 		52DE60A32BBF522000C12669 /* SettingsItemWithInputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DE60A22BBF522000C12669 /* SettingsItemWithInputTextView.swift */; };
 		52DE60A52BBF553600C12669 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DE60A42BBF553600C12669 /* SettingsViewModel.swift */; };
 		52FD81A22BBDD72500D6FEE3 /* ResolverApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD81872BBDD72500D6FEE3 /* ResolverApp.swift */; };
-		52FD81A32BBDD72500D6FEE3 /* ResolverProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD81882BBDD72500D6FEE3 /* ResolverProtocol.swift */; };
 		52FD81A42BBDD72500D6FEE3 /* ResolverPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD81892BBDD72500D6FEE3 /* ResolverPreview.swift */; };
 		52FD81A52BBDD72500D6FEE3 /* LazyKoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD818B2BBDD72500D6FEE3 /* LazyKoin.swift */; };
 		52FD81A72BBDD72500D6FEE3 /* SettingsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD818F2BBDD72500D6FEE3 /* SettingsPage.swift */; };
@@ -109,7 +108,6 @@
 		52DE60A22BBF522000C12669 /* SettingsItemWithInputTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsItemWithInputTextView.swift; sourceTree = "<group>"; };
 		52DE60A42BBF553600C12669 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		52FD81872BBDD72500D6FEE3 /* ResolverApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolverApp.swift; sourceTree = "<group>"; };
-		52FD81882BBDD72500D6FEE3 /* ResolverProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolverProtocol.swift; sourceTree = "<group>"; };
 		52FD81892BBDD72500D6FEE3 /* ResolverPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolverPreview.swift; sourceTree = "<group>"; };
 		52FD818B2BBDD72500D6FEE3 /* LazyKoin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LazyKoin.swift; sourceTree = "<group>"; };
 		52FD818F2BBDD72500D6FEE3 /* SettingsPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPage.swift; sourceTree = "<group>"; };
@@ -332,7 +330,6 @@
 			children = (
 				52FD81872BBDD72500D6FEE3 /* ResolverApp.swift */,
 				52FD81892BBDD72500D6FEE3 /* ResolverPreview.swift */,
-				52FD81882BBDD72500D6FEE3 /* ResolverProtocol.swift */,
 			);
 			path = resolver;
 			sourceTree = "<group>";
@@ -677,7 +674,6 @@
 				52B326972BDD689A00D12B05 /* FirebaseAnalytics.swift in Sources */,
 				52DE60A52BBF553600C12669 /* SettingsViewModel.swift in Sources */,
 				52DE60992BBF242400C12669 /* SettingsViewModelMocked.swift in Sources */,
-				52FD81A32BBDD72500D6FEE3 /* ResolverProtocol.swift in Sources */,
 				52DE60952BBF1EEB00C12669 /* NavigatorViewModelMock.swift in Sources */,
 				52DE609B2BBF249A00C12669 /* AccountModel.swift in Sources */,
 				52BD90902BC0B80600C88B84 /* FamilyListViewModelMocked.swift in Sources */,

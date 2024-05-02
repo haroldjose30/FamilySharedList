@@ -1,12 +1,8 @@
 
 import SwiftUI
 
-
-struct NavigatorView<ViewModel>: View where ViewModel: NavigatorViewModelProtocol {
-    @StateObject var viewModel: ViewModel
-
-    //TODO: add viewModel to DI
-//    private let resolverApp = ResolverApp()
+struct NavigatorView<NavViewModel>: View where NavViewModel: NavigatorViewModelProtocol {
+    @StateObject var viewModel: NavViewModel
 
     @State private var router: ViewRouter = ViewRouter.familyList
 
@@ -28,41 +24,23 @@ struct NavigatorView<ViewModel>: View where ViewModel: NavigatorViewModelProtoco
     }
 
     private func QuickInsertListPage(router: ViewRouter) -> some View {
-        //TODO: add viewModel to DI
-        let viewModel = QuickInsertListViewModel(
-            createFamilyListUseCase: koinInject()
-        )
+        let viewModel: QuickInsertListViewModel = ResolverApp().resolve()
         viewModel.goToFamilyListPage = { self.router = .familyList }
         return Family_List.QuickInsertListPage(viewModel: viewModel)
     }
 
     private func SettingsPage(router: ViewRouter) -> some View {
-        //TODO: add viewModel to DI
-        let viewModel = SettingsViewModel(
-            getAccountUseCase: koinInject(),
-            getLocalAccountUuidUseCase: koinInject(),
-            setSharedAccountByCodeUseCase: koinInject()
-        )
+        let viewModel: SettingsViewModel = ResolverApp().resolve()
         viewModel.goBack = { self.router = .familyList }
         return Family_List.SettingsPage(viewModel: viewModel)
     }
 
     private func FamilyListPage(router: ViewRouter) -> some View {
-        //TODO: add viewModel to DI
-        let viewModel = FamilyListViewModel(
-            getAllFamilyListUseCase: koinInject(),
-            createFamilyListUseCase: koinInject(),
-            updateFamilyListUseCase: koinInject(),
-            deleteFamilyListUseCase: koinInject(),
-            getOrCreateAccountFromLocalUuidUseCase: koinInject(),
-            getProductByCodeUseCase: koinInject()
-        )
+        let viewModel: FamilyListViewModel = ResolverApp().resolve()
         viewModel.goToSetting = { self.router = .settings }
         viewModel.goToQuickInsert = { self.router = .quickInsert }
         return Family_List.FamilyListPage(viewModel: viewModel)
     }
-
-
 }
 
 enum ViewRouter {

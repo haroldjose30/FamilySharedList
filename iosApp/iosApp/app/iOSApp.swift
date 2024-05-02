@@ -12,12 +12,7 @@ struct iOSApp: App {
     var body: some Scene {
 
         WindowGroup {
-            NavigatorView(
-                viewModel:
-                    NavigatorViewModel(
-                        getOrCreateAccountFromLocalUuidUseCase: koinInject()
-                    )
-            )
+            NavigatorView(viewModel: ResolverApp().resolve())
         }.onChange(of: scenePhase) { phase in
 
             switch phase {

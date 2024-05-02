@@ -28,7 +28,10 @@ class GetOrCreateAccountFromLocalUuidUseCase(
         val accountUuid = getOrCreateUuid()
         CrashlyticsKotlin.setUserId(accountUuid)
         firebaseAnalytics.setUserId(accountUuid)
-        firebaseAnalytics.logEvent("account_fetched", params = mapOf("account_uuid" to accountUuid))
+        firebaseAnalytics.logEvent(
+            IFirebaseAnalytics.Event.GET_OR_CREATE_ACCOUNT,
+            mapOf(IFirebaseAnalytics.Param.ACCOUNT_UUID to accountUuid)
+        )
         accountRepository.findBy(uuid = accountUuid)?.toModel()?.let {
             //TODO: verify if accountsSharedWithMe was revoked
             val defaultAccountSharedWithMe = it.accountsSharedWithMe.firstOrNull()
