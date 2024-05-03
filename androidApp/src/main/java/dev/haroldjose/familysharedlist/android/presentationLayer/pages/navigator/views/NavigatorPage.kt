@@ -14,7 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dev.haroldjose.familysharedlist.android.app.MyApplicationTheme
-import dev.haroldjose.familysharedlist.android.presentationLayer.pages.ErrorPage
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.error.ErrorPage
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels.FamilyListViewModel
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels.FamilyListViewModelMocked
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.viewmodels.IFamilyListViewModel

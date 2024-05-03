@@ -32,6 +32,7 @@
 		52BD908E2BC0B72000C88B84 /* FamilyListViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD908D2BC0B72000C88B84 /* FamilyListViewModelProtocol.swift */; };
 		52BD90902BC0B80600C88B84 /* FamilyListViewModelMocked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD908F2BC0B80600C88B84 /* FamilyListViewModelMocked.swift */; };
 		52BD90932BC0B8BD00C88B84 /* FamilyListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD90922BC0B8BD00C88B84 /* FamilyListViewModel.swift */; };
+		52CBE6EC2BE3DC6C00B40828 /* SettingsViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CBE6EB2BE3DC6C00B40828 /* SettingsViewState.swift */; };
 		52D7B6D12BC7433E00037A17 /* isDigitsOnly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D7B6D02BC7433E00037A17 /* isDigitsOnly.swift */; };
 		52DE60912BBF1DC800C12669 /* NavigatorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DE60902BBF1DC800C12669 /* NavigatorViewModel.swift */; };
 		52DE60932BBF1EB700C12669 /* NavigatorViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DE60922BBF1EB700C12669 /* NavigatorViewModelProtocol.swift */; };
@@ -96,6 +97,7 @@
 		52BD908D2BC0B72000C88B84 /* FamilyListViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListViewModelProtocol.swift; sourceTree = "<group>"; };
 		52BD908F2BC0B80600C88B84 /* FamilyListViewModelMocked.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListViewModelMocked.swift; sourceTree = "<group>"; };
 		52BD90922BC0B8BD00C88B84 /* FamilyListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListViewModel.swift; sourceTree = "<group>"; };
+		52CBE6EB2BE3DC6C00B40828 /* SettingsViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewState.swift; sourceTree = "<group>"; };
 		52D7B6D02BC7433E00037A17 /* isDigitsOnly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = isDigitsOnly.swift; sourceTree = "<group>"; };
 		52DE60902BBF1DC800C12669 /* NavigatorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorViewModel.swift; sourceTree = "<group>"; };
 		52DE60922BBF1EB700C12669 /* NavigatorViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorViewModelProtocol.swift; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 				52DE60A42BBF553600C12669 /* SettingsViewModel.swift */,
 				52DE60982BBF242400C12669 /* SettingsViewModelMocked.swift */,
 				52DE60962BBF231000C12669 /* SettingsViewModelProtocol.swift */,
+				52CBE6EB2BE3DC6C00B40828 /* SettingsViewState.swift */,
 			);
 			path = viewModels;
 			sourceTree = "<group>";
@@ -680,6 +683,7 @@
 				524EADD92BC1FCDA00CE1725 /* FamilyListEmptyState.swift in Sources */,
 				52FD81A22BBDD72500D6FEE3 /* ResolverApp.swift in Sources */,
 				523509F92BD3273100BC2F51 /* AppDelegate.swift in Sources */,
+				52CBE6EC2BE3DC6C00B40828 /* SettingsViewState.swift in Sources */,
 				52BD908E2BC0B72000C88B84 /* FamilyListViewModelProtocol.swift in Sources */,
 				52DE60912BBF1DC800C12669 /* NavigatorViewModel.swift in Sources */,
 				52FD81BE2BBDE5D100D6FEE3 /* QuickInsertListViewModel.swift in Sources */,

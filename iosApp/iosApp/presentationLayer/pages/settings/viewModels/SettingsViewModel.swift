@@ -3,17 +3,19 @@ import shared
 import KMPNativeCoroutinesAsync
 
 class SettingsViewModel: SettingsViewModelProtocol {
+
+    @Published var viewState: SettingsViewState = .Initial(
+        accountShortCodeForShareTitle: "carregando...",
+        accountsSharedWithMeTitle: "Acessar conta compartilhada",
+        accountsSharedWithMeSubtitle: "Obs: atualmente limitada apenas a 1 conta"
+    )
+    @Published var myAccount: AccountModel?
+
+    var goBack: () -> Void = {}
+
     private let getAccountUseCase: GetAccountUseCase
     private let getLocalAccountUuidUseCase: GetLocalAccountUuidUseCase
     private let setSharedAccountByCodeUseCase: SetSharedAccountByCodeUseCase
-
-    @Published var myAccount: AccountModel?
-    @Published var accountShortCodeForShareTitle: String = "carregando..."
-    @Published var accountsSharedWithMeTitle: String = "Acessar conta compartilhada"
-    @Published var accountsSharedWithMeSubtitle: String = "Obs: atualmente limitada apenas a 1 conta"
-    @Published var isLoading: Bool = true
-
-    var goBack: () -> Void = {}
 
     init(getAccountUseCase: GetAccountUseCase,
          getLocalAccountUuidUseCase: GetLocalAccountUuidUseCase,
@@ -26,7 +28,7 @@ class SettingsViewModel: SettingsViewModelProtocol {
     @MainActor
     func getAccount() async {
 
-        isLoading = true
+        viewState = .loading
 
         do {
             let accountUuid = try await asyncFunction(for: getLocalAccountUuidUseCase.execute())
@@ -36,19 +38,26 @@ class SettingsViewModel: SettingsViewModelProtocol {
             return
         }
 
-        self.accountShortCodeForShareTitle = self.myAccount?.accountShortCodeForShare ?? "carregando..."
+        let accountShortCodeForShareTitle = self.myAccount?.accountShortCodeForShare ?? "carregando..."
+        var accountsSharedWithMeTitle = "Acessar conta compartilhada"
+        var accountsSharedWithMeSubtitle = "Obs: atualmente limitada apenas a 1 conta"
 
         if let sharedAccount = self.myAccount?.accountsSharedWithMe.first {
-            self.accountsSharedWithMeTitle = "Acessando a conta:"
-            self.accountsSharedWithMeSubtitle = sharedAccount
+            accountsSharedWithMeTitle = "Acessando a conta:"
+            accountsSharedWithMeSubtitle = sharedAccount
         }
 
-        isLoading = false
+        viewState = .Success(
+            accountShortCodeForShareTitle: accountShortCodeForShareTitle,
+            accountsSharedWithMeTitle: accountsSharedWithMeTitle,
+            accountsSharedWithMeSubtitle: accountsSharedWithMeSubtitle
+        )
     }
 
     @MainActor
     func accessSharedAccountWithCode(code: String) async {
-        isLoading = true
+
+        viewState = .loading
 
         do {
             let accountUuid = try await asyncFunction(for: getLocalAccountUuidUseCase.execute())
@@ -58,8 +67,6 @@ class SettingsViewModel: SettingsViewModelProtocol {
             showError(e: error)
             return
         }
-
-        isLoading = false
     }
 
     func shareMyCode() {
@@ -73,7 +80,11 @@ class SettingsViewModel: SettingsViewModelProtocol {
     }
 
     func showError(e: Error) {
-        //TODO: Handle error
-        print("ERROR:",e)
+
+        viewState = .Error(message: e.localizedDescription, retryAction: {
+            Task {
+                await self.getAccount()
+            }
+        })
     }
 }

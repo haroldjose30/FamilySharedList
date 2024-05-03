@@ -1,4 +1,4 @@
-package dev.haroldjose.familysharedlist.android.presentationLayer.pages
+package dev.haroldjose.familysharedlist.android.presentationLayer.pages.error
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

@@ -19,12 +19,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.haroldjose.familysharedlist.android.app.MyApplicationTheme
-import dev.haroldjose.familysharedlist.android.presentationLayer.pages.ErrorPage
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.error.ErrorPage
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.quickInsertList.viewmodesls.IQuickInsertListViewModel
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.quickInsertList.viewmodesls.QuickInsertListViewModelMocked
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.quickInsertList.viewmodesls.QuickInsertListViewState
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.quickInsertList.views.components.QuickInsertListTopBarView
-import dev.haroldjose.familysharedlist.android.presentationLayer.pages.settings.viewmodels.SettingsViewState
 
 @Composable
 fun QuickInsertListPage(

@@ -31,8 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.res.ResourcesCompat
 import dev.haroldjose.familysharedlist.android.R
 import dev.haroldjose.familysharedlist.android.app.MyApplicationTheme
-import dev.haroldjose.familysharedlist.android.presentationLayer.pages.ErrorPage
-import dev.haroldjose.familysharedlist.android.presentationLayer.pages.navigator.viewmodels.NavigatorViewState
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.error.ErrorPage
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.settings.viewmodels.ISettingsViewModel
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.settings.viewmodels.SettingsViewModelMocked
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.settings.viewmodels.SettingsViewState
