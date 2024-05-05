@@ -18,9 +18,10 @@ import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.account.respo
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.ajhttpclient.AJHttpClient
 import dev.haroldjose.familysharedlist.dataLayer.dto.AccountDto
 
-class AccountRemoteDataSource: IAccountRemoteDataSource {
-    //todo: add DI
-    private val client: AJHttpClient = AJHttpClient()
+class AccountRemoteDataSource(
+    val client: AJHttpClient
+): IAccountRemoteDataSource {
+
     override suspend fun createSampleDataForFirstAccess(uuid: String): Boolean {
 
         val request = AccountCreateSampleDataForFirstAccessPostRequest(

@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dev.haroldjose.familysharedlist.Logger
-import dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.views.FamilyListPageTabEnum
 import dev.haroldjose.familysharedlist.defaultLocalDateTime
 import dev.haroldjose.familysharedlist.domainLayer.models.AccountModel
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
@@ -16,6 +16,8 @@ import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.DeleteFam
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.GetAllFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.UpdateFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.product.GetProductByCodeUseCase
+import dev.haroldjose.familysharedlist.services.firebase.IFirebaseCrashlytics
+import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
@@ -27,20 +29,21 @@ class FamilyListViewModel(
     private val updateFamilyListUseCase: UpdateFamilyListUseCase,
     private val deleteFamilyListUseCase: DeleteFamilyListUseCase,
     private val getOrCreateAccountFromLocalUuidUseCase: GetOrCreateAccountFromLocalUuidUseCase,
-    private val getProductByCodeUseCase: GetProductByCodeUseCase
+    private val getProductByCodeUseCase: GetProductByCodeUseCase,
+    private val crashlytics: IFirebaseCrashlytics,
 ): ViewModel(), IFamilyListViewModel {
+
+    override var viewState: FamilyListViewState by mutableStateOf(FamilyListViewState.Initial)
     override var familyListModelsGrouped: Map<LocalDate, List<FamilyListModel>> by mutableStateOf(mapOf())
     override var familyListModels: List<FamilyListModel> by mutableStateOf(arrayListOf())
-    override var loading:Boolean by mutableStateOf(false)
     override var newItemName: String by mutableStateOf("")
     override var selectedItemUuid: String = ""
     override var quantity: Int by mutableStateOf(1)
-    override var tabIndex: FamilyListPageTabEnum by mutableStateOf(FamilyListPageTabEnum.PENDING)
+    override var tabIndex: FamilyListTabType by mutableStateOf(FamilyListTabType.PENDING)
     override var openImageSelectedItem: FamilyListModel? by mutableStateOf(null)
 
     private lateinit var accountModel: AccountModel
     private var familyListModelsFull: List<FamilyListModel> by mutableStateOf(arrayListOf())
-
 
     override var goToSetting: () -> Unit = {}
     override var goToQuickInsert: () -> Unit = {}
@@ -51,17 +54,31 @@ class FamilyListViewModel(
 
     override suspend fun loadData(fromNetwork: Boolean) {
         this.tabIndex = tabIndex
-        loading = true
+        viewState = FamilyListViewState.Loading
 
-        accountModel = getOrCreateAccountFromLocalUuidUseCase.execute()
+        try {
+            val accountModel = getOrCreateAccountFromLocalUuidUseCase.execute()
+            this.accountModel = accountModel
+        } catch (e: Throwable) {
+            showError(e)
+            return
+        }
 
         if (fromNetwork) {
-            familyListModelsFull = getAllFamilyListUseCase.execute().sortedBy { it.name.lowercase() }
+            try {
+                val familyList = getAllFamilyListUseCase.execute()
+                familyListModelsFull = familyList.sortedBy { it.name.lowercase() }
+
+            } catch (e: Throwable) {
+                showError(e)
+                return
+            }
         }
+
         familyListModels = when (tabIndex) {
-            FamilyListPageTabEnum.PRIORIZED -> familyListModelsFull.filter { it.isPrioritized }
-            FamilyListPageTabEnum.PENDING -> familyListModelsFull.filter { !it.isCompleted && !it.isPrioritized}
-            FamilyListPageTabEnum.COMPLETED -> familyListModelsFull.filter { it.isCompleted }
+            FamilyListTabType.PRIORIZED -> familyListModelsFull.filter { it.isPrioritized }
+            FamilyListTabType.PENDING -> familyListModelsFull.filter { !it.isCompleted && !it.isPrioritized}
+            FamilyListTabType.COMPLETED -> familyListModelsFull.filter { it.isCompleted }
         }
 
         familyListModelsGrouped = familyListModelsFull
@@ -73,7 +90,7 @@ class FamilyListViewModel(
         sumOfPending = familyListModelsFull.filter { !it.isCompleted && !it.isPrioritized }.sumOf { it.price * it.quantity }
         sumOfCompleted = familyListModelsGrouped.entries.sortedByDescending { it.key }.firstOrNull()?.value?.sumOf { it.price * it.quantity} ?: 0.0
 
-        loading = false
+        viewState = FamilyListViewState.Initial
     }
 
     override suspend fun add() {
@@ -95,9 +112,14 @@ class FamilyListViewModel(
             isCompleted = false
         )
         newItemName = ""
-        loading = true
-        createFamilyListUseCase.execute(item = item)
-        loadData(fromNetwork = true)
+        viewState = FamilyListViewState.Loading
+        try {
+            createFamilyListUseCase.execute(item = item)
+            loadData(fromNetwork = true)
+        } catch (e: Throwable) {
+            showError(e)
+            return
+        }
     }
 
     override suspend fun addBy(barcode: String) {
@@ -105,68 +127,80 @@ class FamilyListViewModel(
         if (barcode.isEmpty())
             return
 
-        loading = true
-        getProductByCodeUseCase.execute(code = barcode)?.let { productModel ->
-
-            if (productModel.productName.isEmpty()) {
-                loading = false
-                return
-            }
-
-            familyListModelsFull.firstOrNull {
-                it.uuid == selectedItemUuid ||
-                it.product?.code == productModel.code ||
-                it.name.compareTo(
-                    productModel.productName,
-                    ignoreCase = true
-                ) == 0
-            }?.let { itemFounded ->
-                // Check if the item is completed and to pending state
-                if (itemFounded.isCompleted) {
-                    itemFounded.isCompleted = false
+        viewState = FamilyListViewState.Loading
+        try {
+            getProductByCodeUseCase.execute(code = barcode)?.let { productModel ->
+                if (productModel.productName.isEmpty()) {
+                    viewState = FamilyListViewState.Initial
+                    return
                 }
 
-                itemFounded.isPrioritized = this.tabIndex.isPrioritized()
-                if (itemFounded.product == null) {
-                    itemFounded.name = productModel.productName
+                familyListModelsFull.firstOrNull {
+                    it.uuid == selectedItemUuid ||
+                            it.product?.code == productModel.code ||
+                            it.name.compareTo(
+                                productModel.productName,
+                                ignoreCase = true
+                            ) == 0
+                }?.let { itemFounded ->
+                    // Check if the item is completed and to pending state
+                    if (itemFounded.isCompleted) {
+                        itemFounded.isCompleted = false
+                    }
+
+                    itemFounded.isPrioritized = this.tabIndex.isPrioritized()
+                    if (itemFounded.product == null) {
+                        itemFounded.name = productModel.productName
+                    }
+                    itemFounded.product = productModel
+                    update(item = itemFounded)
+                    if (this.tabIndex.isCompleted())
+                        this.tabIndex = FamilyListTabType.PENDING
+                    loadData(fromNetwork = true)
+                    return
                 }
-                itemFounded.product = productModel
-                update(item = itemFounded)
-                if (this.tabIndex.isCompleted())
-                    this.tabIndex = FamilyListPageTabEnum.PENDING
+
+                //if the item not found, create a new one
+                val item = FamilyListModel(
+                    name = productModel.productName,
+                    quantity = quantity,
+                    isPrioritized = this.tabIndex.isPrioritized(),
+                    isCompleted = false,
+                    product = productModel
+                )
+
+                createFamilyListUseCase.execute(item = item)
                 loadData(fromNetwork = true)
-                return
             }
 
-            //if the item not found, create a new one
-            val item = FamilyListModel(
-                name = productModel.productName,
-                quantity = quantity,
-                isPrioritized = this.tabIndex.isPrioritized(),
-                isCompleted = false,
-                product = productModel
-            )
-
-            createFamilyListUseCase.execute(item = item)
-            Logger.d("FamilyListSharedViewModel", "createFamilyListUseCase executed")
-            loadData(fromNetwork = true)
-            Logger.d("FamilyListSharedViewModel", "loadData executed")
+        } catch (e: Throwable) {
+            showError(e)
+            return
         }
-        loading = false
+        viewState = FamilyListViewState.Initial
     }
 
     override fun showError(e: Throwable) {
-        //TODO: implement log in shared module
-        //e.message?.let { Log.d("showError", it) }
+        e.message?.let { Logger.d("showError", it) }
+        crashlytics.record(e)
+        viewState = FamilyListViewState.Error(
+            message = e.message ?: "Erro desconhecido",
+            retryAction = { viewModelScope.launch { loadData(fromNetwork = true) } }
+        )
     }
 
     override suspend fun remove(uuid: String){
         familyListModelsFull.firstOrNull { it.uuid ==  uuid}?.let { item ->
-            loading = true
-            deleteFamilyListUseCase.execute(uuid = item.uuid)
-            familyListModelsFull = familyListModelsFull.filter { it.uuid != uuid }
-            loadData(fromNetwork = false)
-            loading = false
+            viewState = FamilyListViewState.Loading
+            try {
+                deleteFamilyListUseCase.execute(uuid = item.uuid)
+                familyListModelsFull = familyListModelsFull.filter { it.uuid != uuid }
+                loadData(fromNetwork = false)
+                viewState = FamilyListViewState.Initial
+            } catch (e: Throwable) {
+                showError(e)
+                return
+            }
         }
     }
 
@@ -214,9 +248,14 @@ class FamilyListViewModel(
     }
 
     private suspend fun update(item: FamilyListModel){
-        loading = true
-        updateFamilyListUseCase.execute(item = item)
-        loadData(fromNetwork = false)
-        loading = false
+        viewState = FamilyListViewState.Loading
+        try {
+            updateFamilyListUseCase.execute(item = item)
+            loadData(fromNetwork = false)
+        } catch (e: Throwable) {
+            showError(e)
+            return
+        }
+        viewState = FamilyListViewState.Initial
     }
 }

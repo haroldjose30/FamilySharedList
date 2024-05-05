@@ -1,9 +1,11 @@
 import Foundation
 import SwiftUI
 import shared
+import KMPNativeCoroutinesAsync
 
 class QuickInsertListViewModel: QuickInsertListViewModelProtocol {
-    @Published var loading = false
+
+    @Published var viewState: QuickInsertListViewState = .initial
     @Published var text = "" {
         didSet {
             if text.isEmpty {
@@ -19,9 +21,14 @@ class QuickInsertListViewModel: QuickInsertListViewModelProtocol {
     var goToFamilyListPage: () -> Void = {}
 
     private let createFamilyListUseCase: CreateFamilyListUseCase
+    private let crashlytics: IFirebaseCrashlytics
 
-    init(createFamilyListUseCase: CreateFamilyListUseCase) {
+    init(
+        createFamilyListUseCase: CreateFamilyListUseCase,
+        crashlytics: IFirebaseCrashlytics
+    ) {
         self.createFamilyListUseCase = createFamilyListUseCase
+        self.crashlytics = crashlytics
     }
 
     @MainActor
@@ -44,10 +51,22 @@ class QuickInsertListViewModel: QuickInsertListViewModelProtocol {
         })
 
         text = ""
-        loading = true
-        //TODO: handle error
-        try? await createFamilyListUseCase.execute(items: listOfItem)
-        loading = false
-        goToFamilyListPage()
+        viewState = .loading
+
+        do {
+            _ = try await asyncFunction(for: createFamilyListUseCase.execute(items: listOfItem))
+            viewState = .success
+            goToFamilyListPage()
+        } catch {
+            showError(e: error)
+            return
+        }
+    }
+
+    func showError(e: Error) {
+        crashlytics.record(error: e)
+        viewState = .error(message: e.localizedDescription, retryAction: {
+            self.viewState = .initial
+        })
     }
 }

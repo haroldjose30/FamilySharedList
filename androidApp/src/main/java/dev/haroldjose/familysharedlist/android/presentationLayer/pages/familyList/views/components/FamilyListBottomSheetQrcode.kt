@@ -1,5 +1,6 @@
 package dev.haroldjose.familysharedlist.android.presentationLayer.pages.familyList.views.components
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -52,6 +53,13 @@ fun FamilyListBottomSheetQrcode(
         LaunchedEffect(key1 = "FamilyListBottomSheetOpenImage") {
             bottomSheetScaffoldState.bottomSheetState.partialExpand()
         }
+
+        BackHandler {
+            coroutineScope.launch {
+                bottomSheetScaffoldState.bottomSheetState.partialExpand()
+            }
+        }
+
         Box(
             Modifier
                 .fillMaxWidth()

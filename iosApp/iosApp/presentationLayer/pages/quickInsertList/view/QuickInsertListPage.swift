@@ -5,18 +5,16 @@ struct QuickInsertListPage<ViewModel>: View where ViewModel: QuickInsertListView
     @StateObject var viewModel: ViewModel
 
     var body: some View {
-        ZStack {
-            VStack {
-                Text(viewModel.textFieldTitle)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                TextEditorView(text: $viewModel.text, placeHolder: "Ex: 1 refrigerante \nnutela 5\n")
-
-
-            }.padding()
-
-            if viewModel.loading {
+        VStack {
+            switch viewModel.viewState {
+            case .initial:
+                QuickInsertListView()
+            case .loading:
                 ProgressView()
+            case .success:
+                Text("dados incluidos...")
+            case let .error(message, retryAction):
+                ErrorPage(message: message, retryAction: retryAction)
             }
         }
         .navigationTitle("Inclusão rápida")
@@ -38,6 +36,17 @@ struct QuickInsertListPage<ViewModel>: View where ViewModel: QuickInsertListView
                 }
             }
         }
+    }
+
+    func QuickInsertListView() -> some View {
+        VStack {
+            Text(viewModel.textFieldTitle)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            TextEditorView(text: $viewModel.text, placeHolder: "Ex: 1 refrigerante \nnutela 5\n")
+
+
+        }.padding()
     }
 }
 

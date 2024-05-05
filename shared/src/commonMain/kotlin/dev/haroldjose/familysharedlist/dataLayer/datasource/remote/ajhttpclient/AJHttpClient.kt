@@ -17,9 +17,26 @@ import kotlinx.serialization.json.Json
 
 class AJHttpClient {
 
-    //TODO: handle Error in all request
-    //TODO: implement DI
     val client = HttpClient() {
+        expectSuccess = true
+//        HttpResponseValidator {
+//            handleResponseExceptionWithRequest { exception, request ->
+//                (exception as? ClientRequestException)?.let {
+//                    val exceptionResponse = it.response
+//
+//                    throw AJHttpClientResponseGenericException(
+//                        response = exceptionResponse,
+//                        cachedResponseText = exceptionResponse.bodyAsText(),
+//                        httpFailureReason = HttpStatusCode.fromValue(exceptionResponse.status.value).description,
+//                    )
+//                }
+//
+//                throw AJHttpClientResponseUnknownException(
+//                    message = exception.message ?: "Unknown error",
+//                    cause = exception
+//                )
+//            }
+//        }
         defaultRequest {
             contentType(ContentType.Application.Json)
         }
@@ -31,8 +48,7 @@ class AJHttpClient {
         }
     }
 
-     suspend inline fun <reified T: IAJHttpResponse> send(request: IAJHttpRequest): T? {
-
+    suspend inline fun <reified T: IAJHttpResponse> send(request: IAJHttpRequest): T? {
         val httpStatement: HttpStatement = client.prepareRequest(urlString = request.urlBase+request.path) {
             method = when (request.method) {
                 AJHttpMethod.GET -> HttpMethod.Get

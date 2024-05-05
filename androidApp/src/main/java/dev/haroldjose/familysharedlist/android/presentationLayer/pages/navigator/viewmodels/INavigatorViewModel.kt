@@ -1,5 +1,9 @@
 package dev.haroldjose.familysharedlist.android.presentationLayer.pages.navigator.viewmodels
 
+import androidx.navigation.NavHostController
+
 interface INavigatorViewModel {
-    suspend fun checkIfNeedToCreateNewAccount()
+
+    var viewState: NavigatorViewState
+    suspend fun checkIfNeedToCreateNewAccount(navController: NavHostController)
 }

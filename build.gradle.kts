@@ -8,4 +8,6 @@ plugins {
     //added plugins
     alias(libs.plugins.serialization).apply(true)
     alias(libs.plugins.buildkonfig).apply(false)
+    alias(libs.plugins.gms.googleServices).apply(false)
+    alias(libs.plugins.firebase.crashlitycs).apply(false)
 }

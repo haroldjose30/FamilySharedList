@@ -8,59 +8,14 @@ struct FamilyListPage<ViewModel>: View where ViewModel: FamilyListViewModelProto
 
     var body: some View {
         ZStack {
-            VStack {
-                HStack {
-                    Button {
-                        Task { viewModel.isShowingBarcodeBottomSheet = true }
-                    } label: {
-                        Image(systemName: SystemName.qrcodeViewfinder.rawValue)
-                    }
-                    TextField("Informe o novo item", text: $viewModel.newItemName)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    Button {
-                        Task { await viewModel.add() }
-                    } label: {
-                        Image(systemName: SystemName.plusCircle.rawValue)
-                    }
-                }
-                .padding(8)
-                .background(.gray.opacity(0.05))
-                .cornerRadius(10)
-                .shadow(radius: 1)
-                .padding(.horizontal,20)
-                .padding(.top,16)
-                .sheet(isPresented: $viewModel.isShowingBarcodeBottomSheet) {
-                    BarcodeScannerPage { code in
-                        if viewModel.isShowingBarcodeBottomSheet {
-                            viewModel.isShowingBarcodeBottomSheet = false
-                            Task {
-                                await viewModel.addBy(barcode: code)
-                            }
-                        }
-                    }
-                }
-
-
-                TabView(selection: $viewModel.tabIndex) {
-
-                    FamilyListView(viewModel: viewModel, items: viewModel.familyListModels.filter({$0.isPrioritized && !$0.isCompleted}), refreshData: refreshData)
-                        .tabItem { Label("Priorizado", systemImage: SystemName.cart.rawValue) }
-                        .tag(FamilyListPageTabEnum.prioritized)
-                        .padding(.horizontal, -20)
-
-                    FamilyListView(viewModel: viewModel, items: viewModel.familyListModels.filter({!$0.isPrioritized && !$0.isCompleted}), refreshData: refreshData)
-                        .tabItem { Label("Pendente", systemImage: SystemName.listBullet.rawValue) }
-                        .tag(FamilyListPageTabEnum.pending)
-                        .padding(.horizontal, -20)
-
-                    FamilyListView(viewModel: viewModel, items: viewModel.familyListModels.filter({$0.isCompleted}), refreshData: refreshData)
-                        .tabItem { Label("Comprado", systemImage: SystemName.checkmarkCircle.rawValue) }
-                        .tag(FamilyListPageTabEnum.completed)
-                        .padding(.horizontal, -20)
-                }
+            switch viewModel.viewState {
+            case let .error(message, retryAction):
+                ErrorPage(message: message, retryAction: retryAction)
+            default:
+                FamilyListSuccessView()
             }
 
-            if viewModel.isLoading {
+            if viewModel.viewState == .loading {
                 ProgressView()
             }
         }
@@ -81,7 +36,61 @@ struct FamilyListPage<ViewModel>: View where ViewModel: FamilyListViewModelProto
         .onAppear { refreshData(true) }
     }
 
-    func refreshData(_ showLoading: Bool) {
+    private func FamilyListSuccessView() -> some View {
+        VStack {
+            HStack {
+                Button {
+                    Task { viewModel.isShowingBarcodeBottomSheet = true }
+                } label: {
+                    Image(systemName: SystemName.qrcodeViewfinder.rawValue)
+                }
+                TextField("Informe o novo item", text: $viewModel.newItemName)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Button {
+                    Task { await viewModel.add() }
+                } label: {
+                    Image(systemName: SystemName.plusCircle.rawValue)
+                }
+            }
+            .padding(8)
+            .background(.gray.opacity(0.05))
+            .cornerRadius(10)
+            .shadow(radius: 1)
+            .padding(.horizontal,20)
+            .padding(.top,16)
+            .sheet(isPresented: $viewModel.isShowingBarcodeBottomSheet) {
+                BarcodeScannerPage { code in
+                    if viewModel.isShowingBarcodeBottomSheet {
+                        viewModel.isShowingBarcodeBottomSheet = false
+                        Task {
+                            await viewModel.addBy(barcode: code)
+                        }
+                    }
+                }
+            }
+
+
+            TabView(selection: $viewModel.tabIndex) {
+
+                FamilyListView(viewModel: viewModel, items: viewModel.familyListModels.filter({$0.isPrioritized && !$0.isCompleted}), refreshData: refreshData)
+                    .tabItem { Label("Priorizado", systemImage: SystemName.cart.rawValue) }
+                    .tag(FamilyListPageTabEnum.prioritized)
+                    .padding(.horizontal, -20)
+
+                FamilyListView(viewModel: viewModel, items: viewModel.familyListModels.filter({!$0.isPrioritized && !$0.isCompleted}), refreshData: refreshData)
+                    .tabItem { Label("Pendente", systemImage: SystemName.listBullet.rawValue) }
+                    .tag(FamilyListPageTabEnum.pending)
+                    .padding(.horizontal, -20)
+
+                FamilyListView(viewModel: viewModel, items: viewModel.familyListModels.filter({$0.isCompleted}), refreshData: refreshData)
+                    .tabItem { Label("Comprado", systemImage: SystemName.checkmarkCircle.rawValue) }
+                    .tag(FamilyListPageTabEnum.completed)
+                    .padding(.horizontal, -20)
+            }
+        }
+    }
+
+    private func refreshData(_ showLoading: Bool) {
         Task {
             await viewModel.loadData(fromNetwork: true, showLoading: showLoading)
         }

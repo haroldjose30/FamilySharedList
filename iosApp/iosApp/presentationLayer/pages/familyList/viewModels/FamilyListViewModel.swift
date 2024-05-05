@@ -1,10 +1,11 @@
 import Foundation
 import shared
+import KMPNativeCoroutinesAsync
 
 class FamilyListViewModel: FamilyListViewModelProtocol {
 
+    @Published var viewState: FamilyListViewState = .initial
     @Published var familyListModels: [FamilyListModel] = []
-    @Published var isLoading: Bool = false
     @Published var isShowingBarcodeBottomSheet: Bool = false
     @Published var newItemName: String = ""
     @Published var quantity: Int = 1
@@ -26,6 +27,7 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
     private let deleteFamilyListUseCase: DeleteFamilyListUseCase
     private let getOrCreateAccountFromLocalUuidUseCase: GetOrCreateAccountFromLocalUuidUseCase
     private let getProductByCodeUseCase: GetProductByCodeUseCase
+    private let crashlytics: IFirebaseCrashlytics
 
     init(
         getAllFamilyListUseCase: GetAllFamilyListUseCase,
@@ -33,7 +35,8 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
         updateFamilyListUseCase: UpdateFamilyListUseCase,
         deleteFamilyListUseCase: DeleteFamilyListUseCase,
         getOrCreateAccountFromLocalUuidUseCase: GetOrCreateAccountFromLocalUuidUseCase,
-        getProductByCodeUseCase: GetProductByCodeUseCase
+        getProductByCodeUseCase: GetProductByCodeUseCase,
+        crashlytics: IFirebaseCrashlytics
     ) {
         self.getAllFamilyListUseCase = getAllFamilyListUseCase
         self.createFamilyListUseCase = createFamilyListUseCase
@@ -41,23 +44,36 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
         self.deleteFamilyListUseCase = deleteFamilyListUseCase
         self.getOrCreateAccountFromLocalUuidUseCase = getOrCreateAccountFromLocalUuidUseCase
         self.getProductByCodeUseCase = getProductByCodeUseCase
+        self.crashlytics = crashlytics
     }
 
     @MainActor
     func loadData(fromNetwork: Bool, showLoading: Bool) async {
-        if (showLoading) { isLoading = true }
+        if (showLoading) {
+            viewState = .loading
+        }
 
-        //TODO: handle error
-        accountModel = try? await getOrCreateAccountFromLocalUuidUseCase.execute()
+        do {
+            accountModel = try await asyncFunction(for: getOrCreateAccountFromLocalUuidUseCase.execute())
+        } catch {
+            showError(e: error)
+            return
+        }
+
 
         if fromNetwork {
-            //TODO: handle error
-            if let result = try? await getAllFamilyListUseCase.execute() {
+            do {
+                let result = try await asyncFunction(for: getAllFamilyListUseCase.execute())
                 familyListModels = result.sorted { $0.name.lowercased() < $1.name.lowercased() }
+            } catch {
+                showError(e: error)
+                return
             }
         }
 
-        if (showLoading) { isLoading = false }
+        if (showLoading) {
+            viewState = .success
+        }
     }
 
     @MainActor
@@ -80,9 +96,14 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
             quantity: quantity.toInt32()
         )
         newItemName = ""
-        isLoading = true
-        //TODO: handle error
-        try? await createFamilyListUseCase.execute(item: item)
+        viewState = .loading
+        do {
+            _ = try await asyncFunction(for: createFamilyListUseCase.execute(item: item))
+        } catch {
+            showError(e: error)
+            return
+        }
+
         await loadData(fromNetwork: true, showLoading: true)
     }
 
@@ -94,59 +115,67 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
         }
 
         isAddByBusy = true
-        isLoading = true
+        viewState = .loading
         defer {
             isAddByBusy = false
-            isLoading = false
         }
 
-        //TODO: handle error
-        guard let productModelFounded = try? await getProductByCodeUseCase.execute(code: barcode) else {
-            return
-        }
 
-        if let index = familyListModels.firstIndex(where: {
-            $0.product?.code.caseInsensitiveCompare(productModelFounded.code) == .orderedSame ||
-            $0.name.caseInsensitiveCompare(productModelFounded.productName) == .orderedSame
-        }) {
-            if familyListModels[index].isCompleted {
-                familyListModels[index].isCompleted = false
+        do {
+            guard let productModelFounded = try await asyncFunction(for: getProductByCodeUseCase.execute(code: barcode)) else {
+                return
+            }
+
+            if let index = familyListModels.firstIndex(where: {
+                $0.product?.code.caseInsensitiveCompare(productModelFounded.code) == .orderedSame ||
+                $0.name.caseInsensitiveCompare(productModelFounded.productName) == .orderedSame
+            }) {
+                if familyListModels[index].isCompleted {
+                    familyListModels[index].isCompleted = false
+                } else {
+                    //TODO: fix view not updated when quantity is changed
+                    familyListModels[index].quantity += 1
+                }
+
+                familyListModels[index].isPrioritized = tabIndex.isPrioritized()
+                familyListModels[index].product = productModelFounded
+                await update(item: familyListModels[index])
+                if tabIndex.isCompleted() {
+                    tabIndex = .pending
+                }
+                viewState = .success
             } else {
-                //TODO: fix view not updated when quantity is changed
-                familyListModels[index].quantity += 1
-            }
+                let item = FamilyListModel(
+                    name: productModelFounded.productName,
+                    isCompleted: false,
+                    isPrioritized: tabIndex.isPrioritized(),
+                    quantity: quantity.toInt32(),
+                    price: 0,
+                    product: productModelFounded
+                )
 
-            familyListModels[index].isPrioritized = tabIndex.isPrioritized()
-            familyListModels[index].product = productModelFounded
-            await update(item: familyListModels[index])
-            if tabIndex.isCompleted() {
-                tabIndex = .pending
+                _ = try await asyncFunction(for: createFamilyListUseCase.execute(item: item))
+                await loadData(fromNetwork: true, showLoading: true)
             }
-
-        } else {
-            let item = FamilyListModel(
-                name: productModelFounded.productName,
-                isCompleted: false, 
-                isPrioritized: tabIndex.isPrioritized(),
-                quantity: quantity.toInt32(),
-                price: 0,
-                product: productModelFounded
-            )
-            //TODO: handle error
-            try? await createFamilyListUseCase.execute(item: item)
-            await loadData(fromNetwork: true, showLoading: true)
+        } catch {
+            showError(e: error)
+            return
         }
     }
 
     @MainActor
     func remove(uuid: String) async {
         if let index = familyListModels.firstIndex(where: { $0.uuid == uuid }) {
-            isLoading = true
-            //TODO: handle error
-            try? await deleteFamilyListUseCase.execute(uuid: uuid)
-            familyListModels.remove(at: index)
-            await loadData(fromNetwork: false, showLoading: false)
-            isLoading = false
+            viewState = .loading
+            do {
+                _ = try await asyncFunction(for: deleteFamilyListUseCase.execute(uuid: uuid))
+                familyListModels.remove(at: index)
+                await loadData(fromNetwork: false, showLoading: false)
+            } catch {
+                showError(e: error)
+                return
+            }
+            viewState = .success
         }
     }
 
@@ -188,12 +217,22 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
     }
 
     func showError(e: Error) {
-        //TODO: Handle error
+        crashlytics.record(error: e)
+        viewState = .error(message: e.localizedDescription, retryAction: {
+            Task {
+                await self.loadData(fromNetwork: true, showLoading: true)
+            }
+        })
     }
 
     @MainActor
     private func update(item: FamilyListModel) async {
-        try? await updateFamilyListUseCase.execute(item: item)
+        do {
+            _ = try await asyncFunction(for: updateFamilyListUseCase.execute(item: item))
+        } catch {
+            showError(e: error)
+            return
+        }
     }
 }
 

@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
 
     alias(libs.plugins.serialization)
+    alias(libs.plugins.gms.googleServices)
+    alias(libs.plugins.firebase.crashlitycs)
 }
 
 android {
@@ -12,8 +14,8 @@ android {
         applicationId = "dev.haroldjose.familysharedlist.android"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 3
+        versionName = "1.3"
     }
     buildFeatures {
         compose = true
@@ -64,5 +66,7 @@ dependencies {
 
     implementation(libs.kotlinx.datetime)
 
-
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.analytics)
 }

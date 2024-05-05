@@ -2,8 +2,8 @@ import Foundation
 import shared
 
 protocol FamilyListViewModelProtocol: ObservableObject {
+    var viewState: FamilyListViewState { get set }
     var familyListModels: [FamilyListModel] { get set }
-    var isLoading: Bool { get set }
     var isShowingBarcodeBottomSheet: Bool { get set }
     var newItemName: String { get set }
     var quantity: Int { get set }

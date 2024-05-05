@@ -9,6 +9,7 @@ extension FamilyListModel: Identifiable {
     convenience init(
         name: String,
         isCompleted: Bool = false,
+        isCompletedDate: Kotlinx_datetimeLocalDateTime? = nil,
         isPrioritized: Bool = false,
         quantity: Int32 = 1,
         price: Double = 0,
@@ -17,7 +18,8 @@ extension FamilyListModel: Identifiable {
         self.init(
             uuid: "",
             name: name,
-            isCompleted: isCompleted,
+            isCompleted: isCompleted, 
+            isCompletedDate: isCompletedDate,
             isPrioritized: isPrioritized,
             quantity: quantity,
             price: price,

@@ -7,28 +7,25 @@ struct SettingsPage<ViewModel>: View where ViewModel: SettingsViewModelProtocol 
 
     var body: some View {
         VStack(spacing: 16) {
-            if viewModel.isLoading {
+
+            switch  viewModel.viewState {
+            case let .initial(accountShortCodeForShareTitle, accountsSharedWithMeTitle, accountsSharedWithMeSubtitle):
+                SettingsView(
+                    accountShortCodeForShareTitle: accountShortCodeForShareTitle,
+                    accountsSharedWithMeTitle: accountsSharedWithMeTitle,
+                    accountsSharedWithMeSubtitle: accountsSharedWithMeSubtitle
+                )
+            case .loading:
                 ProgressView()
+            case let .success(accountShortCodeForShareTitle, accountsSharedWithMeTitle, accountsSharedWithMeSubtitle):
+                SettingsView(
+                    accountShortCodeForShareTitle: accountShortCodeForShareTitle,
+                    accountsSharedWithMeTitle: accountsSharedWithMeTitle,
+                    accountsSharedWithMeSubtitle: accountsSharedWithMeSubtitle
+                )
+            case let .error(message, retryAction):
+                ErrorPage(message: message, retryAction: retryAction)
             }
-            SettingsItemWithTitleAndSubtitleView(
-                title: "Meu código de compartilhamento",
-                subtitle: viewModel.accountShortCodeForShareTitle
-            ) {
-                viewModel.shareMyCode()
-            }
-
-            SettingsItemWithInputTextView(
-                title: viewModel.accountsSharedWithMeTitle,
-                subtitle: viewModel.accountsSharedWithMeSubtitle
-            ) { code in
-                Task { await viewModel.accessSharedAccountWithCode(code: code) }
-            }
-
-            SettingsItemWithTitleView(title: "Sobre este app") {
-                viewModel.openAppHomePage()
-            }
-
-            Spacer()
         }
         .padding()
         .navigationTitle("Settings")
@@ -46,6 +43,34 @@ struct SettingsPage<ViewModel>: View where ViewModel: SettingsViewModelProtocol 
             Task { await viewModel.getAccount()}
         }
 
+    }
+
+    private func SettingsView(
+        accountShortCodeForShareTitle: String,
+        accountsSharedWithMeTitle: String,
+        accountsSharedWithMeSubtitle: String
+    ) -> some View {
+        VStack(spacing: 16) {
+            SettingsItemWithTitleAndSubtitleView(
+                title: "Meu código de compartilhamento",
+                subtitle: accountShortCodeForShareTitle
+            ) {
+                viewModel.shareMyCode()
+            }
+
+            SettingsItemWithInputTextView(
+                title: accountsSharedWithMeTitle,
+                subtitle: accountsSharedWithMeSubtitle
+            ) { code in
+                Task { await viewModel.accessSharedAccountWithCode(code: code) }
+            }
+
+            SettingsItemWithTitleView(title: "Sobre este app") {
+                viewModel.openAppHomePage()
+            }
+
+            Spacer()
+        }
     }
 }
 

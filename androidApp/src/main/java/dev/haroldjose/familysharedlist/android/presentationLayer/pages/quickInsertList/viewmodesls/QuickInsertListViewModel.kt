@@ -4,13 +4,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import dev.haroldjose.familysharedlist.Logger
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.CreateFamilyListUseCase
+import dev.haroldjose.familysharedlist.services.firebase.IFirebaseCrashlytics
 
 class QuickInsertListViewModel(
-    private val createFamilyListUseCase: CreateFamilyListUseCase
+    private val createFamilyListUseCase: CreateFamilyListUseCase,
+    private val crashlytics: IFirebaseCrashlytics,
 ): ViewModel(), IQuickInsertListViewModel {
-    override var loading:Boolean by mutableStateOf(false)
+    override var viewState: QuickInsertListViewState = QuickInsertListViewState.Initial
     override var text:String by mutableStateOf("")
     override var goToFamilyListPage: () -> Unit = {}
     override suspend fun quickInsertItem() {
@@ -34,9 +37,23 @@ class QuickInsertListViewModel(
             )
         }
         text = ""
-        loading = true
-        createFamilyListUseCase.execute(items = listOfItem)
-        loading = false
-        goToFamilyListPage()
+        viewState = QuickInsertListViewState.Loading
+        try {
+            createFamilyListUseCase.execute(items = listOfItem)
+            goToFamilyListPage()
+            QuickInsertListViewState.Success
+        } catch (e: Throwable) {
+            showError(e)
+            return
+        }
+    }
+
+    private fun showError(e: Throwable) {
+        e.message?.let { Logger.d("showError", it) }
+        crashlytics.record(e)
+        viewState = QuickInsertListViewState.Error(
+            message = e.message ?: "Erro inesperado",
+            retryAction = { viewState = QuickInsertListViewState.Initial }
+        )
     }
 }

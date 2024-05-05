@@ -11,3 +11,5 @@ xcuserdata
 iosApp/iosApp.xcworkspace/*
 iosApp/iosApp.xcodeproj/*
 !iosApp/iosApp.xcodeproj/project.pbxproj
+google-services.json
+GoogleService-Info.plist
