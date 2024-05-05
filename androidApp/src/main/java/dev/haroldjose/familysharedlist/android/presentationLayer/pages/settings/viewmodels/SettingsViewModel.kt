@@ -15,12 +15,14 @@ import dev.haroldjose.familysharedlist.domainLayer.usecases.account.GetAccountUs
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.GetLocalAccountUuidUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.SetSharedAccountByCodeUseCase
 import dev.haroldjose.familysharedlist.getPlatform
+import dev.haroldjose.familysharedlist.services.firebase.IFirebaseCrashlytics
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(
     private val getAccountUseCase: GetAccountUseCase,
     private val getLocalAccountUuidUseCase: GetLocalAccountUuidUseCase,
-    private val setSharedAccountByCodeUseCase: SetSharedAccountByCodeUseCase
+    private val setSharedAccountByCodeUseCase: SetSharedAccountByCodeUseCase,
+    private val crashlytics: IFirebaseCrashlytics,
 ): ViewModel(), ISettingsViewModel {
 
     private val constAccountsSharedWithMeTitle = "Acessar conta compartilhada"
@@ -66,6 +68,7 @@ class SettingsViewModel(
 
     private fun showError(e: Throwable) {
         e.message?.let { Logger.d("showError", it) }
+        crashlytics.record(e)
         viewState = SettingsViewState.Error(
             message = "Erro ao acessar a conta",
             retryAction = {

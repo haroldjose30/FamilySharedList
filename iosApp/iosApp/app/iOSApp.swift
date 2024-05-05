@@ -12,7 +12,7 @@ struct iOSApp: App {
     var body: some Scene {
 
         WindowGroup {
-            NavigatorView(viewModel: ResolverApp().resolve())
+            NavigatorPage(viewModel: ResolverApp().resolve())
         }.onChange(of: scenePhase) { phase in
 
             switch phase {

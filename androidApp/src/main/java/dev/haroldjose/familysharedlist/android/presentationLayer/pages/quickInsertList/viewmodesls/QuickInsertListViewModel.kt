@@ -7,9 +7,11 @@ import androidx.lifecycle.ViewModel
 import dev.haroldjose.familysharedlist.Logger
 import dev.haroldjose.familysharedlist.domainLayer.models.FamilyListModel
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.CreateFamilyListUseCase
+import dev.haroldjose.familysharedlist.services.firebase.IFirebaseCrashlytics
 
 class QuickInsertListViewModel(
-    private val createFamilyListUseCase: CreateFamilyListUseCase
+    private val createFamilyListUseCase: CreateFamilyListUseCase,
+    private val crashlytics: IFirebaseCrashlytics,
 ): ViewModel(), IQuickInsertListViewModel {
     override var viewState: QuickInsertListViewState = QuickInsertListViewState.Initial
     override var text:String by mutableStateOf("")
@@ -48,6 +50,7 @@ class QuickInsertListViewModel(
 
     private fun showError(e: Throwable) {
         e.message?.let { Logger.d("showError", it) }
+        crashlytics.record(e)
         viewState = QuickInsertListViewState.Error(
             message = e.message ?: "Erro inesperado",
             retryAction = { viewState = QuickInsertListViewState.Initial }

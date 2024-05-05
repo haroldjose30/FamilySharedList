@@ -9,7 +9,7 @@ struct SettingsPage<ViewModel>: View where ViewModel: SettingsViewModelProtocol 
         VStack(spacing: 16) {
 
             switch  viewModel.viewState {
-            case let .Initial(accountShortCodeForShareTitle, accountsSharedWithMeTitle, accountsSharedWithMeSubtitle):
+            case let .initial(accountShortCodeForShareTitle, accountsSharedWithMeTitle, accountsSharedWithMeSubtitle):
                 SettingsView(
                     accountShortCodeForShareTitle: accountShortCodeForShareTitle,
                     accountsSharedWithMeTitle: accountsSharedWithMeTitle,
@@ -17,14 +17,14 @@ struct SettingsPage<ViewModel>: View where ViewModel: SettingsViewModelProtocol 
                 )
             case .loading:
                 ProgressView()
-            case let .Success(accountShortCodeForShareTitle, accountsSharedWithMeTitle, accountsSharedWithMeSubtitle):
+            case let .success(accountShortCodeForShareTitle, accountsSharedWithMeTitle, accountsSharedWithMeSubtitle):
                 SettingsView(
                     accountShortCodeForShareTitle: accountShortCodeForShareTitle,
                     accountsSharedWithMeTitle: accountsSharedWithMeTitle,
                     accountsSharedWithMeSubtitle: accountsSharedWithMeSubtitle
                 )
-            case let .Error(message, retryAction):
-                Text(message)
+            case let .error(message, retryAction):
+                ErrorPage(message: message, retryAction: retryAction)
             }
         }
         .padding()

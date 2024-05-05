@@ -4,7 +4,7 @@ import KMPNativeCoroutinesAsync
 
 class SettingsViewModel: SettingsViewModelProtocol {
 
-    @Published var viewState: SettingsViewState = .Initial(
+    @Published var viewState: SettingsViewState = .initial(
         accountShortCodeForShareTitle: "carregando...",
         accountsSharedWithMeTitle: "Acessar conta compartilhada",
         accountsSharedWithMeSubtitle: "Obs: atualmente limitada apenas a 1 conta"
@@ -16,13 +16,18 @@ class SettingsViewModel: SettingsViewModelProtocol {
     private let getAccountUseCase: GetAccountUseCase
     private let getLocalAccountUuidUseCase: GetLocalAccountUuidUseCase
     private let setSharedAccountByCodeUseCase: SetSharedAccountByCodeUseCase
+    private let crashlytics: IFirebaseCrashlytics
 
-    init(getAccountUseCase: GetAccountUseCase,
-         getLocalAccountUuidUseCase: GetLocalAccountUuidUseCase,
-         setSharedAccountByCodeUseCase: SetSharedAccountByCodeUseCase) {
+    init(
+        getAccountUseCase: GetAccountUseCase,
+        getLocalAccountUuidUseCase: GetLocalAccountUuidUseCase,
+        setSharedAccountByCodeUseCase: SetSharedAccountByCodeUseCase,
+        crashlytics: IFirebaseCrashlytics
+    ) {
         self.getAccountUseCase = getAccountUseCase
         self.getLocalAccountUuidUseCase = getLocalAccountUuidUseCase
         self.setSharedAccountByCodeUseCase = setSharedAccountByCodeUseCase
+        self.crashlytics = crashlytics
     }
 
     @MainActor
@@ -47,7 +52,7 @@ class SettingsViewModel: SettingsViewModelProtocol {
             accountsSharedWithMeSubtitle = sharedAccount
         }
 
-        viewState = .Success(
+        viewState = .success(
             accountShortCodeForShareTitle: accountShortCodeForShareTitle,
             accountsSharedWithMeTitle: accountsSharedWithMeTitle,
             accountsSharedWithMeSubtitle: accountsSharedWithMeSubtitle
@@ -80,8 +85,8 @@ class SettingsViewModel: SettingsViewModelProtocol {
     }
 
     func showError(e: Error) {
-
-        viewState = .Error(message: e.localizedDescription, retryAction: {
+        crashlytics.record(error: e)
+        viewState = .error(message: e.localizedDescription, retryAction: {
             Task {
                 await self.getAccount()
             }

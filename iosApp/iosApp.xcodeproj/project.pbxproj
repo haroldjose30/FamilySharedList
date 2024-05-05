@@ -26,6 +26,11 @@
 		524EADD92BC1FCDA00CE1725 /* FamilyListEmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524EADD82BC1FCDA00CE1725 /* FamilyListEmptyState.swift */; };
 		524EADDB2BC1FE9300CE1725 /* FamilyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524EADDA2BC1FE9300CE1725 /* FamilyListView.swift */; };
 		527225992BE024D800762C21 /* KoinHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527225982BE024D800762C21 /* KoinHelpers.swift */; };
+		527A6A0C2BE5BB51000C565D /* ErrorPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527A6A0B2BE5BB51000C565D /* ErrorPage.swift */; };
+		527A6A0E2BE5BD4E000C565D /* QuickInsertListViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527A6A0D2BE5BD4E000C565D /* QuickInsertListViewState.swift */; };
+		527A6A102BE5C0EE000C565D /* NavigatorViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527A6A0F2BE5C0EE000C565D /* NavigatorViewState.swift */; };
+		527A6A122BE5C3C7000C565D /* FamilyListViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527A6A112BE5C3C7000C565D /* FamilyListViewState.swift */; };
+		527A6A142BE6DC0F000C565D /* FirebaseCrashlytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527A6A132BE6DC0F000C565D /* FirebaseCrashlytics.swift */; };
 		52B326972BDD689A00D12B05 /* FirebaseAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B326962BDD689A00D12B05 /* FirebaseAnalytics.swift */; };
 		52B326992BDD736A00D12B05 /* nativeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B326982BDD736A00D12B05 /* nativeModule.swift */; };
 		52BD908C2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD908B2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift */; };
@@ -56,7 +61,7 @@
 		52FD81AE2BBDD72600D6FEE3 /* FamilyListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD819D2BBDD72500D6FEE3 /* FamilyListModel.swift */; };
 		52FD81AF2BBDD72600D6FEE3 /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD819F2BBDD72500D6FEE3 /* iOSApp.swift */; };
 		52FD81B02BBDD72600D6FEE3 /* iOSApp+configureIsRunningUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD81A02BBDD72500D6FEE3 /* iOSApp+configureIsRunningUITests.swift */; };
-		52FD81B12BBDD72600D6FEE3 /* NavigatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD81A12BBDD72500D6FEE3 /* NavigatorView.swift */; };
+		52FD81B12BBDD72600D6FEE3 /* NavigatorPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD81A12BBDD72500D6FEE3 /* NavigatorPage.swift */; };
 		52FD81B52BBDDA9E00D6FEE3 /* QuantitySelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD81B42BBDDA9E00D6FEE3 /* QuantitySelectionView.swift */; };
 		52FD81B82BBDE1B100D6FEE3 /* QuickInsertListPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD81B72BBDE1B100D6FEE3 /* QuickInsertListPage.swift */; };
 		52FD81BA2BBDE23F00D6FEE3 /* QuickInsertListViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FD81B92BBDE23F00D6FEE3 /* QuickInsertListViewModelProtocol.swift */; };
@@ -91,6 +96,11 @@
 		524EADD82BC1FCDA00CE1725 /* FamilyListEmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListEmptyState.swift; sourceTree = "<group>"; };
 		524EADDA2BC1FE9300CE1725 /* FamilyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListView.swift; sourceTree = "<group>"; };
 		527225982BE024D800762C21 /* KoinHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KoinHelpers.swift; sourceTree = "<group>"; };
+		527A6A0B2BE5BB51000C565D /* ErrorPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPage.swift; sourceTree = "<group>"; };
+		527A6A0D2BE5BD4E000C565D /* QuickInsertListViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickInsertListViewState.swift; sourceTree = "<group>"; };
+		527A6A0F2BE5C0EE000C565D /* NavigatorViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorViewState.swift; sourceTree = "<group>"; };
+		527A6A112BE5C3C7000C565D /* FamilyListViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListViewState.swift; sourceTree = "<group>"; };
+		527A6A132BE6DC0F000C565D /* FirebaseCrashlytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCrashlytics.swift; sourceTree = "<group>"; };
 		52B326962BDD689A00D12B05 /* FirebaseAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalytics.swift; sourceTree = "<group>"; };
 		52B326982BDD736A00D12B05 /* nativeModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nativeModule.swift; sourceTree = "<group>"; };
 		52BD908B2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListPageTabEnum.swift; sourceTree = "<group>"; };
@@ -121,7 +131,7 @@
 		52FD819D2BBDD72500D6FEE3 /* FamilyListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FamilyListModel.swift; sourceTree = "<group>"; };
 		52FD819F2BBDD72500D6FEE3 /* iOSApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		52FD81A02BBDD72500D6FEE3 /* iOSApp+configureIsRunningUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "iOSApp+configureIsRunningUITests.swift"; sourceTree = "<group>"; };
-		52FD81A12BBDD72500D6FEE3 /* NavigatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigatorView.swift; sourceTree = "<group>"; };
+		52FD81A12BBDD72500D6FEE3 /* NavigatorPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigatorPage.swift; sourceTree = "<group>"; };
 		52FD81B42BBDDA9E00D6FEE3 /* QuantitySelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantitySelectionView.swift; sourceTree = "<group>"; };
 		52FD81B72BBDE1B100D6FEE3 /* QuickInsertListPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickInsertListPage.swift; sourceTree = "<group>"; };
 		52FD81B92BBDE23F00D6FEE3 /* QuickInsertListViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickInsertListViewModelProtocol.swift; sourceTree = "<group>"; };
@@ -225,10 +235,19 @@
 			path = view;
 			sourceTree = "<group>";
 		};
+		527A6A0A2BE5BB43000C565D /* error */ = {
+			isa = PBXGroup;
+			children = (
+				527A6A0B2BE5BB51000C565D /* ErrorPage.swift */,
+			);
+			path = error;
+			sourceTree = "<group>";
+		};
 		52B326952BDD688900D12B05 /* services */ = {
 			isa = PBXGroup;
 			children = (
 				52B326962BDD689A00D12B05 /* FirebaseAnalytics.swift */,
+				527A6A132BE6DC0F000C565D /* FirebaseCrashlytics.swift */,
 			);
 			path = services;
 			sourceTree = "<group>";
@@ -239,6 +258,7 @@
 				52BD90922BC0B8BD00C88B84 /* FamilyListViewModel.swift */,
 				52BD908D2BC0B72000C88B84 /* FamilyListViewModelProtocol.swift */,
 				52BD908F2BC0B80600C88B84 /* FamilyListViewModelMocked.swift */,
+				527A6A112BE5C3C7000C565D /* FamilyListViewState.swift */,
 			);
 			path = viewModels;
 			sourceTree = "<group>";
@@ -249,6 +269,7 @@
 				52FD81BD2BBDE5D100D6FEE3 /* QuickInsertListViewModel.swift */,
 				52FD81BB2BBDE28200D6FEE3 /* QuickInsertListViewModelMocked.swift */,
 				52FD81B92BBDE23F00D6FEE3 /* QuickInsertListViewModelProtocol.swift */,
+				527A6A0D2BE5BD4E000C565D /* QuickInsertListViewState.swift */,
 			);
 			path = viewModels;
 			sourceTree = "<group>";
@@ -267,6 +288,7 @@
 				52DE60902BBF1DC800C12669 /* NavigatorViewModel.swift */,
 				52DE60942BBF1EEB00C12669 /* NavigatorViewModelMock.swift */,
 				52DE60922BBF1EB700C12669 /* NavigatorViewModelProtocol.swift */,
+				527A6A0F2BE5C0EE000C565D /* NavigatorViewState.swift */,
 			);
 			path = viewModels;
 			sourceTree = "<group>";
@@ -274,7 +296,7 @@
 		52BD90982BC0B93700C88B84 /* views */ = {
 			isa = PBXGroup;
 			children = (
-				52FD81A12BBDD72500D6FEE3 /* NavigatorView.swift */,
+				52FD81A12BBDD72500D6FEE3 /* NavigatorPage.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -350,6 +372,7 @@
 		52FD818D2BBDD72500D6FEE3 /* pages */ = {
 			isa = PBXGroup;
 			children = (
+				527A6A0A2BE5BB43000C565D /* error */,
 				52FD81912BBDD72500D6FEE3 /* barcodeScanner */,
 				52FD81932BBDD72500D6FEE3 /* familyList */,
 				52FD81BF2BBDF43600D6FEE3 /* navigator */,
@@ -650,9 +673,12 @@
 			files = (
 				52FD81A42BBDD72500D6FEE3 /* ResolverPreview.swift in Sources */,
 				52FD81AA2BBDD72600D6FEE3 /* FamilyListPage.swift in Sources */,
+				527A6A122BE5C3C7000C565D /* FamilyListViewState.swift in Sources */,
 				52FD81AF2BBDD72600D6FEE3 /* iOSApp.swift in Sources */,
 				52BD908C2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift in Sources */,
 				52FD81B02BBDD72600D6FEE3 /* iOSApp+configureIsRunningUITests.swift in Sources */,
+				527A6A142BE6DC0F000C565D /* FirebaseCrashlytics.swift in Sources */,
+				527A6A0C2BE5BB51000C565D /* ErrorPage.swift in Sources */,
 				524EADDB2BC1FE9300CE1725 /* FamilyListView.swift in Sources */,
 				52FD81BC2BBDE28200D6FEE3 /* QuickInsertListViewModelMocked.swift in Sources */,
 				52FD81A92BBDD72600D6FEE3 /* BarcodeScannerPage.swift in Sources */,
@@ -673,7 +699,7 @@
 				52385F372BC1C7E4009E46F4 /* AppConstants.swift in Sources */,
 				52FD81A72BBDD72500D6FEE3 /* SettingsPage.swift in Sources */,
 				527225992BE024D800762C21 /* KoinHelpers.swift in Sources */,
-				52FD81B12BBDD72600D6FEE3 /* NavigatorView.swift in Sources */,
+				52FD81B12BBDD72600D6FEE3 /* NavigatorPage.swift in Sources */,
 				52B326972BDD689A00D12B05 /* FirebaseAnalytics.swift in Sources */,
 				52DE60A52BBF553600C12669 /* SettingsViewModel.swift in Sources */,
 				52DE60992BBF242400C12669 /* SettingsViewModelMocked.swift in Sources */,
@@ -682,9 +708,11 @@
 				52BD90902BC0B80600C88B84 /* FamilyListViewModelMocked.swift in Sources */,
 				524EADD92BC1FCDA00CE1725 /* FamilyListEmptyState.swift in Sources */,
 				52FD81A22BBDD72500D6FEE3 /* ResolverApp.swift in Sources */,
+				527A6A0E2BE5BD4E000C565D /* QuickInsertListViewState.swift in Sources */,
 				523509F92BD3273100BC2F51 /* AppDelegate.swift in Sources */,
 				52CBE6EC2BE3DC6C00B40828 /* SettingsViewState.swift in Sources */,
 				52BD908E2BC0B72000C88B84 /* FamilyListViewModelProtocol.swift in Sources */,
+				527A6A102BE5C0EE000C565D /* NavigatorViewState.swift in Sources */,
 				52DE60912BBF1DC800C12669 /* NavigatorViewModel.swift in Sources */,
 				52FD81BE2BBDE5D100D6FEE3 /* QuickInsertListViewModel.swift in Sources */,
 				52BD90932BC0B8BD00C88B84 /* FamilyListViewModel.swift in Sources */,

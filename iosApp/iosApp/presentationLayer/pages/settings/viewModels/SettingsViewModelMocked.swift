@@ -10,7 +10,7 @@ class SettingsViewModelMocked: SettingsViewModelProtocol {
 //    )
 
     //@Published var viewState: SettingsViewState = .loading
-    @Published var viewState: SettingsViewState = .Error(message: "Error", retryAction: {})
+    @Published var viewState: SettingsViewState = .error(message: "Error", retryAction: {})
 
     @Published var myAccount: AccountModel? = nil
 

@@ -7,9 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.navigator.views.NavigatorRouter
 import dev.haroldjose.familysharedlist.domainLayer.usecases.account.GetOrCreateAccountFromLocalUuidUseCase
+import dev.haroldjose.familysharedlist.services.firebase.IFirebaseCrashlytics
 
 class NavigatorViewModel(
     private val getOrCreateAccountFromLocalUuidUseCase: GetOrCreateAccountFromLocalUuidUseCase,
+    private val crashlytics: IFirebaseCrashlytics,
 ): ViewModel(), INavigatorViewModel {
     override var viewState: NavigatorViewState by mutableStateOf(NavigatorViewState.Initial)
 
@@ -20,6 +22,7 @@ class NavigatorViewModel(
             viewState = NavigatorViewState.Success
             navController.navigate(NavigatorRouter.FAMILY_LIST.value)
         } catch (e: Throwable) {
+            crashlytics.record(e)
             viewState = NavigatorViewState.Error(e.message ?: "Ocorreu um erro inesperado. Tente novamente.")
             return
         }

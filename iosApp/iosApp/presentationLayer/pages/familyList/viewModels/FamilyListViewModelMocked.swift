@@ -2,6 +2,8 @@ import Foundation
 import shared
 
 class FamilyListViewModelMocked: FamilyListViewModelProtocol {
+    var viewState: FamilyListViewState = .success
+
     var familyListModels: [FamilyListModel] = [
         FamilyListModel(uuid: "", name: "Item 01", isCompleted: false, isCompletedDate: nil, isPrioritized: false, quantity: 1, price: 0, product: nil),
         FamilyListModel(uuid: "", name: "Item 02", isCompleted: false, isCompletedDate: nil, isPrioritized: false, quantity: 2, price: 0, product: nil),
@@ -17,7 +19,6 @@ class FamilyListViewModelMocked: FamilyListViewModelProtocol {
         FamilyListModel(uuid: "", name: "Item 12", isCompleted: false, isCompletedDate: nil, isPrioritized: false, quantity: 12, price: 0, product: nil),
     ]
 
-    var isLoading: Bool = false
     var isShowingBarcodeBottomSheet: Bool = false
     var newItemName: String = ""
     var quantity: Int = 1

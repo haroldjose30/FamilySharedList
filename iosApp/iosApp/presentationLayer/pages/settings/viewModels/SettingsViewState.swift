@@ -1,6 +1,6 @@
 enum SettingsViewState {
 
-    case Initial(
+    case initial(
         accountShortCodeForShareTitle: String,
         accountsSharedWithMeTitle: String,
         accountsSharedWithMeSubtitle: String
@@ -8,13 +8,13 @@ enum SettingsViewState {
 
     case loading
 
-    case Success(
+    case success(
         accountShortCodeForShareTitle: String,
         accountsSharedWithMeTitle: String,
         accountsSharedWithMeSubtitle: String
     )
     
-    case Error(
+    case error(
         message: String,
         retryAction: (() -> Void)?
     )

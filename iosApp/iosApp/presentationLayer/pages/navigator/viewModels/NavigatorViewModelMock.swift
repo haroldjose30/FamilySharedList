@@ -9,7 +9,7 @@
 import Foundation
 
 class NavigatorViewModelMock: NavigatorViewModelProtocol {
-    func checkIfNeedToCreateNewAccount() async {
-        // Do nothing in mock implementation
-    }
+    var viewState: NavigatorViewState = .loading
+    func checkIfNeedToCreateNewAccount() async {}
+    func showError(e: Error) {}
 }

@@ -10,13 +10,15 @@ extension ResolverAppProtocol {
 
     func resolve() -> NavigatorViewModel {
         NavigatorViewModel(
-            getOrCreateAccountFromLocalUuidUseCase: koinInject()
+            getOrCreateAccountFromLocalUuidUseCase: koinInject(), 
+            crashlytics: koinInject()
         )
     }
 
     func resolve() -> QuickInsertListViewModel {
         QuickInsertListViewModel(
-            createFamilyListUseCase: koinInject()
+            createFamilyListUseCase: koinInject(),
+            crashlytics: koinInject()
         )
     }
 
@@ -24,7 +26,8 @@ extension ResolverAppProtocol {
         SettingsViewModel(
             getAccountUseCase: koinInject(),
             getLocalAccountUuidUseCase: koinInject(),
-            setSharedAccountByCodeUseCase: koinInject()
+            setSharedAccountByCodeUseCase: koinInject(),
+            crashlytics: koinInject()
         )
     }
 
@@ -35,7 +38,8 @@ extension ResolverAppProtocol {
             updateFamilyListUseCase: koinInject(),
             deleteFamilyListUseCase: koinInject(),
             getOrCreateAccountFromLocalUuidUseCase: koinInject(),
-            getProductByCodeUseCase: koinInject()
+            getProductByCodeUseCase: koinInject(),
+            crashlytics: koinInject()
         )
     }
 }

@@ -16,6 +16,7 @@ import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.DeleteFam
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.GetAllFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.familyList.UpdateFamilyListUseCase
 import dev.haroldjose.familysharedlist.domainLayer.usecases.product.GetProductByCodeUseCase
+import dev.haroldjose.familysharedlist.services.firebase.IFirebaseCrashlytics
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDate
@@ -28,8 +29,10 @@ class FamilyListViewModel(
     private val updateFamilyListUseCase: UpdateFamilyListUseCase,
     private val deleteFamilyListUseCase: DeleteFamilyListUseCase,
     private val getOrCreateAccountFromLocalUuidUseCase: GetOrCreateAccountFromLocalUuidUseCase,
-    private val getProductByCodeUseCase: GetProductByCodeUseCase
+    private val getProductByCodeUseCase: GetProductByCodeUseCase,
+    private val crashlytics: IFirebaseCrashlytics,
 ): ViewModel(), IFamilyListViewModel {
+
     override var viewState: FamilyListViewState by mutableStateOf(FamilyListViewState.Initial)
     override var familyListModelsGrouped: Map<LocalDate, List<FamilyListModel>> by mutableStateOf(mapOf())
     override var familyListModels: List<FamilyListModel> by mutableStateOf(arrayListOf())
@@ -179,6 +182,7 @@ class FamilyListViewModel(
 
     override fun showError(e: Throwable) {
         e.message?.let { Logger.d("showError", it) }
+        crashlytics.record(e)
         viewState = FamilyListViewState.Error(
             message = e.message ?: "Erro desconhecido",
             retryAction = { viewModelScope.launch { loadData(fromNetwork = true) } }
