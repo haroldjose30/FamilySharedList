@@ -1,23 +1,20 @@
 package dev.haroldjose.familysharedlist.dataLayer.datasource.remote.openfoodfacts.request
 
-import dev.haroldjose.familysharedlist.BuildKonfig
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.ajhttpclient.AJHttpMethod
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.ajhttpclient.request.AJHttpHeaders
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.ajhttpclient.request.AJHttpQueryParameters
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.ajhttpclient.request.IAJHttpRequest
-import dev.haroldjose.familysharedlist.getPlatform
 
 data class OpenFoodFactsGetProductByGetRequest(
     val code: String
 ) : IAJHttpRequest {
     override val urlBase: String
         get() {
-            //TODO - harold - retirar quando estiver estavel
             return "https://world.openfoodfacts.org/"
-            //return if (getPlatform().isDebug)
-            //    "https://world.openfoodfacts.net/"
-            //else
-            //    "https://world.openfoodfacts.org/"
+//            return if (getPlatform().isDebug)
+//                "https://world.openfoodfacts.net/"
+//            else
+//                "https://world.openfoodfacts.org/"
         }
     override val path: String
         get() = "api/v2/product/$code"

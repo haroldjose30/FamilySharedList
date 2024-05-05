@@ -1,21 +1,18 @@
 import SwiftUI
 import shared
 
+
 @main
 struct iOSApp: App {
 
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+
     @Environment(\.scenePhase) private var scenePhase
     
-
-    init() {
-        configureIsRunningUITests()
-        KoinApplication.start()
-    }
-
     var body: some Scene {
 
         WindowGroup {
-            NavigationView()
+            NavigatorPage(viewModel: ResolverApp().resolve())
         }.onChange(of: scenePhase) { phase in
 
             switch phase {

@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
 
     alias(libs.plugins.serialization)
+    alias(libs.plugins.gms.googleServices)
+    alias(libs.plugins.firebase.crashlitycs)
 }
 
 android {
@@ -12,8 +14,8 @@ android {
         applicationId = "dev.haroldjose.familysharedlist.android"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 3
+        versionName = "1.3"
     }
     buildFeatures {
         compose = true
@@ -48,6 +50,7 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.navigation.compose)
     debugImplementation(libs.compose.ui.tooling)
+    implementation(libs.coil.compose)
 
     implementation(libs.camera.camera2)
     implementation(libs.camera.core)
@@ -63,12 +66,7 @@ dependencies {
 
     implementation(libs.kotlinx.datetime)
 
-    //implementation(libs.kotlinx.coroutines.core)
-    //implementation(libs.kotlinx.serialization.core)
-    //implementation(libs.kotlinx.serialization.json)
-    //implementation(libs.ktor.client.core)
-    //implementation(libs.ktor.client.serialization)
-    //implementation(libs.ktor.serialization.kotlinx.json)
-    //implementation(libs.ktor.client.content.negotiation)
-    //implementation(libs.ktor.client.okhttp)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.analytics)
 }

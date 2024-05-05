@@ -6,6 +6,8 @@ plugins {
 
     alias(libs.plugins.serialization)
     alias(libs.plugins.buildkonfig)
+    alias(libs.plugins.googleDevtools)
+    alias(libs.plugins.nativecoroutines)
 }
 
 kotlin {
@@ -31,6 +33,10 @@ kotlin {
         }
     }
 
+    kotlin.sourceSets.all {
+        languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
+    }
+
     sourceSets {
         commonMain.dependencies {
             implementation(libs.kotlinx.coroutines.core)
@@ -42,6 +48,8 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.koin.core)
             implementation(libs.kotlinx.datetime)
+            implementation(libs.crashkios)
+
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

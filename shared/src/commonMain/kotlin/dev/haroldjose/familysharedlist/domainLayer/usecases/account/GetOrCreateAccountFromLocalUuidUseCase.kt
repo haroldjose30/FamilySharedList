@@ -1,13 +1,16 @@
 package dev.haroldjose.familysharedlist.domainLayer.usecases.account
 
+import co.touchlab.crashkios.crashlytics.CrashlyticsKotlin
+import com.rickclephas.kmp.nativecoroutines.NativeCoroutines
+import dev.haroldjose.familysharedlist.Logger
 import dev.haroldjose.familysharedlist.dataLayer.repositories.account.IAccountRepository
-import dev.haroldjose.familysharedlist.dataLayer.repositories.familyList.IFamilyListRepository
 import dev.haroldjose.familysharedlist.dataLayer.repositories.keyValueStorage.IKeyValueStorageRepository
 import dev.haroldjose.familysharedlist.dataLayer.repositories.keyValueStorage.KeyValueStorageRepositoryEnum
 import dev.haroldjose.familysharedlist.domainLayer.mappers.toDto
 import dev.haroldjose.familysharedlist.domainLayer.mappers.toModel
 import dev.haroldjose.familysharedlist.domainLayer.models.AccountModel
 import dev.haroldjose.familysharedlist.getPlatform
+import dev.haroldjose.familysharedlist.services.firebase.IFirebaseAnalytics
 
 
 object Constants {
@@ -17,13 +20,19 @@ object Constants {
 class GetOrCreateAccountFromLocalUuidUseCase(
     private val keyValueStorageRepository: IKeyValueStorageRepository,
     private val accountRepository: IAccountRepository,
+    private val firebaseAnalytics: IFirebaseAnalytics
 )  {
 
+    @NativeCoroutines
     suspend fun execute(): AccountModel {
-
         val accountUuid = getOrCreateUuid()
+        CrashlyticsKotlin.setUserId(accountUuid)
+        firebaseAnalytics.setUserId(accountUuid)
+        firebaseAnalytics.logEvent(
+            IFirebaseAnalytics.Event.GET_OR_CREATE_ACCOUNT,
+            mapOf(IFirebaseAnalytics.Param.ACCOUNT_UUID to accountUuid)
+        )
         accountRepository.findBy(uuid = accountUuid)?.toModel()?.let {
-            //configure singleton
             //TODO: verify if accountsSharedWithMe was revoked
             val defaultAccountSharedWithMe = it.accountsSharedWithMe.firstOrNull()
             val selectedDatabaseName: String = defaultAccountSharedWithMe ?: it.uuid
@@ -54,7 +63,12 @@ class GetOrCreateAccountFromLocalUuidUseCase(
 
         //Generate new Account UUID for this device
         val sanitizedUuid = sanitizeUuid(getPlatform().generateUUID())
-        val newAccountUuid = "${Constants.ACCOUNT_PREFIX}_${sanitizedUuid}"
+        var newAccountUuid = "${Constants.ACCOUNT_PREFIX}_${sanitizedUuid}"
+
+        if (getPlatform().isDebug) {
+            newAccountUuid = "${Constants.ACCOUNT_PREFIX}_DEBUG"
+            Logger.d("GetOrCreateAccountFromLocalUuidUseCase","Debug Mode: Account UUID: $newAccountUuid")
+        }
 
         //Save Account UUID on localStorage
         keyValueStorageRepository.put(

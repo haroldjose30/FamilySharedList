@@ -18,9 +18,10 @@ import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.account.respo
 import dev.haroldjose.familysharedlist.dataLayer.datasource.remote.ajhttpclient.AJHttpClient
 import dev.haroldjose.familysharedlist.dataLayer.dto.AccountDto
 
-class AccountRemoteDataSource: IAccountRemoteDataSource {
-    //todo: add DI
-    private val client: AJHttpClient = AJHttpClient()
+class AccountRemoteDataSource(
+    val client: AJHttpClient
+): IAccountRemoteDataSource {
+
     override suspend fun createSampleDataForFirstAccess(uuid: String): Boolean {
 
         val request = AccountCreateSampleDataForFirstAccessPostRequest(
@@ -64,14 +65,14 @@ class AccountRemoteDataSource: IAccountRemoteDataSource {
     override suspend fun update(item: AccountDto) {
         val request = AccountUpdatePostRequest(item)
         val response = client.send<AccountUpdatePostResponse>(request)
-        Logger.d("AccountRemoteDataSource.update.matchedCount",response?.matchedCount.toString() ?: "")
-        Logger.d("AccountRemoteDataSource.update.modifiedCount",response?.modifiedCount.toString() ?: "")
+        Logger.d("AccountRemoteDataSource.update.matchedCount",response?.matchedCount.toString())
+        Logger.d("AccountRemoteDataSource.update.modifiedCount",response?.modifiedCount.toString())
     }
 
     override suspend fun delete(uuid: String) {
         val request = AccountDeletePostRequest(uuid)
         val response = client.send<AccountDeletePostResponse>(request)
-        Logger.d("AccountRemoteDataSource.delete.deletedCount",response?.deletedCount.toString() ?: "")
+        Logger.d("AccountRemoteDataSource.delete.deletedCount",response?.deletedCount.toString())
     }
 }
 
