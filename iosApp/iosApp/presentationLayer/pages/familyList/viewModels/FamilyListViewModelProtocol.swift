@@ -8,6 +8,7 @@ protocol FamilyListViewModelProtocol: ObservableObject {
     var newItemName: String { get set }
     var quantity: Int { get set }
     var tabIndex: FamilyListPageTabEnum { get set }
+    var selectedItemUuid: String { get set }
 
     var goToSetting: () -> Void { get set }
     var goToQuickInsert: () -> Void { get set }
@@ -20,4 +21,5 @@ protocol FamilyListViewModelProtocol: ObservableObject {
     func updateIsPrioritized(uuid: String, isPrioritized: Bool) async
     func updateName(uuid: String, name: String) async
     func updateQuantity(uuid: String, quantity: Int) async
+    func updatePrice(uuid: String, price: Double) async
 }

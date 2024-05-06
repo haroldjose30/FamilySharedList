@@ -19,18 +19,16 @@ struct QuantitySelectionView: View {
     var body: some View {
         HStack {
 
-            Image(systemName: SystemName.chevronLeft.rawValue)
-                .resizable()
-                .frame(width: 12, height: 20)
+            Image(systemName: SystemName.minus.rawValue)
+                .frame(width: 24, height: 24)
                 .foregroundColor(quantity <= minValue ? .gray : .blue)
                 .onTapGesture { internalOnMinusClicked() }
 
             Text("\(quantity)")
                 .font(.system(size: 16, weight: .bold))
             
-            Image(systemName: SystemName.chevronRight.rawValue)
-                .resizable()
-                .frame(width: 12, height: 20)
+            Image(systemName: SystemName.plus.rawValue)
+                .frame(width: 24, height: 24)
                 .foregroundColor(quantity >= maxValue ? .gray : .blue)
                 .onTapGesture { internalOnMoreClicked() }
         }

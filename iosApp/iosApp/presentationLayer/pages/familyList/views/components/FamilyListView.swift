@@ -13,7 +13,7 @@ struct FamilyListView<ViewModel>: View where ViewModel: FamilyListViewModelProto
                 })
             } else {
                 List(items) { item in
-                    FamilyListRowItemView(
+                    FamilyListRowItemWithProduct(
                         viewModel: viewModel,
                         item: item
                     )
@@ -40,9 +40,10 @@ struct FamilyListView<ViewModel>: View where ViewModel: FamilyListViewModelProto
 }
 
 #Preview {
-    FamilyListView(
-        viewModel: FamilyListViewModelMocked(),
-        items: [],
-        refreshData: { _ in}
+    let viewModel = FamilyListViewModelMocked()
+    return FamilyListView(
+        viewModel: viewModel,
+        items: viewModel.familyListModels,
+        refreshData: { _ in }
     )
 }

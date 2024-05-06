@@ -40,7 +40,10 @@ struct FamilyListPage<ViewModel>: View where ViewModel: FamilyListViewModelProto
         VStack {
             HStack {
                 Button {
-                    Task { viewModel.isShowingBarcodeBottomSheet = true }
+                    Task {
+                        viewModel.selectedItemUuid = ""
+                        viewModel.isShowingBarcodeBottomSheet = true
+                    }
                 } label: {
                     Image(systemName: SystemName.qrcodeViewfinder.rawValue)
                 }

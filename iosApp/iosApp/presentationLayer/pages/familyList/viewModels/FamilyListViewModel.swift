@@ -14,6 +14,7 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
             Task { await loadData(fromNetwork: false, showLoading: false) }
         }
     }
+    var selectedItemUuid: String = ""
 
     var goToSetting: () -> Void = {}
     var goToQuickInsert: () -> Void = {}
@@ -127,6 +128,7 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
             }
 
             if let index = familyListModels.firstIndex(where: {
+                $0.uuid == selectedItemUuid ||
                 $0.product?.code.caseInsensitiveCompare(productModelFounded.code) == .orderedSame ||
                 $0.name.caseInsensitiveCompare(productModelFounded.productName) == .orderedSame
             }) {
@@ -138,25 +140,30 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
                 }
 
                 familyListModels[index].isPrioritized = tabIndex.isPrioritized()
+                if (familyListModels[index].product == nil) {
+                    familyListModels[index].name = productModelFounded.productName
+                }
                 familyListModels[index].product = productModelFounded
                 await update(item: familyListModels[index])
                 if tabIndex.isCompleted() {
                     tabIndex = .pending
                 }
-                viewState = .success
-            } else {
-                let item = FamilyListModel(
-                    name: productModelFounded.productName,
-                    isCompleted: false,
-                    isPrioritized: tabIndex.isPrioritized(),
-                    quantity: quantity.toInt32(),
-                    price: 0,
-                    product: productModelFounded
-                )
-
-                _ = try await asyncFunction(for: createFamilyListUseCase.execute(item: item))
                 await loadData(fromNetwork: true, showLoading: true)
+                return
             }
+
+            let item = FamilyListModel(
+                name: productModelFounded.productName,
+                isCompleted: false,
+                isPrioritized: tabIndex.isPrioritized(),
+                quantity: quantity.toInt32(),
+                price: 0,
+                product: productModelFounded
+            )
+
+            _ = try await asyncFunction(for: createFamilyListUseCase.execute(item: item))
+            await loadData(fromNetwork: true, showLoading: true)
+
         } catch {
             showError(e: error)
             return
@@ -212,6 +219,14 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
     func updateQuantity(uuid: String, quantity: Int) async {
         if let index = familyListModels.firstIndex(where: { $0.uuid == uuid }) {
             familyListModels[index].quantity = quantity.toInt32()
+            await update(item: familyListModels[index])
+        }
+    }
+
+    @MainActor
+    func updatePrice(uuid: String, price: Double) async {
+        if let index = familyListModels.firstIndex(where: { $0.uuid == uuid }) {
+            familyListModels[index].price = price
             await update(item: familyListModels[index])
         }
     }
