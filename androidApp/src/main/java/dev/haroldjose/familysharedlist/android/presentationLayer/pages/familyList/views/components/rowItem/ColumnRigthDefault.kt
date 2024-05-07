@@ -128,20 +128,18 @@ private fun ItemRowBottomOptions(
     bottomSheetScaffoldState: BottomSheetScaffoldState,
 ) {
     Row(verticalAlignment = Alignment.Bottom) {
-        if (!item.value.isCompleted) {
-            QuantitySelectionView(
-                value = item.value.quantity,
-                minValue = 1,
-                maxValue = 50,
-                coroutineScope = coroutineScope,
-                onValueChanged = {
-                    item.value.quantity = it
-                    coroutineScope.launch {
-                        viewModel.updateQuantity(uuid = item.value.uuid, quantity = it)
-                    }
+        QuantitySelectionView(
+            value = item.value.quantity,
+            minValue = 1,
+            maxValue = 50,
+            coroutineScope = coroutineScope,
+            onValueChanged = {
+                item.value.quantity = it
+                coroutineScope.launch {
+                    viewModel.updateQuantity(uuid = item.value.uuid, quantity = it)
                 }
-            )
-        }
+            }
+        )
 
         Spacer(Modifier.weight(1f))
 

@@ -4,6 +4,7 @@ import shared
 protocol FamilyListViewModelProtocol: ObservableObject {
     var viewState: FamilyListViewState { get set }
     var familyListModels: [FamilyListModel] { get set }
+    var familyListModelsGrouped: [FamilyListModelsGrouped] { get set }
     var isShowingBarcodeBottomSheet: Bool { get set }
     var newItemName: String { get set }
     var quantity: Int { get set }
@@ -12,6 +13,10 @@ protocol FamilyListViewModelProtocol: ObservableObject {
 
     var goToSetting: () -> Void { get set }
     var goToQuickInsert: () -> Void { get set }
+
+    var sumOfPrioritized: Double { get set }
+    var sumOfPending: Double { get set }
+    var sumOfCompleted: Double { get set }
 
     func loadData(fromNetwork: Bool, showLoading: Bool) async
     func add() async
@@ -22,4 +27,14 @@ protocol FamilyListViewModelProtocol: ObservableObject {
     func updateName(uuid: String, name: String) async
     func updateQuantity(uuid: String, quantity: Int) async
     func updatePrice(uuid: String, price: Double) async
+}
+
+struct FamilyListModelsGrouped: Identifiable {
+    let id: Date
+    let items: [FamilyListModel]
+    var priceTotal: Double {
+        items.reduce(0.0) { partialResult, item in
+            return partialResult + (Double(item.quantity) * item.price)
+        }
+    }
 }

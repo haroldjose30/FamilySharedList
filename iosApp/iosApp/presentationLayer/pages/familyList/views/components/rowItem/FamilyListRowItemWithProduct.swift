@@ -8,6 +8,7 @@ struct FamilyListRowItemWithProduct<ViewModel>: View where ViewModel: FamilyList
 
     @State private var nameTextFieldValue = ""
     @State private var nameInEditMode = false
+    @State private var priceTextFieldValue = ""
     @State private var priceInEditMode = false
     @State private var isBusy = false
 
@@ -16,14 +17,16 @@ struct FamilyListRowItemWithProduct<ViewModel>: View where ViewModel: FamilyList
             switch (nameInEditMode,priceInEditMode) {
             case (true,_):
                 ColumnRigthEditingName(
-                    item: $item,
+                    item: $item, 
+                    nameTextFieldValue: $nameTextFieldValue,
                     nameInEditMode: $nameInEditMode,
                     viewModel: viewModel,
                     isBusy: $isBusy
                 )
             case (_,true):
                 ColumnRigthEditingPrice(
-                    item: $item,
+                    item: $item, 
+                    priceTextFieldValue: $priceTextFieldValue,
                     priceInEditMode: $priceInEditMode,
                     viewModel: viewModel,
                     isBusy: $isBusy
@@ -35,7 +38,9 @@ struct FamilyListRowItemWithProduct<ViewModel>: View where ViewModel: FamilyList
                 )
                 ColumnRigthDefault(
                     item: $item,
+                    nameTextFieldValue: $nameTextFieldValue,
                     nameInEditMode: $nameInEditMode,
+                    priceTextFieldValue: $priceTextFieldValue,
                     priceInEditMode: $priceInEditMode,
                     viewModel: viewModel,
                     isBusy: $isBusy
@@ -50,5 +55,4 @@ struct FamilyListRowItemWithProduct<ViewModel>: View where ViewModel: FamilyList
         viewModel: FamilyListViewModelMocked(), 
         item: Samples.FamilyList.companion.nutella
     )
-    .background(Color.gray)
 }

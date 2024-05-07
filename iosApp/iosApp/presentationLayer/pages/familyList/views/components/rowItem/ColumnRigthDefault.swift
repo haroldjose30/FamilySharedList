@@ -4,7 +4,9 @@ import shared
 struct ColumnRigthDefault<ViewModel>: View where ViewModel: FamilyListViewModelProtocol {
 
     @Binding var item: FamilyListModel
+    @Binding var nameTextFieldValue: String
     @Binding var nameInEditMode: Bool
+    @Binding var priceTextFieldValue: String
     @Binding var priceInEditMode: Bool
     var viewModel: ViewModel
     @Binding var isBusy: Bool
@@ -12,12 +14,14 @@ struct ColumnRigthDefault<ViewModel>: View where ViewModel: FamilyListViewModelP
     var body: some View {
         VStack {
             RowItemTopOptions(
-                item: $item,
-                nameInEditMode: $nameInEditMode, 
+                item: $item, 
+                nameTextFieldValue: $nameTextFieldValue,
+                nameInEditMode: $nameInEditMode,
                 isBusy: $isBusy
             )
             RowItemMiddleOptions(
                 item: $item, 
+                priceTextFieldValue: $priceTextFieldValue,
                 priceInEditMode: $priceInEditMode
             )
             ItemRowBottomOptions(
@@ -31,6 +35,7 @@ struct ColumnRigthDefault<ViewModel>: View where ViewModel: FamilyListViewModelP
 
 private struct RowItemTopOptions: View {
     @Binding var item: FamilyListModel
+    @Binding var nameTextFieldValue: String
     @Binding var nameInEditMode: Bool
     @Binding var isBusy: Bool
     var body: some View {
@@ -41,11 +46,13 @@ private struct RowItemTopOptions: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(10)
                 .onLongPressGesture {
+                    nameTextFieldValue = item.name
                     nameInEditMode = true
                 }
             if isBusy {
                 ProgressView()
                     .frame(width: 20, height: 20)
+                    .padding(8)
             }
         }
     }
@@ -53,6 +60,7 @@ private struct RowItemTopOptions: View {
 
 private struct RowItemMiddleOptions: View {
     @Binding var item: FamilyListModel
+    @Binding var priceTextFieldValue: String
     @Binding var priceInEditMode: Bool
     var body: some View {
         HStack {
@@ -61,6 +69,7 @@ private struct RowItemMiddleOptions: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(10)
                 .onLongPressGesture {
+                    priceTextFieldValue = "\(item.price)"
                     priceInEditMode = true
                 }
         }
@@ -80,35 +89,37 @@ private struct ItemRowBottomOptions<ViewModel>: View where ViewModel: FamilyList
 
             Spacer()
 
-            Button(action: {
-                viewModel.selectedItemUuid = item.uuid
-                viewModel.isShowingBarcodeBottomSheet = true
-            }) {
-                Image(systemName: SystemName.qrcodeViewfinder.rawValue)
+            Image(systemName: SystemName.qrcodeViewfinder.rawValue)
+                .resizable()
+                .frame(width: 24, height: 24)
+                .padding(.horizontal,4)
+                .foregroundColor(.blue)
+                .onTapGesture {
+                    viewModel.selectedItemUuid = item.uuid
+                    viewModel.isShowingBarcodeBottomSheet = true
+                }
+
+            if !item.isCompleted {
+                Image(systemName: item.isPrioritized ? SystemName.cartFill.rawValue : SystemName.cart.rawValue)
                     .resizable()
                     .frame(width: 24, height: 24)
                     .padding(.horizontal,4)
+                    .foregroundColor(.blue)
+                    .onTapGesture {
+                        item.isPrioritized = !item.isPrioritized
+                        processUpdate { await viewModel.updateIsPrioritized(uuid: item.uuid, isPrioritized: item.isPrioritized) }
+                    }
             }
 
-            Button(action: {
-                item.isPrioritized = !item.isPrioritized
-                processUpdate { await viewModel.updateIsPrioritized(uuid: item.uuid, isPrioritized: item.isPrioritized) }
-            }) {
-                Image(systemName: SystemName.cart.rawValue)
-                    .resizable()
-                    .frame(width: 24, height: 24)
-                    .padding(.horizontal,4)
-            }
-
-            Button(action: {
-                item.isCompleted = !item.isCompleted
-                processUpdate { await viewModel.updateIsCompleted(uuid: item.uuid, isCompleted: item.isCompleted) }
-            }) {
-                Image(systemName: SystemName.checkmarkCircle.rawValue)
-                    .resizable()
-                    .frame(width: 24, height: 24)
-                    .padding(.horizontal,4)
-            }
+            Image(systemName: item.isCompleted ? SystemName.listBullet.rawValue : SystemName.checkmarkCircle.rawValue)
+                .resizable()
+                .frame(width: 24, height: 24)
+                .padding(.horizontal,4)
+                .foregroundColor(.blue)
+                .onTapGesture {
+                    item.isCompleted = !item.isCompleted
+                    processUpdate { await viewModel.updateIsCompleted(uuid: item.uuid, isCompleted: item.isCompleted) }
+                }
         }
         .padding(.bottom,8)
     }
@@ -125,9 +136,11 @@ private struct ItemRowBottomOptions<ViewModel>: View where ViewModel: FamilyList
 #Preview {
     ColumnRigthDefault(
         item: .constant(Samples.FamilyList.companion.nutella),
+        nameTextFieldValue: .constant(""),
         nameInEditMode: .constant(false),
+        priceTextFieldValue: .constant(""),
         priceInEditMode: .constant(false),
         viewModel: FamilyListViewModelMocked(), 
         isBusy: .constant(false)
-    ).background(Color.gray)
+    )
 }

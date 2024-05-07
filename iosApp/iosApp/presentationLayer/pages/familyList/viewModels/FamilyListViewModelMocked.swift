@@ -5,12 +5,23 @@ class FamilyListViewModelMocked: FamilyListViewModelProtocol {
     var viewState: FamilyListViewState = .success
 
     var familyListModels: [FamilyListModel] = Samples.FamilyList.companion.list1
+    var familyListModelsGrouped: [FamilyListModelsGrouped] = {
+        Dictionary(grouping: Samples.FamilyList.companion.list1) { item in
+            item.isCompletedDate?.toDateNoTime() ?? GlobalStateKt.defaultLocalDateTime.toDateNoTime()
+        }.map { key, items in
+            FamilyListModelsGrouped(id: key, items: items)
+        }.sorted { $0.id > $1.id }
+    }()
 
     var isShowingBarcodeBottomSheet: Bool = false
     var newItemName: String = ""
     var quantity: Int = 1
     var tabIndex: FamilyListPageTabEnum = .pending
     var selectedItemUuid: String = ""
+
+    var sumOfPrioritized: Double = 1.11
+    var sumOfPending: Double = 2.22
+    var sumOfCompleted: Double = 3.33
 
     var goToSetting: () -> Void = {}
     var goToQuickInsert: () -> Void = {}
@@ -27,4 +38,3 @@ class FamilyListViewModelMocked: FamilyListViewModelProtocol {
     func updateQuantity(uuid: String, quantity: Int) {}
     func updatePrice(uuid: String, price: Double) {}
 }
-

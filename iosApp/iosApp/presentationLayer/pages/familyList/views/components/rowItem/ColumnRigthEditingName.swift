@@ -4,7 +4,7 @@ import shared
 struct ColumnRigthEditingName<ViewModel>: View where ViewModel: FamilyListViewModelProtocol {
 
     @Binding var item: FamilyListModel
-    @State private var nameTextFieldValue: String = ""
+    @Binding var nameTextFieldValue: String
     @Binding var nameInEditMode: Bool
     var viewModel: ViewModel
     @Binding var isBusy: Bool
@@ -57,25 +57,24 @@ private struct ItemRowBottomOptions<ViewModel>: View where ViewModel: FamilyList
     var body: some View {
         HStack {
             Spacer()
-            Button(action: {
-                item.name = nameTextFieldValue
-                nameInEditMode = false
-                processUpdate { await viewModel.updateName(uuid: item.uuid, name: nameTextFieldValue)}
-            }) {
-                Image(systemName: SystemName.checkmark.rawValue)
-                    .frame(width: 20, height: 20)
-                    .foregroundColor(.blue)
-                    .padding(8)
-            }
-            
-            Button(action: {
-                nameInEditMode = false
-            }) {
-                Image(systemName: SystemName.xmark.rawValue)
-                    .frame(width: 20, height: 20)
-                    .foregroundColor(.blue)
-                    .padding(8)
-            }
+
+            Image(systemName: SystemName.checkmark.rawValue)
+                .frame(width: 20, height: 20)
+                .padding(8)
+                .foregroundColor(.blue)
+                .onTapGesture {
+                    item.name = nameTextFieldValue
+                    nameInEditMode = false
+                    processUpdate { await viewModel.updateName(uuid: item.uuid, name: nameTextFieldValue)}
+                }
+
+            Image(systemName: SystemName.xmark.rawValue)
+                .frame(width: 20, height: 20)
+                .padding(8)
+                .foregroundColor(.blue)
+                .onTapGesture {
+                    nameInEditMode = false
+                }
         }
     }
 
@@ -90,11 +89,10 @@ private struct ItemRowBottomOptions<ViewModel>: View where ViewModel: FamilyList
 
 #Preview {
     ColumnRigthEditingName(
-        item: .constant(Samples.FamilyList.companion.nutella),
+        item: .constant(Samples.FamilyList.companion.nutella), 
+        nameTextFieldValue: .constant("description preview"),
         nameInEditMode: .constant(false),
         viewModel: FamilyListViewModelMocked(),
         isBusy: .constant(false)
     )
 }
-
-

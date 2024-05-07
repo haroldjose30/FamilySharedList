@@ -72,21 +72,20 @@ struct FamilyListPage<ViewModel>: View where ViewModel: FamilyListViewModelProto
                 }
             }
 
-
             TabView(selection: $viewModel.tabIndex) {
 
-                FamilyListView(viewModel: viewModel, items: viewModel.familyListModels.filter({$0.isPrioritized && !$0.isCompleted}), refreshData: refreshData)
-                    .tabItem { Label("Priorizado", systemImage: SystemName.cart.rawValue) }
+                FamilyListTabItemView(viewModel: viewModel, items: viewModel.familyListModels.filter({$0.isPrioritized && !$0.isCompleted}), refreshData: refreshData)
+                    .tabItem { Label("Priorizado \(viewModel.sumOfPrioritized.toCurrencyFormat())", systemImage: SystemName.cart.rawValue) }
                     .tag(FamilyListPageTabEnum.prioritized)
                     .padding(.horizontal, -20)
 
-                FamilyListView(viewModel: viewModel, items: viewModel.familyListModels.filter({!$0.isPrioritized && !$0.isCompleted}), refreshData: refreshData)
-                    .tabItem { Label("Pendente", systemImage: SystemName.listBullet.rawValue) }
+                FamilyListTabItemView(viewModel: viewModel, items: viewModel.familyListModels.filter({!$0.isPrioritized && !$0.isCompleted}), refreshData: refreshData)
+                    .tabItem { Label("Pendente \(viewModel.sumOfPending.toCurrencyFormat())", systemImage: SystemName.listBullet.rawValue) }
                     .tag(FamilyListPageTabEnum.pending)
                     .padding(.horizontal, -20)
 
-                FamilyListView(viewModel: viewModel, items: viewModel.familyListModels.filter({$0.isCompleted}), refreshData: refreshData)
-                    .tabItem { Label("Comprado", systemImage: SystemName.checkmarkCircle.rawValue) }
+                FamilyListTabItemCompletedView(viewModel: viewModel, refreshData: refreshData)
+                    .tabItem { Label("Comprado \(viewModel.sumOfCompleted.toCurrencyFormat())", systemImage: SystemName.checkmarkCircle.rawValue) }
                     .tag(FamilyListPageTabEnum.completed)
                     .padding(.horizontal, -20)
             }

@@ -1,8 +1,8 @@
 import SwiftUI
 import shared
 
-struct FamilyListView<ViewModel>: View where ViewModel: FamilyListViewModelProtocol {
-    @StateObject var viewModel: ViewModel
+struct FamilyListTabItemView<ViewModel>: View where ViewModel: FamilyListViewModelProtocol {
+    var viewModel: ViewModel
     let items: [FamilyListModel]
     let refreshData: (_ showLoading: Bool) -> Void
     var body: some View {
@@ -41,7 +41,7 @@ struct FamilyListView<ViewModel>: View where ViewModel: FamilyListViewModelProto
 
 #Preview {
     let viewModel = FamilyListViewModelMocked()
-    return FamilyListView(
+    return FamilyListTabItemView(
         viewModel: viewModel,
         items: viewModel.familyListModels,
         refreshData: { _ in }

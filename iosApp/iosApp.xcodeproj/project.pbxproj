@@ -29,8 +29,13 @@
 		523D9BD22BE7D5C60014A86F /* ColumnRigthDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523D9BD12BE7D5C60014A86F /* ColumnRigthDefault.swift */; };
 		523D9BD42BE7D5D30014A86F /* ColumnLeftDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523D9BD32BE7D5D30014A86F /* ColumnLeftDefault.swift */; };
 		523D9BD72BE81C010014A86F /* toCurrencyFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523D9BD62BE81C010014A86F /* toCurrencyFormat.swift */; };
+		523E95E62BE9894800ECEBBF /* FamilyListTabItemCompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E95E52BE9894800ECEBBF /* FamilyListTabItemCompletedView.swift */; };
+		523E95E92BE9990900ECEBBF /* toDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E95E82BE9990900ECEBBF /* toDate.swift */; };
+		523E95EB2BE9994200ECEBBF /* toDatetime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E95EA2BE9994200ECEBBF /* toDatetime.swift */; };
+		523E95EE2BE9B76300ECEBBF /* year+month+day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E95ED2BE9B76300ECEBBF /* year+month+day.swift */; };
+		523E95F02BE9B84400ECEBBF /* toString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E95EF2BE9B84400ECEBBF /* toString.swift */; };
 		524EADD92BC1FCDA00CE1725 /* FamilyListEmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524EADD82BC1FCDA00CE1725 /* FamilyListEmptyState.swift */; };
-		524EADDB2BC1FE9300CE1725 /* FamilyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524EADDA2BC1FE9300CE1725 /* FamilyListView.swift */; };
+		524EADDB2BC1FE9300CE1725 /* FamilyListTabItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524EADDA2BC1FE9300CE1725 /* FamilyListTabItemView.swift */; };
 		527225992BE024D800762C21 /* KoinHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527225982BE024D800762C21 /* KoinHelpers.swift */; };
 		527A6A0C2BE5BB51000C565D /* ErrorPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527A6A0B2BE5BB51000C565D /* ErrorPage.swift */; };
 		527A6A0E2BE5BD4E000C565D /* QuickInsertListViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527A6A0D2BE5BD4E000C565D /* QuickInsertListViewState.swift */; };
@@ -105,8 +110,13 @@
 		523D9BD12BE7D5C60014A86F /* ColumnRigthDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnRigthDefault.swift; sourceTree = "<group>"; };
 		523D9BD32BE7D5D30014A86F /* ColumnLeftDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnLeftDefault.swift; sourceTree = "<group>"; };
 		523D9BD62BE81C010014A86F /* toCurrencyFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toCurrencyFormat.swift; sourceTree = "<group>"; };
+		523E95E52BE9894800ECEBBF /* FamilyListTabItemCompletedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListTabItemCompletedView.swift; sourceTree = "<group>"; };
+		523E95E82BE9990900ECEBBF /* toDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toDate.swift; sourceTree = "<group>"; };
+		523E95EA2BE9994200ECEBBF /* toDatetime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toDatetime.swift; sourceTree = "<group>"; };
+		523E95ED2BE9B76300ECEBBF /* year+month+day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "year+month+day.swift"; sourceTree = "<group>"; };
+		523E95EF2BE9B84400ECEBBF /* toString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toString.swift; sourceTree = "<group>"; };
 		524EADD82BC1FCDA00CE1725 /* FamilyListEmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListEmptyState.swift; sourceTree = "<group>"; };
-		524EADDA2BC1FE9300CE1725 /* FamilyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListView.swift; sourceTree = "<group>"; };
+		524EADDA2BC1FE9300CE1725 /* FamilyListTabItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListTabItemView.swift; sourceTree = "<group>"; };
 		527225982BE024D800762C21 /* KoinHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KoinHelpers.swift; sourceTree = "<group>"; };
 		527A6A0B2BE5BB51000C565D /* ErrorPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPage.swift; sourceTree = "<group>"; };
 		527A6A0D2BE5BD4E000C565D /* QuickInsertListViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickInsertListViewState.swift; sourceTree = "<group>"; };
@@ -218,7 +228,8 @@
 				523D9BCA2BE7D56F0014A86F /* rowItem */,
 				52385CF52BC1ABC2009E46F4 /* FamilyListRowItemView.swift */,
 				524EADD82BC1FCDA00CE1725 /* FamilyListEmptyState.swift */,
-				524EADDA2BC1FE9300CE1725 /* FamilyListView.swift */,
+				524EADDA2BC1FE9300CE1725 /* FamilyListTabItemView.swift */,
+				523E95E52BE9894800ECEBBF /* FamilyListTabItemCompletedView.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -266,6 +277,24 @@
 				523D9BD62BE81C010014A86F /* toCurrencyFormat.swift */,
 			);
 			path = Decimal;
+			sourceTree = "<group>";
+		};
+		523E95E72BE998FC00ECEBBF /* Kotlinx_datetimeLocalDateTime */ = {
+			isa = PBXGroup;
+			children = (
+				523E95E82BE9990900ECEBBF /* toDate.swift */,
+				523E95EA2BE9994200ECEBBF /* toDatetime.swift */,
+			);
+			path = Kotlinx_datetimeLocalDateTime;
+			sourceTree = "<group>";
+		};
+		523E95EC2BE9B74B00ECEBBF /* Date */ = {
+			isa = PBXGroup;
+			children = (
+				523E95ED2BE9B76300ECEBBF /* year+month+day.swift */,
+				523E95EF2BE9B84400ECEBBF /* toString.swift */,
+			);
+			path = Date;
 			sourceTree = "<group>";
 		};
 		527A6A0A2BE5BB43000C565D /* error */ = {
@@ -444,9 +473,11 @@
 		52FD81952BBDD72500D6FEE3 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				523E95EC2BE9B74B00ECEBBF /* Date */,
 				523D9BD52BE81BE10014A86F /* Decimal */,
 				52FD81982BBDD72500D6FEE3 /* Int */,
 				52FD81962BBDD72500D6FEE3 /* Int32 */,
+				523E95E72BE998FC00ECEBBF /* Kotlinx_datetimeLocalDateTime */,
 				52FD819C2BBDD72500D6FEE3 /* models */,
 				52385F2D2BC1B2A6009E46F4 /* modifiers */,
 				52FD819A2BBDD72500D6FEE3 /* String */,
@@ -705,6 +736,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				523E95E92BE9990900ECEBBF /* toDate.swift in Sources */,
 				52FD81A42BBDD72500D6FEE3 /* ResolverPreview.swift in Sources */,
 				52FD81AA2BBDD72600D6FEE3 /* FamilyListPage.swift in Sources */,
 				523D9BD22BE7D5C60014A86F /* ColumnRigthDefault.swift in Sources */,
@@ -715,7 +747,7 @@
 				527A6A142BE6DC0F000C565D /* FirebaseCrashlytics.swift in Sources */,
 				523D9BD42BE7D5D30014A86F /* ColumnLeftDefault.swift in Sources */,
 				527A6A0C2BE5BB51000C565D /* ErrorPage.swift in Sources */,
-				524EADDB2BC1FE9300CE1725 /* FamilyListView.swift in Sources */,
+				524EADDB2BC1FE9300CE1725 /* FamilyListTabItemView.swift in Sources */,
 				52FD81BC2BBDE28200D6FEE3 /* QuickInsertListViewModelMocked.swift in Sources */,
 				52FD81A92BBDD72600D6FEE3 /* BarcodeScannerPage.swift in Sources */,
 				52DE60A02BBF51C900C12669 /* SettingsItemWithTitleAndSubtitleView.swift in Sources */,
@@ -726,9 +758,11 @@
 				52FD81AB2BBDD72600D6FEE3 /* toInt.swift in Sources */,
 				52B326992BDD736A00D12B05 /* nativeModule.swift in Sources */,
 				52FD81AE2BBDD72600D6FEE3 /* FamilyListModel.swift in Sources */,
+				523E95E62BE9894800ECEBBF /* FamilyListTabItemCompletedView.swift in Sources */,
 				523D9BCC2BE7D5920014A86F /* FamilyListRowItemWithProduct.swift in Sources */,
 				5210C0BA2BDEEEC50089B31E /* KeyValueStorageDataSource.swift in Sources */,
 				52DE609E2BBF517700C12669 /* SettingsItemWithTitleView.swift in Sources */,
+				523E95EE2BE9B76300ECEBBF /* year+month+day.swift in Sources */,
 				52FD81A52BBDD72500D6FEE3 /* LazyKoin.swift in Sources */,
 				52FD81B52BBDDA9E00D6FEE3 /* QuantitySelectionView.swift in Sources */,
 				52FD81B82BBDE1B100D6FEE3 /* QuickInsertListPage.swift in Sources */,
@@ -748,12 +782,14 @@
 				52BD90902BC0B80600C88B84 /* FamilyListViewModelMocked.swift in Sources */,
 				524EADD92BC1FCDA00CE1725 /* FamilyListEmptyState.swift in Sources */,
 				52FD81A22BBDD72500D6FEE3 /* ResolverApp.swift in Sources */,
+				523E95F02BE9B84400ECEBBF /* toString.swift in Sources */,
 				527A6A0E2BE5BD4E000C565D /* QuickInsertListViewState.swift in Sources */,
 				523509F92BD3273100BC2F51 /* AppDelegate.swift in Sources */,
 				52CBE6EC2BE3DC6C00B40828 /* SettingsViewState.swift in Sources */,
 				52BD908E2BC0B72000C88B84 /* FamilyListViewModelProtocol.swift in Sources */,
 				527A6A102BE5C0EE000C565D /* NavigatorViewState.swift in Sources */,
 				52DE60912BBF1DC800C12669 /* NavigatorViewModel.swift in Sources */,
+				523E95EB2BE9994200ECEBBF /* toDatetime.swift in Sources */,
 				52FD81BE2BBDE5D100D6FEE3 /* QuickInsertListViewModel.swift in Sources */,
 				52BD90932BC0B8BD00C88B84 /* FamilyListViewModel.swift in Sources */,
 				52385F322BC1B428009E46F4 /* ViewHideRowSeparatorModifier.swift in Sources */,

@@ -6,6 +6,7 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
 
     @Published var viewState: FamilyListViewState = .initial
     @Published var familyListModels: [FamilyListModel] = []
+    @Published var familyListModelsGrouped: [FamilyListModelsGrouped] = []
     @Published var isShowingBarcodeBottomSheet: Bool = false
     @Published var newItemName: String = ""
     @Published var quantity: Int = 1
@@ -15,6 +16,10 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
         }
     }
     var selectedItemUuid: String = ""
+
+    @Published var sumOfPrioritized: Double = 0.0
+    @Published var sumOfPending: Double = 0.0
+    @Published var sumOfCompleted: Double = 0.0
 
     var goToSetting: () -> Void = {}
     var goToQuickInsert: () -> Void = {}
@@ -71,6 +76,28 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
                 return
             }
         }
+
+        let familyListModelsCompletedAndSorted = familyListModels
+            .filter { $0.isCompleted }
+
+        familyListModelsGrouped = Dictionary(grouping: familyListModelsCompletedAndSorted, by: {
+            $0.isCompletedDate?.toDateNoTime() ?? GlobalStateKt.defaultLocalDateTime.toDateNoTime()
+        }).map { key, items in
+            FamilyListModelsGrouped(id: key, items: items)
+        }.sorted { $0.id > $1.id }
+
+        sumOfPrioritized = familyListModels
+            .filter { $0.isPrioritized }
+            .map { $0.price * Double($0.quantity) }
+            .reduce(0, +)
+
+        sumOfPending = familyListModels
+            .filter { !$0.isCompleted && !$0.isPrioritized  }
+            .map { $0.price * Double($0.quantity) }
+            .reduce(0, +)
+
+        sumOfCompleted = familyListModelsGrouped.first?.priceTotal ?? 0
+
 
         if (showLoading) {
             viewState = .success
@@ -192,6 +219,7 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
             familyListModels[index].isCompleted = isCompleted
             if isCompleted {
                 familyListModels[index].isPrioritized = false
+                familyListModels[index].isCompletedDate = GlobalStateKt.currentDateTime
             }
             await update(item: familyListModels[index])
             await loadData(fromNetwork: false, showLoading: true)
@@ -209,6 +237,7 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
 
     @MainActor
     func updateName(uuid: String, name: String) async {
+        guard !name.isEmpty else { return }
         if let index = familyListModels.firstIndex(where: { $0.uuid == uuid }) {
             familyListModels[index].name = name
             await update(item: familyListModels[index])
@@ -217,6 +246,7 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
 
     @MainActor
     func updateQuantity(uuid: String, quantity: Int) async {
+        guard quantity >= 0 else { return }
         if let index = familyListModels.firstIndex(where: { $0.uuid == uuid }) {
             familyListModels[index].quantity = quantity.toInt32()
             await update(item: familyListModels[index])
@@ -225,19 +255,11 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
 
     @MainActor
     func updatePrice(uuid: String, price: Double) async {
+        guard quantity >= 0 else { return }
         if let index = familyListModels.firstIndex(where: { $0.uuid == uuid }) {
             familyListModels[index].price = price
             await update(item: familyListModels[index])
         }
-    }
-
-    func showError(e: Error) {
-        crashlytics.record(error: e)
-        viewState = .error(message: e.localizedDescription, retryAction: {
-            Task {
-                await self.loadData(fromNetwork: true, showLoading: true)
-            }
-        })
     }
 
     @MainActor
@@ -248,6 +270,15 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
             showError(e: error)
             return
         }
+    }
+
+    func showError(e: Error) {
+        crashlytics.record(error: e)
+        viewState = .error(message: e.localizedDescription, retryAction: {
+            Task {
+                await self.loadData(fromNetwork: true, showLoading: true)
+            }
+        })
     }
 }
 
