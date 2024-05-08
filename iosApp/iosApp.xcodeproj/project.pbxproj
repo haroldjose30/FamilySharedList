@@ -30,10 +30,12 @@
 		523D9BD42BE7D5D30014A86F /* ColumnLeftDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523D9BD32BE7D5D30014A86F /* ColumnLeftDefault.swift */; };
 		523D9BD72BE81C010014A86F /* toCurrencyFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523D9BD62BE81C010014A86F /* toCurrencyFormat.swift */; };
 		523E95E62BE9894800ECEBBF /* FamilyListTabItemCompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E95E52BE9894800ECEBBF /* FamilyListTabItemCompletedView.swift */; };
-		523E95E92BE9990900ECEBBF /* toDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E95E82BE9990900ECEBBF /* toDate.swift */; };
+		523E95E92BE9990900ECEBBF /* toDateNoTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E95E82BE9990900ECEBBF /* toDateNoTime.swift */; };
 		523E95EB2BE9994200ECEBBF /* toDatetime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E95EA2BE9994200ECEBBF /* toDatetime.swift */; };
 		523E95EE2BE9B76300ECEBBF /* year+month+day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E95ED2BE9B76300ECEBBF /* year+month+day.swift */; };
 		523E95F02BE9B84400ECEBBF /* toString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523E95EF2BE9B84400ECEBBF /* toString.swift */; };
+		524120D02BEAE43200C1E1D3 /* FamilyListBottomSheetOpenImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524120CF2BEAE43200C1E1D3 /* FamilyListBottomSheetOpenImage.swift */; };
+		524120D22BEAF86F00C1E1D3 /* CurrencyField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524120D12BEAF86F00C1E1D3 /* CurrencyField.swift */; };
 		524EADD92BC1FCDA00CE1725 /* FamilyListEmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524EADD82BC1FCDA00CE1725 /* FamilyListEmptyState.swift */; };
 		524EADDB2BC1FE9300CE1725 /* FamilyListTabItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524EADDA2BC1FE9300CE1725 /* FamilyListTabItemView.swift */; };
 		527225992BE024D800762C21 /* KoinHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527225982BE024D800762C21 /* KoinHelpers.swift */; };
@@ -111,10 +113,12 @@
 		523D9BD32BE7D5D30014A86F /* ColumnLeftDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnLeftDefault.swift; sourceTree = "<group>"; };
 		523D9BD62BE81C010014A86F /* toCurrencyFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toCurrencyFormat.swift; sourceTree = "<group>"; };
 		523E95E52BE9894800ECEBBF /* FamilyListTabItemCompletedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListTabItemCompletedView.swift; sourceTree = "<group>"; };
-		523E95E82BE9990900ECEBBF /* toDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toDate.swift; sourceTree = "<group>"; };
+		523E95E82BE9990900ECEBBF /* toDateNoTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toDateNoTime.swift; sourceTree = "<group>"; };
 		523E95EA2BE9994200ECEBBF /* toDatetime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toDatetime.swift; sourceTree = "<group>"; };
 		523E95ED2BE9B76300ECEBBF /* year+month+day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "year+month+day.swift"; sourceTree = "<group>"; };
 		523E95EF2BE9B84400ECEBBF /* toString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toString.swift; sourceTree = "<group>"; };
+		524120CF2BEAE43200C1E1D3 /* FamilyListBottomSheetOpenImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListBottomSheetOpenImage.swift; sourceTree = "<group>"; };
+		524120D12BEAF86F00C1E1D3 /* CurrencyField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyField.swift; sourceTree = "<group>"; };
 		524EADD82BC1FCDA00CE1725 /* FamilyListEmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListEmptyState.swift; sourceTree = "<group>"; };
 		524EADDA2BC1FE9300CE1725 /* FamilyListTabItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListTabItemView.swift; sourceTree = "<group>"; };
 		527225982BE024D800762C21 /* KoinHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KoinHelpers.swift; sourceTree = "<group>"; };
@@ -230,6 +234,7 @@
 				524EADD82BC1FCDA00CE1725 /* FamilyListEmptyState.swift */,
 				524EADDA2BC1FE9300CE1725 /* FamilyListTabItemView.swift */,
 				523E95E52BE9894800ECEBBF /* FamilyListTabItemCompletedView.swift */,
+				524120CF2BEAE43200C1E1D3 /* FamilyListBottomSheetOpenImage.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -282,7 +287,7 @@
 		523E95E72BE998FC00ECEBBF /* Kotlinx_datetimeLocalDateTime */ = {
 			isa = PBXGroup;
 			children = (
-				523E95E82BE9990900ECEBBF /* toDate.swift */,
+				523E95E82BE9990900ECEBBF /* toDateNoTime.swift */,
 				523E95EA2BE9994200ECEBBF /* toDatetime.swift */,
 			);
 			path = Kotlinx_datetimeLocalDateTime;
@@ -544,6 +549,7 @@
 			children = (
 				52FD81B42BBDDA9E00D6FEE3 /* QuantitySelectionView.swift */,
 				52FD81C02BBE02A000D6FEE3 /* TextEditorView.swift */,
+				524120D12BEAF86F00C1E1D3 /* CurrencyField.swift */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -736,7 +742,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				523E95E92BE9990900ECEBBF /* toDate.swift in Sources */,
+				523E95E92BE9990900ECEBBF /* toDateNoTime.swift in Sources */,
 				52FD81A42BBDD72500D6FEE3 /* ResolverPreview.swift in Sources */,
 				52FD81AA2BBDD72600D6FEE3 /* FamilyListPage.swift in Sources */,
 				523D9BD22BE7D5C60014A86F /* ColumnRigthDefault.swift in Sources */,
@@ -765,6 +771,7 @@
 				523E95EE2BE9B76300ECEBBF /* year+month+day.swift in Sources */,
 				52FD81A52BBDD72500D6FEE3 /* LazyKoin.swift in Sources */,
 				52FD81B52BBDDA9E00D6FEE3 /* QuantitySelectionView.swift in Sources */,
+				524120D22BEAF86F00C1E1D3 /* CurrencyField.swift in Sources */,
 				52FD81B82BBDE1B100D6FEE3 /* QuickInsertListPage.swift in Sources */,
 				523D9BD72BE81C010014A86F /* toCurrencyFormat.swift in Sources */,
 				52D7B6D12BC7433E00037A17 /* isDigitsOnly.swift in Sources */,
@@ -796,6 +803,7 @@
 				52FD81AD2BBDD72600D6FEE3 /* StringConstants.swift in Sources */,
 				52385F2F2BC1B2BD009E46F4 /* ListBackgroundClearModifier.swift in Sources */,
 				52DE60A32BBF522000C12669 /* SettingsItemWithInputTextView.swift in Sources */,
+				524120D02BEAE43200C1E1D3 /* FamilyListBottomSheetOpenImage.swift in Sources */,
 				52FD81BA2BBDE23F00D6FEE3 /* QuickInsertListViewModelProtocol.swift in Sources */,
 				52FD81AC2BBDD72600D6FEE3 /* toInt32.swift in Sources */,
 			);

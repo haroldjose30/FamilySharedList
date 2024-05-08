@@ -5,11 +5,14 @@ protocol FamilyListViewModelProtocol: ObservableObject {
     var viewState: FamilyListViewState { get set }
     var familyListModels: [FamilyListModel] { get set }
     var familyListModelsGrouped: [FamilyListModelsGrouped] { get set }
+    
     var isShowingBarcodeBottomSheet: Bool { get set }
+    var isShowingOpenImageBottomSheet: Bool { get set }
+
     var newItemName: String { get set }
-    var quantity: Int { get set }
-    var tabIndex: FamilyListPageTabEnum { get set }
     var selectedItemUuid: String { get set }
+    var tabIndex: FamilyListPageTabEnum { get set }
+    var openImageSelectedItem: FamilyListModel? { get set }
 
     var goToSetting: () -> Void { get set }
     var goToQuickInsert: () -> Void { get set }
@@ -27,6 +30,7 @@ protocol FamilyListViewModelProtocol: ObservableObject {
     func updateName(uuid: String, name: String) async
     func updateQuantity(uuid: String, quantity: Int) async
     func updatePrice(uuid: String, price: Double) async
+    func openImage(item: FamilyListModel)
 }
 
 struct FamilyListModelsGrouped: Identifiable {

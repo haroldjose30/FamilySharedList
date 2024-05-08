@@ -8,7 +8,7 @@ struct FamilyListRowItemWithProduct<ViewModel>: View where ViewModel: FamilyList
 
     @State private var nameTextFieldValue = ""
     @State private var nameInEditMode = false
-    @State private var priceTextFieldValue = ""
+    @State private var priceTextFieldValue: Int = 0
     @State private var priceInEditMode = false
     @State private var isBusy = false
 

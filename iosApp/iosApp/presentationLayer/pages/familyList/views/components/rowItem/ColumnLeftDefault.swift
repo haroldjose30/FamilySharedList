@@ -19,8 +19,7 @@ struct ColumnLeftDefault<ViewModel>: View where ViewModel: FamilyListViewModelPr
                             .aspectRatio(contentMode: .fit)
                             .padding(4)
                             .onTapGesture {
-                                //TODO: implement
-                                //viewModel.openImage(item)
+                                viewModel.openImage(item: item)
                             }
                     } else if phase.error != nil {
                         // Display a placeholder when loading failed

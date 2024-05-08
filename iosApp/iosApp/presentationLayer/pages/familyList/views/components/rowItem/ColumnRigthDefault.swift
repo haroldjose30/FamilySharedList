@@ -6,7 +6,7 @@ struct ColumnRigthDefault<ViewModel>: View where ViewModel: FamilyListViewModelP
     @Binding var item: FamilyListModel
     @Binding var nameTextFieldValue: String
     @Binding var nameInEditMode: Bool
-    @Binding var priceTextFieldValue: String
+    @Binding var priceTextFieldValue: Int
     @Binding var priceInEditMode: Bool
     var viewModel: ViewModel
     @Binding var isBusy: Bool
@@ -60,7 +60,7 @@ private struct RowItemTopOptions: View {
 
 private struct RowItemMiddleOptions: View {
     @Binding var item: FamilyListModel
-    @Binding var priceTextFieldValue: String
+    @Binding var priceTextFieldValue: Int
     @Binding var priceInEditMode: Bool
     var body: some View {
         HStack {
@@ -69,7 +69,7 @@ private struct RowItemMiddleOptions: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(10)
                 .onLongPressGesture {
-                    priceTextFieldValue = "\(item.price)"
+                    priceTextFieldValue = Int(item.price * 100)
                     priceInEditMode = true
                 }
         }
@@ -138,7 +138,7 @@ private struct ItemRowBottomOptions<ViewModel>: View where ViewModel: FamilyList
         item: .constant(Samples.FamilyList.companion.nutella),
         nameTextFieldValue: .constant(""),
         nameInEditMode: .constant(false),
-        priceTextFieldValue: .constant(""),
+        priceTextFieldValue: .constant(0),
         priceInEditMode: .constant(false),
         viewModel: FamilyListViewModelMocked(), 
         isBusy: .constant(false)

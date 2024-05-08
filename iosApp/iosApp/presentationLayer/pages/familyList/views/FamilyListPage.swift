@@ -71,6 +71,9 @@ struct FamilyListPage<ViewModel>: View where ViewModel: FamilyListViewModelProto
                     }
                 }
             }
+            .sheet(isPresented: $viewModel.isShowingOpenImageBottomSheet) {
+                FamilyListBottomSheetOpenImage(viewModel: viewModel)
+            }
 
             TabView(selection: $viewModel.tabIndex) {
 

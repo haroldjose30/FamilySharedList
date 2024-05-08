@@ -7,15 +7,19 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
     @Published var viewState: FamilyListViewState = .initial
     @Published var familyListModels: [FamilyListModel] = []
     @Published var familyListModelsGrouped: [FamilyListModelsGrouped] = []
+
     @Published var isShowingBarcodeBottomSheet: Bool = false
+    @Published var isShowingOpenImageBottomSheet: Bool = false
+    
     @Published var newItemName: String = ""
-    @Published var quantity: Int = 1
     @Published var tabIndex: FamilyListPageTabEnum = .pending {
         didSet {
             Task { await loadData(fromNetwork: false, showLoading: false) }
         }
     }
+
     var selectedItemUuid: String = ""
+    var openImageSelectedItem: FamilyListModel? = nil
 
     @Published var sumOfPrioritized: Double = 0.0
     @Published var sumOfPending: Double = 0.0
@@ -121,7 +125,7 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
             name: newItemName,
             isCompleted: false, 
             isPrioritized: tabIndex.isPrioritized(), 
-            quantity: quantity.toInt32()
+            quantity: 1
         )
         newItemName = ""
         viewState = .loading
@@ -183,7 +187,7 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
                 name: productModelFounded.productName,
                 isCompleted: false,
                 isPrioritized: tabIndex.isPrioritized(),
-                quantity: quantity.toInt32(),
+                quantity: 1,
                 price: 0,
                 product: productModelFounded
             )
@@ -255,7 +259,7 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
 
     @MainActor
     func updatePrice(uuid: String, price: Double) async {
-        guard quantity >= 0 else { return }
+        guard price >= 0 else { return }
         if let index = familyListModels.firstIndex(where: { $0.uuid == uuid }) {
             familyListModels[index].price = price
             await update(item: familyListModels[index])
@@ -279,6 +283,11 @@ class FamilyListViewModel: FamilyListViewModelProtocol {
                 await self.loadData(fromNetwork: true, showLoading: true)
             }
         })
+    }
+
+    func openImage(item: FamilyListModel) {
+        openImageSelectedItem = item
+        isShowingOpenImageBottomSheet = true
     }
 }
 

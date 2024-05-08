@@ -14,10 +14,12 @@ class FamilyListViewModelMocked: FamilyListViewModelProtocol {
     }()
 
     var isShowingBarcodeBottomSheet: Bool = false
+    var isShowingOpenImageBottomSheet: Bool = false
+
     var newItemName: String = ""
-    var quantity: Int = 1
     var tabIndex: FamilyListPageTabEnum = .pending
     var selectedItemUuid: String = ""
+    var openImageSelectedItem: FamilyListModel? = nil
 
     var sumOfPrioritized: Double = 1.11
     var sumOfPending: Double = 2.22
@@ -37,4 +39,5 @@ class FamilyListViewModelMocked: FamilyListViewModelProtocol {
     func updateName(uuid: String, name: String) {}
     func updateQuantity(uuid: String, quantity: Int) {}
     func updatePrice(uuid: String, price: Double) {}
+    func openImage(item: FamilyListModel) {}
 }
