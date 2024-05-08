@@ -1,6 +1,5 @@
 package dev.haroldjose.familysharedlist
 
-import dev.haroldjose.familysharedlist.domainLayer.models.AccountModel
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
@@ -20,4 +19,8 @@ class GlobalState {
 val defaultLocalDateTime: LocalDateTime get() {
     val year = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).year
     return LocalDateTime(year, 1, 1, 0, 0, 0, 0)
+}
+
+val currentDateTime: LocalDateTime get() {
+    return Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
 }

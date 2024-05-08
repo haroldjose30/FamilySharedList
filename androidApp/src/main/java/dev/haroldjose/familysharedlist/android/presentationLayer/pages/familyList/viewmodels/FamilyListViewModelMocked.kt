@@ -11,7 +11,7 @@ import kotlinx.datetime.LocalDate
 class FamilyListViewModelMocked: ViewModel(), IFamilyListViewModel {
     override val viewState: FamilyListViewState by mutableStateOf(FamilyListViewState.Initial)
     override val familyListModelsGrouped: Map<LocalDate, List<FamilyListModel>> by mutableStateOf(
-        Samples.FamilyList.list1.groupBy { it.isCompletedDate?.date ?: defaultLocalDateTime.date }
+        Samples.FamilyList.list1.sortedByDescending { it.isCompletedDate }.groupBy { it.isCompletedDate?.date ?: defaultLocalDateTime.date }
     )
     override var familyListModels: List<FamilyListModel> = Samples.FamilyList.list1
     override var newItemName: String = "newItem"

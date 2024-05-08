@@ -48,13 +48,13 @@ private struct ViewHideRowSeparatorModifierIOS14: ViewModifier {
 }
 
 extension EdgeInsets {
-    static let defaultListRowInsets = Self(top: 0, leading: 16, bottom: 0, trailing: 16)
+    static let defaultListRowInsets = Self(top: 0, leading: 8, bottom: 0, trailing: 8)
 }
 
 #Preview {
     List {
-        ForEach(0..<10) { _ in
-            Text("Text 4")
+        ForEach(0..<10) { index in
+            Text("Text \(index)")
                 .hideRowSeparator()
         }
     }

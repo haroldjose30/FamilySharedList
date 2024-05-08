@@ -1,8 +1,8 @@
 import SwiftUI
 import shared
 
-struct FamilyListView<ViewModel>: View where ViewModel: FamilyListViewModelProtocol {
-    @StateObject var viewModel: ViewModel
+struct FamilyListTabItemView<ViewModel>: View where ViewModel: FamilyListViewModelProtocol {
+    var viewModel: ViewModel
     let items: [FamilyListModel]
     let refreshData: (_ showLoading: Bool) -> Void
     var body: some View {
@@ -13,7 +13,7 @@ struct FamilyListView<ViewModel>: View where ViewModel: FamilyListViewModelProto
                 })
             } else {
                 List(items) { item in
-                    FamilyListRowItemView(
+                    FamilyListRowItemWithProduct(
                         viewModel: viewModel,
                         item: item
                     )
@@ -40,9 +40,10 @@ struct FamilyListView<ViewModel>: View where ViewModel: FamilyListViewModelProto
 }
 
 #Preview {
-    FamilyListView(
-        viewModel: FamilyListViewModelMocked(),
-        items: [],
-        refreshData: { _ in}
+    let viewModel = FamilyListViewModelMocked()
+    return FamilyListTabItemView(
+        viewModel: viewModel,
+        items: viewModel.familyListModels,
+        refreshData: { _ in }
     )
 }

@@ -10,13 +10,9 @@ class FirebaseCrashlytics: IFirebaseCrashlytics {
         crashlytics.log(message)
     }
     
-    func record(kError: KotlinException) {
-        let exceptionModel = ExceptionModel(
-            name: kError.message ?? "unknow error",
-            reason: kError.description()
-        )
-
-        crashlytics.record(exceptionModel: exceptionModel)
+    func record(kError: KotlinThrowable) {
+        let error = kError.asError()
+        crashlytics.record(error: error)
     }
     
     func setCrashlyticsCollectionEnabled(enabled: Bool) {

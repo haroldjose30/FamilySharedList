@@ -33,10 +33,6 @@ data class AccountModel(
         platform = getPlatform().name,
         accountShortCodeForShare = ""
     )
-
-    companion object {
-        fun getCurrentDateTime(): Instant = Clock.System.now()
-    }
 }
 
 
