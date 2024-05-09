@@ -39,6 +39,17 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemType</key>
+			<string>dev.haroldjose.familysharedlist.ios.quick_insert</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Inclusão rápida</string>
+			<key>UIApplicationShortcutItemSubtitle</key>
+			<string>crie vários itens de uma só vez</string>
+		</dict>
+	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
