@@ -1,0 +1,16 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="quick_insert"
+        android:enabled="true"
+        android:icon="@drawable/list_alt_add"
+        android:shortcutShortLabel="@string/quick_insert_shortcut_short_label"
+        android:shortcutLongLabel="@string/quick_insert_shortcut_long_label"
+        android:shortcutDisabledMessage="@string/quick_insert_disabled_message">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="dev.haroldjose.familysharedlist.android"
+            android:targetClass="dev.haroldjose.familysharedlist.android.app.MainActivity">
+            <extra android:name="shortcut_key" android:value="quick_insert" />
+        </intent>
+    </shortcut>
+</shortcuts>

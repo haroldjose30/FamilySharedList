@@ -40,32 +40,33 @@ fun NavigatorPage(
     navigatorViewModel: INavigatorViewModel = koinViewModel<NavigatorViewModel>(),
     quickInsertListViewModel: IQuickInsertListViewModel = koinViewModel<QuickInsertListViewModel>(),
     settingsViewModel: ISettingsViewModel = koinViewModel<SettingsViewModel>(),
-    familyListViewModel: IFamilyListViewModel = koinViewModel<FamilyListViewModel>()
+    familyListViewModel: IFamilyListViewModel = koinViewModel<FamilyListViewModel>(),
+    initialRoute: Router
 ) {
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val navController: NavHostController = rememberNavController()
 
-    quickInsertListViewModel.goToFamilyListPage = { navController.navigate(NavigatorRouter.FAMILY_LIST.value) }
-    settingsViewModel.goBack = { navController.navigate(NavigatorRouter.FAMILY_LIST.value) }
-    familyListViewModel.goToSetting = { navController.navigate(NavigatorRouter.SETTINGS.value) }
-    familyListViewModel.goToQuickInsert = { navController.navigate(NavigatorRouter.QUICK_INSERT.value) }
+    quickInsertListViewModel.goToFamilyListPage = { navController.navigate(Router.FAMILY_LIST.value) }
+    settingsViewModel.goBack = { navController.navigate(Router.FAMILY_LIST.value) }
+    familyListViewModel.goToSetting = { navController.navigate(Router.SETTINGS.value) }
+    familyListViewModel.goToQuickInsert = { navController.navigate(Router.QUICK_INSERT.value) }
 
     LaunchedEffect(key1 = "NavigatorView") {
-        navigatorViewModel.checkIfNeedToCreateNewAccount(navController)
+        navigatorViewModel.checkIfNeedToCreateNewAccount(navController, initialRoute)
     }
 
-    NavHost(navController = navController, startDestination = NavigatorRouter.NAVIGATOR.value) {
-        composable(NavigatorRouter.FAMILY_LIST.value) {
+    NavHost(navController = navController, startDestination = Router.NAVIGATOR.value) {
+        composable(Router.FAMILY_LIST.value) {
             FamilyListPage(familyListViewModel)
         }
-        composable(NavigatorRouter.SETTINGS.value) {
+        composable(Router.SETTINGS.value) {
             SettingsPage(settingsViewModel)
         }
-        composable(NavigatorRouter.QUICK_INSERT.value) {
+        composable(Router.QUICK_INSERT.value) {
             QuickInsertListPage(quickInsertListViewModel)
         }
-        composable(NavigatorRouter.NAVIGATOR.value) {
-            LoadingOrErrorPage(navController, coroutineScope, navigatorViewModel)
+        composable(Router.NAVIGATOR.value) {
+            LoadingOrErrorPage(navController, coroutineScope, navigatorViewModel, initialRoute)
         }
     }
 }
@@ -74,7 +75,8 @@ fun NavigatorPage(
 private fun LoadingOrErrorPage(
     navController: NavHostController,
     coroutineScope: CoroutineScope,
-    navigatorViewModel: INavigatorViewModel
+    navigatorViewModel: INavigatorViewModel,
+    initialRoute: Router
 ) {
     when (navigatorViewModel.viewState) {
         is NavigatorViewState.Initial, NavigatorViewState.Loading, NavigatorViewState.Success -> CircularProgressIndicator(
@@ -85,7 +87,8 @@ private fun LoadingOrErrorPage(
         is NavigatorViewState.Error -> ErrorPage((navigatorViewModel.viewState as NavigatorViewState.Error).message) {
             coroutineScope.launch {
                 navigatorViewModel.checkIfNeedToCreateNewAccount(
-                    navController
+                    navController,
+                    initialRoute
                 )
             }
         }
@@ -100,7 +103,8 @@ fun FamilyListPage_Preview() {
             navigatorViewModel = NavigatorViewModelMock(),
             quickInsertListViewModel = QuickInsertListViewModelMocked(),
             settingsViewModel = SettingsViewModelMocked(),
-            familyListViewModel= FamilyListViewModelMocked()
+            familyListViewModel= FamilyListViewModelMocked(),
+            initialRoute = Router.NAVIGATOR
         )
     }
 }
