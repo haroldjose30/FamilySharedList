@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Family List</string>
+    <string name="quick_insert_shortcut_short_label">Inclusão rápida</string>
+    <string name="quick_insert_shortcut_long_label">crie vários itens de uma só vez</string>
+    <string name="quick_insert_disabled_message">indisponível no momento</string>
 </resources>

@@ -44,6 +44,9 @@
 		527A6A102BE5C0EE000C565D /* NavigatorViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527A6A0F2BE5C0EE000C565D /* NavigatorViewState.swift */; };
 		527A6A122BE5C3C7000C565D /* FamilyListViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527A6A112BE5C3C7000C565D /* FamilyListViewState.swift */; };
 		527A6A142BE6DC0F000C565D /* FirebaseCrashlytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527A6A132BE6DC0F000C565D /* FirebaseCrashlytics.swift */; };
+		5296515B2BED7F9B005F5E19 /* RouterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5296515A2BED7F9B005F5E19 /* RouterType.swift */; };
+		5296515D2BED8C14005F5E19 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5296515C2BED8C14005F5E19 /* SceneDelegate.swift */; };
+		5296515F2BED8C79005F5E19 /* RouterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5296515E2BED8C79005F5E19 /* RouterService.swift */; };
 		52B326972BDD689A00D12B05 /* FirebaseAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B326962BDD689A00D12B05 /* FirebaseAnalytics.swift */; };
 		52B326992BDD736A00D12B05 /* nativeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B326982BDD736A00D12B05 /* nativeModule.swift */; };
 		52BD908C2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD908B2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift */; };
@@ -127,6 +130,9 @@
 		527A6A0F2BE5C0EE000C565D /* NavigatorViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatorViewState.swift; sourceTree = "<group>"; };
 		527A6A112BE5C3C7000C565D /* FamilyListViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListViewState.swift; sourceTree = "<group>"; };
 		527A6A132BE6DC0F000C565D /* FirebaseCrashlytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseCrashlytics.swift; sourceTree = "<group>"; };
+		5296515A2BED7F9B005F5E19 /* RouterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterType.swift; sourceTree = "<group>"; };
+		5296515C2BED8C14005F5E19 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		5296515E2BED8C79005F5E19 /* RouterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterService.swift; sourceTree = "<group>"; };
 		52B326962BDD689A00D12B05 /* FirebaseAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalytics.swift; sourceTree = "<group>"; };
 		52B326982BDD736A00D12B05 /* nativeModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nativeModule.swift; sourceTree = "<group>"; };
 		52BD908B2BC0B6DE00C88B84 /* FamilyListPageTabEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyListPageTabEnum.swift; sourceTree = "<group>"; };
@@ -308,6 +314,15 @@
 				527A6A0B2BE5BB51000C565D /* ErrorPage.swift */,
 			);
 			path = error;
+			sourceTree = "<group>";
+		};
+		529651602BED8D8E005F5E19 /* router */ = {
+			isa = PBXGroup;
+			children = (
+				5296515E2BED8C79005F5E19 /* RouterService.swift */,
+				5296515A2BED7F9B005F5E19 /* RouterType.swift */,
+			);
+			path = router;
 			sourceTree = "<group>";
 		};
 		52B326952BDD688900D12B05 /* services */ = {
@@ -531,6 +546,7 @@
 				52FD81A02BBDD72500D6FEE3 /* iOSApp+configureIsRunningUITests.swift */,
 				52385F362BC1C7E4009E46F4 /* AppConstants.swift */,
 				523509F82BD3273100BC2F51 /* AppDelegate.swift */,
+				5296515C2BED8C14005F5E19 /* SceneDelegate.swift */,
 			);
 			path = app;
 			sourceTree = "<group>";
@@ -538,6 +554,7 @@
 		52FD81B22BBDD87300D6FEE3 /* presentationLayer */ = {
 			isa = PBXGroup;
 			children = (
+				529651602BED8D8E005F5E19 /* router */,
 				52FD81B32BBDD8E500D6FEE3 /* components */,
 				52FD818D2BBDD72500D6FEE3 /* pages */,
 			);
@@ -771,9 +788,11 @@
 				523E95EE2BE9B76300ECEBBF /* year+month+day.swift in Sources */,
 				52FD81A52BBDD72500D6FEE3 /* LazyKoin.swift in Sources */,
 				52FD81B52BBDDA9E00D6FEE3 /* QuantitySelectionView.swift in Sources */,
+				5296515D2BED8C14005F5E19 /* SceneDelegate.swift in Sources */,
 				524120D22BEAF86F00C1E1D3 /* CurrencyField.swift in Sources */,
 				52FD81B82BBDE1B100D6FEE3 /* QuickInsertListPage.swift in Sources */,
 				523D9BD72BE81C010014A86F /* toCurrencyFormat.swift in Sources */,
+				5296515F2BED8C79005F5E19 /* RouterService.swift in Sources */,
 				52D7B6D12BC7433E00037A17 /* isDigitsOnly.swift in Sources */,
 				523D9BD02BE7D5B40014A86F /* ColumnRigthEditingName.swift in Sources */,
 				52385F372BC1C7E4009E46F4 /* AppConstants.swift in Sources */,
@@ -804,6 +823,7 @@
 				52385F2F2BC1B2BD009E46F4 /* ListBackgroundClearModifier.swift in Sources */,
 				52DE60A32BBF522000C12669 /* SettingsItemWithInputTextView.swift in Sources */,
 				524120D02BEAE43200C1E1D3 /* FamilyListBottomSheetOpenImage.swift in Sources */,
+				5296515B2BED7F9B005F5E19 /* RouterType.swift in Sources */,
 				52FD81BA2BBDE23F00D6FEE3 /* QuickInsertListViewModelProtocol.swift in Sources */,
 				52FD81AC2BBDD72600D6FEE3 /* toInt32.swift in Sources */,
 			);

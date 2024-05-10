@@ -13,6 +13,7 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import dev.haroldjose.familysharedlist.AndroidPlatform
 import dev.haroldjose.familysharedlist.android.presentationLayer.pages.navigator.views.NavigatorPage
+import dev.haroldjose.familysharedlist.android.presentationLayer.pages.navigator.views.Router
 import org.koin.androidx.compose.KoinAndroidContext
 import org.koin.core.annotation.KoinExperimentalAPI
 
@@ -26,6 +27,8 @@ class MainActivity : ComponentActivity() {
         AndroidPlatform.androidContextForKmm = this
         AndroidPlatform.isDebuggable = (0 != applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE)
 
+
+        var initialRoute = handleInitialRoute()
         setContent {
             MyApplicationTheme {
                 Surface(
@@ -33,9 +36,27 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     KoinAndroidContext() {
-                        NavigatorPage()
+                        NavigatorPage(
+                            initialRoute = initialRoute
+                        )
                     }
                 }
+            }
+        }
+    }
+
+    private fun handleInitialRoute(): Router {
+
+        //handle shortcuts
+        val shortcutValue = intent.getStringExtra("shortcut_key")
+        when (shortcutValue) {
+
+            Router.QUICK_INSERT.value -> {
+                return Router.QUICK_INSERT
+            }
+
+            else -> {
+                return Router.FAMILY_LIST
             }
         }
     }
